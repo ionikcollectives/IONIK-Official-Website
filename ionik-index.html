@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="IONIK — Premium Digital Marketing Agency. We build brands that dominate.">
+    <title>IONIK — Digital Agency</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;900&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="ionik-styles.css">
+</head>
+<body>
+
+<!-- ══════════════════════════════════
+     PRELOADER
+══════════════════════════════════ -->
+<div id="preloader" class="preloader" aria-hidden="true">
+    <div class="pre-scanline"></div>
+    <div class="pre-rays"   aria-hidden="true"></div>
+    <div class="pre-glow"   aria-hidden="true"></div>
+    <div class="pre-body">
+        <!--
+            LOGO FILE: name your white-on-transparent logo  ionik-logo.svg
+            and place it in the same folder as this HTML.
+            For the sidebar icon, name it  ionik-mark.svg  (the standalone O/eye mark).
+        -->
+        <img id="preLogoImg" class="pre-logo-img" src="ionik-logo.svg" alt="IONIK" draggable="false">
+        <p class="pre-tagline">DIGITAL AGENCY</p>
+    </div>
+    <div class="pre-shockwave" aria-hidden="true"></div>
+    <div class="pre-flash"     aria-hidden="true"></div>
+    <div class="pre-streak"></div>
+</div>
+
+<!-- ══════════════════════════════════
+     CUSTOM CURSOR
+══════════════════════════════════ -->
+<div id="cursorDot"  class="cursor-dot"  aria-hidden="true"></div>
+<div id="cursorRing" class="cursor-ring" aria-hidden="true"></div>
+
+<!-- ══════════════════════════════════
+     LEFT SIDEBAR
+══════════════════════════════════ -->
+<aside id="sidebar" class="sidebar" aria-label="Site navigation">
+
+    <!-- Logo — links to top, breathing glow + glitch on hover -->
+    <a href="#home" class="sidebar__logo-wrap" id="sidebarLogoWrap" aria-label="IONIK home">
+        <img
+            id="sidebarLogo"
+            class="sidebar__logo-img"
+            src="ionik-logo.svg"
+            alt="IONIK"
+            draggable="false"
+        >
+    </a>
+
+    <!-- Scroll progress indicator (right edge) -->
+    <div class="sidebar__track" aria-hidden="true">
+        <div id="scrollFill" class="sidebar__fill"></div>
+    </div>
+
+    <!-- Primary nav -->
+    <nav class="sidebar__nav" aria-label="Primary">
+        <ul role="list">
+            <li>
+                <a href="#home"     class="sidebar__link active" data-section="home">
+                    <span class="sidebar__link-bar"></span>
+                    <span class="sidebar__link-text">Home</span>
+                </a>
+            </li>
+            <li>
+                <a href="#services" class="sidebar__link" data-section="services">
+                    <span class="sidebar__link-bar"></span>
+                    <span class="sidebar__link-text">Services</span>
+                </a>
+            </li>
+            <li>
+                <a href="#about"    class="sidebar__link" data-section="about">
+                    <span class="sidebar__link-bar"></span>
+                    <span class="sidebar__link-text">About</span>
+                </a>
+            </li>
+            <li>
+                <a href="#contact"  class="sidebar__link" data-section="contact">
+                    <span class="sidebar__link-bar"></span>
+                    <span class="sidebar__link-text">Contact</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Bottom CTA -->
+    <div class="sidebar__bottom">
+        <a href="#contact" class="sidebar__cta">Start a Project</a>
+        <a href="mailto:info.ionikcollectives@gmail.com" class="sidebar__email">info.ionikcollectives@gmail.com</a>
+    </div>
+
+</aside>
+
+<!-- Mobile hamburger toggle -->
+<button
+    id="sidebarToggle"
+    class="s-toggle"
+    aria-label="Open menu"
+    aria-expanded="false"
+    aria-controls="sidebar"
+>
+    <span></span>
+    <span></span>
+    <span></span>
+</button>
+
+<!-- Mobile backdrop -->
+<div id="sidebarOverlay" class="s-overlay" aria-hidden="true"></div>
+
+<!-- ══════════════════════════════════
+     MAIN CONTENT
+══════════════════════════════════ -->
+<div class="main-wrap">
+<main id="main">
+
+    <!-- ────────── HERO ────────── -->
+    <section class="hero" id="home" aria-label="Hero">
+        <div class="hero__dots" aria-hidden="true"></div>
+
+        <div class="hero__content">
+            <p class="hero__eyebrow">— LET'S WORK TOGETHER —</p>
+            <h1 class="hero__title">
+                <span>LET'S BUILD</span>
+                <span>SOMETHING</span>
+                <span>POWERFUL</span>
+            </h1>
+            <p class="hero__sub">
+                Ready to dominate your market? Tell us about your brand,
+                and we'll show you exactly how to get there.
+            </p>
+            <div class="hero__actions">
+                <a href="#contact"  class="btn btn-fill">START A PROJECT</a>
+                <a href="#services" class="btn btn-ghost">
+                    <span class="btn-arrow">→</span> OUR SERVICES
+                </a>
+            </div>
+            <p class="hero__foot">
+                Or reach us directly at
+                <a href="mailto:info.ionikcollectives@gmail.com" class="hero__email">info.ionikcollectives@gmail.com</a>
+            </p>
+        </div>
+    </section>
+
+    <!-- ────────── SERVICES ────────── -->
+    <section id="services" class="services" aria-label="Services">
+        <div class="section-wrap">
+
+            <header class="section-header">
+                <p class="eyebrow">— WHAT WE DO —</p>
+                <h2 class="section-title">
+                    Built to<br><span class="stroke-text">Dominate</span>
+                </h2>
+                <p class="section-lead">
+                    Every service engineered for one outcome: market dominance.
+                </p>
+            </header>
+
+            <div class="services__grid">
+
+                <article class="scard">
+                    <span class="scard__num" aria-hidden="true">01</span>
+                    <div class="scard__body">
+                        <h3 class="scard__title">Search Engine<br>Optimization</h3>
+                        <p class="scard__desc">Rank where it matters. We build sustainable search visibility through technical precision and content authority that compounds over time.</p>
+                    </div>
+                    <span class="scard__arrow" aria-hidden="true">↗</span>
+                    <div class="scard__glow-line" aria-hidden="true"></div>
+                </article>
+
+                <article class="scard">
+                    <span class="scard__num" aria-hidden="true">02</span>
+                    <div class="scard__body">
+                        <h3 class="scard__title">Social Media<br>Management</h3>
+                        <p class="scard__desc">Turn followers into fanatics. Strategic content, community systems, and growth frameworks that transform your audience into brand advocates.</p>
+                    </div>
+                    <span class="scard__arrow" aria-hidden="true">↗</span>
+                    <div class="scard__glow-line" aria-hidden="true"></div>
+                </article>
+
+                <article class="scard">
+                    <span class="scard__num" aria-hidden="true">03</span>
+                    <div class="scard__body">
+                        <h3 class="scard__title">Paid Advertising<br>&amp; PPC</h3>
+                        <p class="scard__desc">Every dollar, optimized. Data-driven campaigns across Google, Meta, and beyond — engineered to deliver the highest return on ad spend.</p>
+                    </div>
+                    <span class="scard__arrow" aria-hidden="true">↗</span>
+                    <div class="scard__glow-line" aria-hidden="true"></div>
+                </article>
+
+                <article class="scard">
+                    <span class="scard__num" aria-hidden="true">04</span>
+                    <div class="scard__body">
+                        <h3 class="scard__title">Content<br>Marketing</h3>
+                        <p class="scard__desc">Stories that convert. We craft content ecosystems that position your brand as the definitive authority and pull customers into your orbit.</p>
+                    </div>
+                    <span class="scard__arrow" aria-hidden="true">↗</span>
+                    <div class="scard__glow-line" aria-hidden="true"></div>
+                </article>
+
+                <article class="scard">
+                    <span class="scard__num" aria-hidden="true">05</span>
+                    <div class="scard__body">
+                        <h3 class="scard__title">Email<br>Marketing</h3>
+                        <p class="scard__desc">Your highest-ROI channel, mastered. Automated sequences and campaigns engineered to nurture, convert, and retain customers at scale.</p>
+                    </div>
+                    <span class="scard__arrow" aria-hidden="true">↗</span>
+                    <div class="scard__glow-line" aria-hidden="true"></div>
+                </article>
+
+                <article class="scard">
+                    <span class="scard__num" aria-hidden="true">06</span>
+                    <div class="scard__body">
+                        <h3 class="scard__title">Branding<br>&amp; Strategy</h3>
+                        <p class="scard__desc">Identity with intent. We develop brand strategies that command attention, establish authority, and justify premium positioning in any market.</p>
+                    </div>
+                    <span class="scard__arrow" aria-hidden="true">↗</span>
+                    <div class="scard__glow-line" aria-hidden="true"></div>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ────────── ABOUT ────────── -->
+    <section id="about" class="about" aria-label="About IONIK">
+        <div class="section-wrap">
+            <div class="about__grid">
+
+                <div class="about__text">
+                    <p class="eyebrow">— WHO WE ARE —</p>
+                    <h2 class="section-title">
+                        Obsessed<br>With <span class="stroke-text">Results</span>
+                    </h2>
+                    <p class="about__body">
+                        IONIK is a full-spectrum digital marketing agency built for brands that refuse to be ordinary.
+                        We combine data intelligence with creative precision to engineer marketing systems that don't
+                        just perform — they dominate.
+                    </p>
+                    <p class="about__body">
+                        From scaling startups to enterprise transformations, our work is defined by one metric: your growth.
+                    </p>
+                    <a href="#contact" class="btn btn-fill about__cta">Work With Us →</a>
+                </div>
+
+                <div class="about__stats">
+                    <div class="stat">
+                        <span class="stat__num">300<span class="stat__sup">+</span></span>
+                        <span class="stat__label">Brands Scaled</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat__num">12<span class="stat__sup">×</span></span>
+                        <span class="stat__label">Average ROI</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat__num">98<span class="stat__sup">%</span></span>
+                        <span class="stat__label">Client Retention</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat__num">5<span class="stat__sup">+</span></span>
+                        <span class="stat__label">Years Dominating</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ────────── CONTACT ────────── -->
+    <section id="contact" class="contact" aria-label="Contact">
+        <div class="section-wrap">
+
+            <header class="section-header">
+                <p class="eyebrow">— GET IN TOUCH —</p>
+                <h2 class="section-title">
+                    Start Your<br><span class="stroke-text">Project</span>
+                </h2>
+                <p class="section-lead">
+                    Tell us about your vision.<br>We'll craft the strategy to get you there.
+                </p>
+            </header>
+
+            <div class="contact__body">
+
+                <!--
+                    FORMSUBMIT: On first send, FormSubmit emails info.ionikcollectives@gmail.com
+                    asking to activate. Click the link once — all future sends work automatically.
+                -->
+                <form
+                    id="contactForm"
+                    class="cform"
+                    action="https://formsubmit.co/info.ionikcollectives@gmail.com" 
+                    method="POST"
+                    novalidate
+                    aria-label="Project inquiry form"
+                >
+                    <input type="hidden" name="_subject"  value="New Project Inquiry — IONIK">
+                    <input type="hidden" name="_captcha"  value="false">
+                    <input type="hidden" name="_template" value="table">
+                    <input type="text"   name="_honey"    style="display:none" tabindex="-1" autocomplete="off">
+
+                    <div class="field" id="field-name">
+                        <input class="field__input" type="text"  id="f-name"    name="name"    placeholder=" " required autocomplete="name"  aria-required="true" aria-describedby="err-name">
+                        <label class="field__label" for="f-name">Full Name</label>
+                        <div class="field__bar" aria-hidden="true"></div>
+                        <span class="field__err" id="err-name" role="alert" aria-live="polite">Please enter your name</span>
+                    </div>
+
+                    <div class="field" id="field-email">
+                        <input class="field__input" type="email" id="f-email"   name="email"   placeholder=" " required autocomplete="email" aria-required="true" aria-describedby="err-email">
+                        <label class="field__label" for="f-email">Email Address</label>
+                        <div class="field__bar" aria-hidden="true"></div>
+                        <span class="field__err" id="err-email" role="alert" aria-live="polite">Please enter a valid email</span>
+                    </div>
+
+                    <div class="field field--wide" id="field-message">
+                        <textarea class="field__input field__textarea" id="f-message" name="message" placeholder=" " required rows="4" aria-required="true" aria-describedby="err-message"></textarea>
+                        <label class="field__label" for="f-message">Tell us about your project</label>
+                        <div class="field__bar" aria-hidden="true"></div>
+                        <span class="field__err" id="err-message" role="alert" aria-live="polite">Please describe your project</span>
+                    </div>
+
+                    <div class="cform__row">
+                        <button type="submit" class="btn btn-send" id="submitBtn" aria-label="Send message">
+                            <span class="btn-label">Send Message</span>
+                            <span class="btn-sending" aria-hidden="true">Sending…</span>
+                            <span class="btn-ico"     aria-hidden="true">→</span>
+                        </button>
+                    </div>
+
+                    <div class="cform__success" id="formSuccess" hidden aria-live="polite" role="status">
+                        <div class="success-ring" aria-hidden="true">✓</div>
+                        <h3 class="success-head">Message Sent</h3>
+                        <p  class="success-body">We'll be in touch within 24 hours.</p>
+                    </div>
+
+                    <div class="cform__fail" id="formFail" hidden aria-live="polite" role="alert">
+                        <p>Something went wrong. Reach us directly at
+                        <a href="mailto:info.ionikcollectives@gmail.com">info.ionikcollectives@gmail.com</a></p>
+                    </div>
+                </form>
+
+                <aside class="cinfo" aria-label="Contact details">
+                    <dl class="cinfo__list">
+                        <div class="cinfo__item">
+                            <dt class="cinfo__label">Email</dt>
+                            <dd><a href="mailto:info.ionikcollectives@gmail.com" class="cinfo__val">info.ionikcollectives@gmail.com</a></dd>
+                        </div>
+                        <div class="cinfo__item">
+                            <dt class="cinfo__label">Response Time</dt>
+                            <dd class="cinfo__val">Within 24 hours</dd>
+                        </div>
+                        <div class="cinfo__item">
+                            <dt class="cinfo__label">Based In</dt>
+                            <dd class="cinfo__val">Global · Remote</dd>
+                        </div>
+                    </dl>
+                    <div class="cinfo__deco" aria-hidden="true">IONIK</div>
+                </aside>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="footer__inner">
+        <span class="footer__brand">IONIK</span>
+        <nav class="footer__links" aria-label="Footer navigation">
+            <a href="#services">Services</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+        </nav>
+        <small class="footer__copy">© 2025 IONIK Agency. All rights reserved.</small>
+    </div>
+</footer>
+
+</div><!-- /.main-wrap -->
+
+<script src="ionik-script.js"></script>
+</body>
+</html>
