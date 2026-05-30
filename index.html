@@ -15,6 +15,9 @@
 </head>
 <body>
 
+<!-- 3D background canvas — sits behind all content (z-index: -1) -->
+<canvas id="gearCanvas" aria-hidden="true"></canvas>
+
 <!-- ══════════════════════════════════
      PRELOADER
 ══════════════════════════════════ -->
@@ -67,25 +70,47 @@
     <nav class="sidebar__nav" aria-label="Primary">
         <ul role="list">
             <li>
-                <a href="#home"     class="sidebar__link active" data-section="home">
+                <a href="#home" class="sidebar__link active" data-section="home">
                     <span class="sidebar__link-bar"></span>
                     <span class="sidebar__link-text">Home</span>
                 </a>
             </li>
+            <li class="sidebar__group" aria-hidden="true">
+                <span class="sidebar__group-label">Subsidiaries</span>
+            </li>
             <li>
-                <a href="#services" class="sidebar__link" data-section="services">
+                <a href="#gear" class="sidebar__link sidebar__link--sub" data-section="gear">
                     <span class="sidebar__link-bar"></span>
-                    <span class="sidebar__link-text">Services</span>
+                    <span class="sidebar__link-text">IONIK Gear</span>
                 </a>
             </li>
             <li>
-                <a href="#about"    class="sidebar__link" data-section="about">
+                <a href="#events" class="sidebar__link sidebar__link--sub" data-section="events">
+                    <span class="sidebar__link-bar"></span>
+                    <span class="sidebar__link-text">IONIK Events</span>
+                </a>
+            </li>
+            <li>
+                <a href="#creatives" class="sidebar__link sidebar__link--sub" data-section="creatives">
+                    <span class="sidebar__link-bar"></span>
+                    <span class="sidebar__link-text">IONIK Creatives</span>
+                </a>
+            </li>
+            <li>
+                <a href="#web" class="sidebar__link sidebar__link--sub" data-section="web">
+                    <span class="sidebar__link-bar"></span>
+                    <span class="sidebar__link-text">IONIK Web</span>
+                </a>
+            </li>
+            <li class="sidebar__sep" aria-hidden="true"></li>
+            <li>
+                <a href="#about" class="sidebar__link" data-section="about">
                     <span class="sidebar__link-bar"></span>
                     <span class="sidebar__link-text">About</span>
                 </a>
             </li>
             <li>
-                <a href="#contact"  class="sidebar__link" data-section="contact">
+                <a href="#contact" class="sidebar__link" data-section="contact">
                     <span class="sidebar__link-bar"></span>
                     <span class="sidebar__link-text">Contact</span>
                 </a>
@@ -165,17 +190,153 @@
         </div>
     </section>
 
-    <!-- ────────── SERVICES ────────── -->
-    <section id="services" class="services" aria-label="Services">
+    <!-- ────────── IONIK GEAR ────────── -->
+    <section id="gear" class="subsidiary gear-section" aria-label="IONIK Gear">
         <div class="section-wrap">
 
             <header class="section-header">
-                <p class="eyebrow">— WHAT WE DO —</p>
+                <p class="eyebrow">— IONIK GEAR —</p>
                 <h2 class="section-title">
-                    Built to<br><span class="stroke-text">Dominate</span>
+                    Utility Built<br>to <span class="stroke-text">Last</span>
                 </h2>
                 <p class="section-lead">
-                    Every service engineered for one outcome: market dominance.
+                    Customised utility products and event accessories. Engineered for performance, designed for legacy.
+                </p>
+            </header>
+
+            <div class="gear-drop">
+
+                <div class="gear-drop__header">
+                    <span class="gear-tag gear-tag--live">Current Drop</span>
+                    <span class="gear-tag gear-tag--event">Key To Happiness · 10th Anniversary</span>
+                    <span class="gear-tag gear-tag--first">#1 First in Sri Lanka</span>
+                </div>
+
+                <div class="gear-drop__body">
+
+                    <div class="gear-drop__info">
+                        <h3 class="gear-drop__title">TACTICAL<br>BOTTLE<br>CARRIER</h3>
+                        <p class="gear-drop__desc">
+                            A rugged, premium-grade hands-free hydration accessory — purpose-engineered for festival-goers.
+                            Exclusively bundled with Backstage, Gold &amp; Platinum tickets for the Key To Happiness
+                            10th Anniversary at Port City Colombo, 06 June 2026.
+                        </p>
+
+                        <dl class="gear-specs">
+                            <div class="gear-spec">
+                                <dt class="gear-spec__key">Strap</dt>
+                                <dd class="gear-spec__val">Premium High-Density Nylon</dd>
+                            </div>
+                            <div class="gear-spec">
+                                <dt class="gear-spec__key">Buckle</dt>
+                                <dd class="gear-spec__val">Quick-Release Impact Plastic</dd>
+                            </div>
+                            <div class="gear-spec">
+                                <dt class="gear-spec__key">Grip</dt>
+                                <dd class="gear-spec__val">Anti-Slip Plastic Ring</dd>
+                            </div>
+                            <div class="gear-spec">
+                                <dt class="gear-spec__key">Length</dt>
+                                <dd class="gear-spec__val">7.5 Inches</dd>
+                            </div>
+                            <div class="gear-spec">
+                                <dt class="gear-spec__key">Attach</dt>
+                                <dd class="gear-spec__val">Universal Belt Loop</dd>
+                            </div>
+                            <div class="gear-spec">
+                                <dt class="gear-spec__key">Print</dt>
+                                <dd class="gear-spec__val">Full KTH Custom Branding</dd>
+                            </div>
+                        </dl>
+
+                        <a href="#contact" class="btn btn-fill gear-drop__cta">Enquire Now →</a>
+                    </div>
+
+                    <div class="gear-drop__visual" aria-hidden="true">
+                        <div class="gear-visual">
+                            <div class="gear-visual__top">
+                                <span class="gear-visual__year">2026</span>
+                                <span class="gear-visual__event">KEY TO HAPPINESS</span>
+                            </div>
+                            <div class="gear-visual__name">TACTICAL<br>BOTTLE<br>CARRIER</div>
+                            <div class="gear-visual__bottom">
+                                <span class="gear-visual__sub">10TH ANNIVERSARY</span>
+                                <span class="gear-visual__dot"></span>
+                                <span class="gear-visual__sub">PORT CITY COLOMBO</span>
+                            </div>
+                            <div class="gear-visual__ghost" aria-hidden="true">7.5</div>
+                            <div class="gear-visual__glow" aria-hidden="true"></div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="gear-tiers">
+                    <p class="gear-tiers__label">— Exclusive Edition Packages —</p>
+                    <div class="gear-tiers__grid">
+                        <div class="gear-tier">
+                            <span class="gear-tier__num">01</span>
+                            <span class="gear-tier__name">Bronze</span>
+                            <span class="gear-tier__edition">Core Edition</span>
+                            <span class="gear-tier__price">LKR 549</span>
+                            <span class="gear-tier__moq">per unit · MOQ 700</span>
+                        </div>
+                        <div class="gear-tier gear-tier--hero">
+                            <span class="gear-tier__num">02</span>
+                            <span class="gear-tier__name">Gold</span>
+                            <span class="gear-tier__edition">Anniversary Edition</span>
+                            <span class="gear-tier__price">LKR 699</span>
+                            <span class="gear-tier__moq">per unit · MOQ 700</span>
+                        </div>
+                        <div class="gear-tier">
+                            <span class="gear-tier__num">03</span>
+                            <span class="gear-tier__name">Platinum</span>
+                            <span class="gear-tier__edition">Port City Edition</span>
+                            <span class="gear-tier__price">LKR 799</span>
+                            <span class="gear-tier__moq">per unit · MOQ 700</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ────────── IONIK EVENTS ────────── -->
+    <section id="events" class="subsidiary events-section" aria-label="IONIK Events">
+        <div class="section-wrap">
+            <div class="events-wrap">
+                <div class="events-content">
+                    <p class="eyebrow">— IONIK EVENTS —</p>
+                    <h2 class="section-title">
+                        Something's<br><span class="stroke-text">Coming</span>
+                    </h2>
+                    <p class="section-lead">
+                        Premium event experiences, creative productions, and cultural moments engineered to leave a mark.
+                        IONIK Events is in development — watch this space.
+                    </p>
+                    <div class="events-coming">
+                        <span class="events-coming__text">Coming Soon</span>
+                    </div>
+                </div>
+                <div class="events-bg" aria-hidden="true">
+                    <span class="events-bg__word">EVENTS</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ────────── IONIK CREATIVES ────────── -->
+    <section id="creatives" class="subsidiary creatives-section" aria-label="IONIK Creatives">
+        <div class="section-wrap">
+
+            <header class="section-header">
+                <p class="eyebrow">— IONIK CREATIVES —</p>
+                <h2 class="section-title">
+                    Digital Marketing<br>&amp; <span class="stroke-text">Brand Growth</span>
+                </h2>
+                <p class="section-lead">
+                    Social media strategy, content creation, and digital campaigns engineered to dominate your market.
                 </p>
             </header>
 
@@ -184,8 +345,8 @@
                 <article class="scard">
                     <span class="scard__num" aria-hidden="true">01</span>
                     <div class="scard__body">
-                        <h3 class="scard__title">Search Engine<br>Optimization</h3>
-                        <p class="scard__desc">Rank where it matters. We build sustainable search visibility through technical precision and content authority that compounds over time.</p>
+                        <h3 class="scard__title">Social Media<br>Management</h3>
+                        <p class="scard__desc">Turn followers into fanatics. Strategic content, community systems, and growth frameworks that transform your audience into brand advocates.</p>
                     </div>
                     <span class="scard__arrow" aria-hidden="true">↗</span>
                     <div class="scard__glow-line" aria-hidden="true"></div>
@@ -194,8 +355,8 @@
                 <article class="scard">
                     <span class="scard__num" aria-hidden="true">02</span>
                     <div class="scard__body">
-                        <h3 class="scard__title">Social Media<br>Management</h3>
-                        <p class="scard__desc">Turn followers into fanatics. Strategic content, community systems, and growth frameworks that transform your audience into brand advocates.</p>
+                        <h3 class="scard__title">Content<br>Marketing</h3>
+                        <p class="scard__desc">Stories that convert. We craft content ecosystems that position your brand as the definitive authority and pull customers into your orbit.</p>
                     </div>
                     <span class="scard__arrow" aria-hidden="true">↗</span>
                     <div class="scard__glow-line" aria-hidden="true"></div>
@@ -214,8 +375,8 @@
                 <article class="scard">
                     <span class="scard__num" aria-hidden="true">04</span>
                     <div class="scard__body">
-                        <h3 class="scard__title">Content<br>Marketing</h3>
-                        <p class="scard__desc">Stories that convert. We craft content ecosystems that position your brand as the definitive authority and pull customers into your orbit.</p>
+                        <h3 class="scard__title">Brand Strategy<br>&amp; Identity</h3>
+                        <p class="scard__desc">Identity with intent. We develop brand strategies that command attention, establish authority, and justify premium positioning in any market.</p>
                     </div>
                     <span class="scard__arrow" aria-hidden="true">↗</span>
                     <div class="scard__glow-line" aria-hidden="true"></div>
@@ -234,8 +395,88 @@
                 <article class="scard">
                     <span class="scard__num" aria-hidden="true">06</span>
                     <div class="scard__body">
-                        <h3 class="scard__title">Branding<br>&amp; Strategy</h3>
-                        <p class="scard__desc">Identity with intent. We develop brand strategies that command attention, establish authority, and justify premium positioning in any market.</p>
+                        <h3 class="scard__title">Search Engine<br>Optimization</h3>
+                        <p class="scard__desc">Rank where it matters. We build sustainable search visibility through technical precision and content authority that compounds over time.</p>
+                    </div>
+                    <span class="scard__arrow" aria-hidden="true">↗</span>
+                    <div class="scard__glow-line" aria-hidden="true"></div>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ────────── IONIK WEB ────────── -->
+    <section id="web" class="subsidiary web-section" aria-label="IONIK Web">
+        <div class="section-wrap">
+
+            <header class="section-header">
+                <p class="eyebrow">— IONIK WEB —</p>
+                <h2 class="section-title">
+                    IT Solutions &<br><span class="stroke-text">Web Dev</span>
+                </h2>
+                <p class="section-lead">
+                    From concept to deployment — full-stack development and digital infrastructure built for scale and performance.
+                </p>
+            </header>
+
+            <div class="services__grid">
+
+                <article class="scard">
+                    <span class="scard__num" aria-hidden="true">01</span>
+                    <div class="scard__body">
+                        <h3 class="scard__title">Web Design<br>&amp; Development</h3>
+                        <p class="scard__desc">High-performance websites and web applications built with precision. Every pixel purposeful, every interaction intentional.</p>
+                    </div>
+                    <span class="scard__arrow" aria-hidden="true">↗</span>
+                    <div class="scard__glow-line" aria-hidden="true"></div>
+                </article>
+
+                <article class="scard">
+                    <span class="scard__num" aria-hidden="true">02</span>
+                    <div class="scard__body">
+                        <h3 class="scard__title">E-Commerce<br>Solutions</h3>
+                        <p class="scard__desc">Full-featured online stores engineered to convert. Seamless checkout flows, payment integration, and inventory systems built to scale.</p>
+                    </div>
+                    <span class="scard__arrow" aria-hidden="true">↗</span>
+                    <div class="scard__glow-line" aria-hidden="true"></div>
+                </article>
+
+                <article class="scard">
+                    <span class="scard__num" aria-hidden="true">03</span>
+                    <div class="scard__body">
+                        <h3 class="scard__title">Custom<br>Applications</h3>
+                        <p class="scard__desc">Bespoke software solutions built around your specific business needs. If you can imagine it, we can build it.</p>
+                    </div>
+                    <span class="scard__arrow" aria-hidden="true">↗</span>
+                    <div class="scard__glow-line" aria-hidden="true"></div>
+                </article>
+
+                <article class="scard">
+                    <span class="scard__num" aria-hidden="true">04</span>
+                    <div class="scard__body">
+                        <h3 class="scard__title">UI/UX<br>Design</h3>
+                        <p class="scard__desc">Interfaces that users love. Research-driven design systems that reduce friction, increase engagement, and drive measurable outcomes.</p>
+                    </div>
+                    <span class="scard__arrow" aria-hidden="true">↗</span>
+                    <div class="scard__glow-line" aria-hidden="true"></div>
+                </article>
+
+                <article class="scard">
+                    <span class="scard__num" aria-hidden="true">05</span>
+                    <div class="scard__body">
+                        <h3 class="scard__title">Hosting &amp;<br>Maintenance</h3>
+                        <p class="scard__desc">Reliable infrastructure with ongoing support. We keep your digital assets secure, fast, and always online.</p>
+                    </div>
+                    <span class="scard__arrow" aria-hidden="true">↗</span>
+                    <div class="scard__glow-line" aria-hidden="true"></div>
+                </article>
+
+                <article class="scard">
+                    <span class="scard__num" aria-hidden="true">06</span>
+                    <div class="scard__body">
+                        <h3 class="scard__title">Digital<br>Transformation</h3>
+                        <p class="scard__desc">Take your business fully digital. End-to-end IT strategy, system integration, and technology roadmapping for modern enterprises.</p>
                     </div>
                     <span class="scard__arrow" aria-hidden="true">↗</span>
                     <div class="scard__glow-line" aria-hidden="true"></div>
@@ -387,16 +628,23 @@
     <div class="footer__inner">
         <span class="footer__brand">IONIK</span>
         <nav class="footer__links" aria-label="Footer navigation">
-            <a href="#services">Services</a>
+            <a href="#gear">IONIK Gear</a>
+            <a href="#creatives">Creatives</a>
+            <a href="#web">Web</a>
             <a href="#about">About</a>
             <a href="#contact">Contact</a>
         </nav>
-        <small class="footer__copy">© 2025 IONIK Agency. All rights reserved.</small>
+        <small class="footer__copy">© 2026 IONIK Co. All rights reserved.</small>
     </div>
 </footer>
 
 </div><!-- /.main-wrap -->
 
 <script src="ionik-script.js"></script>
+
+<!-- Three.js + GLTFLoader (UMD globals — works from file://) -->
+<script src="https://cdn.jsdelivr.net/npm/three@0.134.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.134.0/examples/js/loaders/GLTFLoader.js"></script>
+<script src="ionik-3d.js"></script>
 </body>
 </html>

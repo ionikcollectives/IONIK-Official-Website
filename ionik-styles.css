@@ -64,6 +64,19 @@ img,svg { display: block; max-width: 100%; }
 button  { cursor: none; background: none; border: none; font: inherit; }
 textarea { font: inherit; }
 
+/* ─── 3D GEAR BACKGROUND CANVAS ────────────────────────────
+   z-index: -1  →  above body background, below all page content.
+   pointer-events: none  →  clicks pass through to the page.
+──────────────────────────────────────────────────────────── */
+#gearCanvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: -1;
+    pointer-events: none;
+    display: block;
+}
+
 /* Subtle film-grain overlay via SVG filter */
 body::after {
     content: '';
@@ -1673,3 +1686,492 @@ body[data-theme="light"] .footer__brand       { color: rgba(0,0,0,0.38); }
 body[data-theme="light"] .footer__links a     { color: rgba(0,0,0,0.26); }
 body[data-theme="light"] .footer__links a:hover { color: rgba(0,0,0,0.60); }
 body[data-theme="light"] .footer__copy        { color: rgba(0,0,0,0.18); }
+
+
+/* ─── SIDEBAR — GROUP LABEL & SEPARATOR ─────────────────── */
+
+.sidebar__nav {
+    align-items: flex-start;
+}
+
+.sidebar__group {
+    padding: 14px 28px 5px;
+    pointer-events: none;
+    user-select: none;
+}
+.sidebar__group-label {
+    display: block;
+    font-size: 7.5px;
+    font-weight: 600;
+    letter-spacing: 0.38em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.14);
+}
+
+.sidebar__sep {
+    display: block;
+    height: 1px;
+    background: rgba(255,255,255,0.04);
+    margin: 8px 28px;
+}
+
+/* Subsidiary links — slightly tighter tracking so text fits */
+.sidebar__link--sub {
+    letter-spacing: 0.1em;
+    font-size: 10.5px;
+}
+
+body[data-theme="light"] .sidebar__group-label { color: rgba(0,0,0,0.18); }
+body[data-theme="light"] .sidebar__sep         { background: rgba(0,0,0,0.06); }
+
+
+/* ─── SUBSIDIARY — BASE ──────────────────────────────────── */
+
+.subsidiary {
+    padding: var(--section-pad) 0;
+    position: relative;
+}
+.subsidiary::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 5%; right: 5%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.07), transparent);
+}
+body[data-theme="light"] .subsidiary::before {
+    background: linear-gradient(90deg, transparent, rgba(0,0,0,0.07), transparent);
+}
+
+
+/* ─── IONIK GEAR ─────────────────────────────────────────── */
+
+.gear-drop__header {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 3rem;
+}
+
+.gear-tag {
+    display: inline-block;
+    font-family: var(--ff-body);
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 100px;
+    border: 1px solid;
+}
+.gear-tag--live  { border-color: rgba(255,255,255,0.28); color: rgba(255,255,255,0.72); background: rgba(255,255,255,0.04); }
+.gear-tag--event { border-color: rgba(255,255,255,0.12); color: rgba(255,255,255,0.42); }
+.gear-tag--first { border-color: rgba(255,255,255,0.08); color: rgba(255,255,255,0.28); }
+
+/* Two-column: info + visual */
+.gear-drop__body {
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    gap: 5rem;
+    align-items: start;
+    margin-bottom: 4.5rem;
+}
+
+.gear-drop__title {
+    font-family: var(--ff-display);
+    font-size: clamp(52px, 7vw, 84px);
+    font-weight: 900;
+    letter-spacing: -0.025em;
+    line-height: 0.88;
+    text-transform: uppercase;
+    color: var(--c-text);
+    margin-bottom: 1.75rem;
+}
+
+.gear-drop__desc {
+    font-size: 14px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.48);
+    line-height: 1.82;
+    max-width: 480px;
+    margin-bottom: 2.5rem;
+}
+
+.gear-drop__cta {
+    display: inline-flex;
+}
+
+/* Specs grid */
+.gear-specs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    border: 1px solid var(--c-border);
+    margin-bottom: 2.5rem;
+}
+.gear-spec {
+    padding: 0.9rem 1.1rem;
+    background: rgba(255,255,255,0.012);
+    border: 1px solid var(--c-border);
+    margin: -1px;
+}
+.gear-spec__key {
+    display: block;
+    font-size: 8.5px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.24);
+    margin-bottom: 4px;
+}
+.gear-spec__val {
+    display: block;
+    font-size: 12.5px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.64);
+}
+
+/* Visual product card */
+.gear-drop__visual {
+    position: sticky;
+    top: 40px;
+}
+
+.gear-visual {
+    position: relative;
+    background: rgba(255,255,255,0.022);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 4px;
+    padding: 2.5rem;
+    overflow: hidden;
+    min-height: 380px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 2rem;
+}
+.gear-visual::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(135deg, rgba(255,255,255,0.025) 0%, transparent 55%),
+        radial-gradient(ellipse at 15% 85%, rgba(255,255,255,0.035) 0%, transparent 65%);
+    pointer-events: none;
+}
+.gear-visual::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.32), transparent);
+}
+
+.gear-visual__top {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    position: relative;
+    z-index: 1;
+}
+.gear-visual__year {
+    font-family: var(--ff-body);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.32em;
+    color: rgba(255,255,255,0.24);
+}
+.gear-visual__event {
+    font-family: var(--ff-body);
+    font-size: 8px;
+    font-weight: 500;
+    letter-spacing: 0.24em;
+    color: rgba(255,255,255,0.16);
+    text-transform: uppercase;
+}
+
+.gear-visual__name {
+    font-family: var(--ff-display);
+    font-size: clamp(30px, 3.5vw, 42px);
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    line-height: 0.9;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.84);
+    position: relative;
+    z-index: 1;
+    text-shadow: 0 0 48px rgba(255,255,255,0.07);
+}
+
+.gear-visual__bottom {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 1;
+}
+.gear-visual__sub {
+    font-size: 7px;
+    font-weight: 500;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.18);
+}
+.gear-visual__dot {
+    width: 2px; height: 2px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    flex-shrink: 0;
+}
+
+/* Ghost number watermark */
+.gear-visual__ghost {
+    position: absolute;
+    bottom: -0.12em; right: -0.08em;
+    font-family: var(--ff-display);
+    font-size: 140px;
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    color: rgba(255,255,255,0.035);
+    pointer-events: none;
+    user-select: none;
+}
+
+.gear-visual__glow {
+    position: absolute;
+    width: 220px; height: 220px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    animation: gearGlowPulse 3.8s ease-in-out infinite;
+}
+@keyframes gearGlowPulse {
+    0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
+    50%       { opacity: 1;   transform: translate(-50%, -50%) scale(1.18); }
+}
+
+/* Package tier cards */
+.gear-tiers {
+    border-top: 1px solid rgba(255,255,255,0.05);
+    padding-top: 3rem;
+}
+.gear-tiers__label {
+    font-size: 9.5px;
+    font-weight: 300;
+    letter-spacing: 0.4em;
+    color: rgba(255,255,255,0.22);
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+.gear-tiers__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    border: 1px solid var(--c-border);
+}
+.gear-tier {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 2rem 1.5rem;
+    background: rgba(255,255,255,0.015);
+    border: 1px solid var(--c-border);
+    margin: -1px;
+    gap: 0.35rem;
+    transition: background 0.3s ease;
+    position: relative;
+}
+.gear-tier:hover { background: rgba(255,255,255,0.03); }
+
+.gear-tier--hero {
+    background: rgba(255,255,255,0.03);
+}
+.gear-tier--hero::before {
+    content: 'Most Popular';
+    position: absolute;
+    top: -10px;
+    left: 50%; transform: translateX(-50%);
+    font-size: 7.5px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.38);
+    background: var(--c-bg);
+    padding: 0 10px;
+    white-space: nowrap;
+}
+
+.gear-tier__num {
+    font-family: var(--ff-display);
+    font-size: 12px;
+    font-weight: 900;
+    color: rgba(255,255,255,0.18);
+    letter-spacing: 0.05em;
+}
+.gear-tier__name {
+    font-family: var(--ff-display);
+    font-size: 28px;
+    font-weight: 900;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.82);
+    line-height: 1;
+}
+.gear-tier--hero .gear-tier__name { color: var(--c-text); }
+
+.gear-tier__edition {
+    font-size: 9.5px;
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.26);
+    margin-bottom: 0.5rem;
+}
+.gear-tier__price {
+    font-family: var(--ff-display);
+    font-size: 22px;
+    font-weight: 900;
+    letter-spacing: -0.01em;
+    color: rgba(255,255,255,0.72);
+}
+.gear-tier--hero .gear-tier__price { color: var(--c-text); }
+
+.gear-tier__moq {
+    font-size: 9.5px;
+    font-weight: 300;
+    letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.2);
+}
+
+
+/* ─── IONIK EVENTS ───────────────────────────────────────── */
+
+.events-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    min-height: 340px;
+}
+
+.events-content { position: relative; z-index: 1; }
+
+.events-coming {
+    display: inline-flex;
+    margin-top: 2.25rem;
+    border: 1px solid rgba(255,255,255,0.10);
+    padding: 10px 22px;
+    border-radius: 2px;
+}
+.events-coming__text {
+    font-family: var(--ff-display);
+    font-size: 13px;
+    font-weight: 900;
+    letter-spacing: 0.55em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.28);
+}
+
+.events-bg {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    overflow: hidden;
+}
+.events-bg__word {
+    font-family: var(--ff-display);
+    font-size: clamp(80px, 12vw, 156px);
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255,255,255,0.05);
+    user-select: none;
+    pointer-events: none;
+    white-space: nowrap;
+    line-height: 1;
+}
+
+
+/* ─── LIGHT MODE — GEAR & EVENTS ─────────────────────────── */
+
+body[data-theme="light"] .gear-tag--live  { border-color: rgba(0,0,0,0.22); color: rgba(0,0,0,0.58); background: rgba(0,0,0,0.03); }
+body[data-theme="light"] .gear-tag--event { border-color: rgba(0,0,0,0.10); color: rgba(0,0,0,0.38); }
+body[data-theme="light"] .gear-tag--first { border-color: rgba(0,0,0,0.07); color: rgba(0,0,0,0.28); }
+
+body[data-theme="light"] .gear-drop__title { color: #0d0d0d; }
+body[data-theme="light"] .gear-drop__desc  { color: rgba(0,0,0,0.48); }
+
+body[data-theme="light"] .gear-specs        { border-color: rgba(0,0,0,0.08); }
+body[data-theme="light"] .gear-spec         { background: rgba(0,0,0,0.018); border-color: rgba(0,0,0,0.08); }
+body[data-theme="light"] .gear-spec__key    { color: rgba(0,0,0,0.28); }
+body[data-theme="light"] .gear-spec__val    { color: rgba(0,0,0,0.60); }
+
+body[data-theme="light"] .gear-visual {
+    background: rgba(0,0,0,0.025);
+    border-color: rgba(0,0,0,0.08);
+}
+body[data-theme="light"] .gear-visual::before {
+    background:
+        linear-gradient(135deg, rgba(0,0,0,0.02) 0%, transparent 55%),
+        radial-gradient(ellipse at 15% 85%, rgba(0,0,0,0.02) 0%, transparent 65%);
+}
+body[data-theme="light"] .gear-visual::after {
+    background: linear-gradient(90deg, transparent, rgba(0,0,0,0.15), transparent);
+}
+body[data-theme="light"] .gear-visual__year  { color: rgba(0,0,0,0.26); }
+body[data-theme="light"] .gear-visual__event { color: rgba(0,0,0,0.18); }
+body[data-theme="light"] .gear-visual__name  { color: rgba(0,0,0,0.78); }
+body[data-theme="light"] .gear-visual__sub   { color: rgba(0,0,0,0.18); }
+body[data-theme="light"] .gear-visual__ghost { color: rgba(0,0,0,0.04); }
+
+body[data-theme="light"] .gear-tiers       { border-top-color: rgba(0,0,0,0.07); }
+body[data-theme="light"] .gear-tiers__label { color: rgba(0,0,0,0.24); }
+body[data-theme="light"] .gear-tiers__grid  { border-color: rgba(0,0,0,0.08); }
+body[data-theme="light"] .gear-tier         { background: rgba(0,0,0,0.018); border-color: rgba(0,0,0,0.08); }
+body[data-theme="light"] .gear-tier:hover   { background: rgba(0,0,0,0.034); }
+body[data-theme="light"] .gear-tier--hero   { background: rgba(0,0,0,0.03); }
+body[data-theme="light"] .gear-tier--hero::before { background: #f5f5f2; color: rgba(0,0,0,0.38); }
+body[data-theme="light"] .gear-tier__num    { color: rgba(0,0,0,0.18); }
+body[data-theme="light"] .gear-tier__name   { color: rgba(0,0,0,0.78); }
+body[data-theme="light"] .gear-tier--hero .gear-tier__name  { color: #0d0d0d; }
+body[data-theme="light"] .gear-tier__edition { color: rgba(0,0,0,0.28); }
+body[data-theme="light"] .gear-tier__price  { color: rgba(0,0,0,0.68); }
+body[data-theme="light"] .gear-tier--hero .gear-tier__price { color: #0d0d0d; }
+body[data-theme="light"] .gear-tier__moq    { color: rgba(0,0,0,0.22); }
+
+body[data-theme="light"] .events-coming     { border-color: rgba(0,0,0,0.10); }
+body[data-theme="light"] .events-coming__text { color: rgba(0,0,0,0.28); }
+body[data-theme="light"] .events-bg__word   { -webkit-text-stroke-color: rgba(0,0,0,0.05); }
+
+
+/* ─── RESPONSIVE — SUBSIDIARIES ─────────────────────────── */
+
+@media (max-width: 860px) {
+    .gear-drop__body {
+        grid-template-columns: 1fr;
+    }
+    .gear-drop__visual {
+        position: static;
+        max-width: 480px;
+    }
+    .events-wrap {
+        grid-template-columns: 1fr;
+        min-height: auto;
+    }
+    .events-bg { display: none; }
+}
+
+@media (max-width: 680px) {
+    .gear-tiers__grid { grid-template-columns: 1fr; }
+    .gear-tier--hero::before { display: none; }
+}
+
+@media (max-width: 520px) {
+    .gear-specs { grid-template-columns: 1fr; }
+}

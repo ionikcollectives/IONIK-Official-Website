@@ -346,7 +346,7 @@ window.scrollTo(0, 0);
 
     /* ── Scroll Spy ── */
     var navLinks    = sidebar.querySelectorAll('.sidebar__link[data-section]');
-    var sectionEls  = ['home', 'services', 'about', 'contact']
+    var sectionEls  = ['home', 'gear', 'events', 'creatives', 'web', 'about', 'contact']
                         .map(function (id) { return document.getElementById(id); })
                         .filter(Boolean);
 
