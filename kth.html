@@ -1,0 +1,1251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Key to Happiness — Tactical Bottle Carrier. IONIK Gear × SKG Events. Sri Lanka's first festival utility accessory bundled with tickets.">
+    <title>Key to Happiness — IONIK Gear</title>
+    <link rel="icon" type="image/png" media="(prefers-color-scheme: dark)"  href="Assets/ionik_icon_white-Photoroom.png">
+    <link rel="icon" type="image/png" media="(prefers-color-scheme: light)" href="Assets/ionik_icon_black-Photoroom.png">
+    <link rel="icon" type="image/png" href="Assets/ionik_icon_white-Photoroom.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;900&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="ionik-styles.css">
+
+    <style>
+    /* ═══════════════════════════════════════════════════
+       KTH PAGE — DESIGN SYSTEM
+    ═══════════════════════════════════════════════════ */
+
+    /* ── SECTION DIVIDER ── */
+    .kthp-section {
+        position: relative;
+    }
+    .kthp-section + .kthp-section::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent);
+    }
+
+    /* ── BACK LINK ── */
+    .kthp-back {
+        position: fixed;
+        top: 36px;
+        left: calc(var(--sidebar-w) + 40px);
+        z-index: 100;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-family: var(--ff-body);
+        font-size: 9.5px;
+        font-weight: 600;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        color: rgba(255,255,255,0.30);
+        text-decoration: none;
+        transition: color 0.22s ease;
+        backdrop-filter: blur(8px);
+        padding: 6px 14px 6px 10px;
+        border: 1px solid rgba(255,255,255,0.05);
+        border-radius: 100px;
+        background: rgba(0,0,0,0.35);
+    }
+    .kthp-back::before { content: '←'; font-size: 13px; }
+    .kthp-back:hover   { color: rgba(255,255,255,0.75); border-color: rgba(255,255,255,0.12); }
+
+    /* ══════════════════════════════════════════════════
+       1. HERO — FULL VIEWPORT
+    ══════════════════════════════════════════════════ */
+    .kthp-hero {
+        min-height: 100dvh;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        padding: 0 48px 72px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* video background */
+    .kthp-hero__video {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        opacity: 0;
+        z-index: 0;
+        pointer-events: none;
+        transition: opacity 1s ease;
+    }
+    .kthp-hero__video.active  { opacity: 0.68; }
+    .kthp-hero__video.fading  { opacity: 0; }
+
+    /* dark overlay on top of video */
+    .kthp-hero__video-overlay {
+        position: absolute;
+        inset: 0;
+        background:
+            radial-gradient(ellipse 70% 60% at 20% 70%, rgba(0,201,177,0.06) 0%, transparent 65%),
+            linear-gradient(to top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.05) 55%, rgba(0,0,0,0.35) 100%);
+        pointer-events: none;
+        z-index: 1;
+    }
+
+    .kthp-hero__inner {
+        position: relative;
+        z-index: 2;
+        max-width: var(--max-w);
+    }
+
+    /* collab tags */
+    .kthp-hero__tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 3rem;
+    }
+    .kthp-htag {
+        font-family: var(--ff-body);
+        font-size: 8.5px;
+        font-weight: 600;
+        letter-spacing: 0.26em;
+        text-transform: uppercase;
+        color: rgba(255,255,255,0.28);
+        border: 1px solid rgba(255,255,255,0.09);
+        padding: 5px 12px;
+        border-radius: 100px;
+    }
+    .kthp-htag--teal {
+        color: var(--c-teal-dim);
+        border-color: rgba(0,201,177,0.25);
+    }
+
+    /* main title */
+    .kthp-hero__title {
+        line-height: 0.85;
+        margin-bottom: 2.5rem;
+    }
+    .kthp-hero__line1 {
+        display: block;
+        font-family: var(--ff-display);
+        font-size: clamp(52px, 6.5vw, 88px);
+        font-weight: 900;
+        letter-spacing: -0.02em;
+        text-transform: uppercase;
+        color: rgba(255,255,255,0.38);
+    }
+    .kthp-hero__line2 {
+        display: block;
+        font-family: var(--ff-display);
+        font-size: clamp(100px, 15vw, 196px);
+        font-weight: 900;
+        letter-spacing: -0.04em;
+        text-transform: uppercase;
+        color: var(--c-text);
+        text-shadow: 0 0 120px rgba(0,201,177,0.08);
+    }
+
+    /* rule */
+    .kthp-hero__rule {
+        height: 1px;
+        background: linear-gradient(90deg, rgba(0,201,177,0.55) 0%, rgba(255,255,255,0.07) 40%, transparent 100%);
+        margin-bottom: 2rem;
+    }
+
+    /* event meta strip */
+    .kthp-hero__meta {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0;
+        margin-bottom: 1.25rem;
+    }
+    .kthp-hero__meta-item {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        padding-right: 2.5rem;
+    }
+    .kthp-hero__meta-label {
+        font-size: 7.5px;
+        font-weight: 600;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: rgba(255,255,255,0.18);
+    }
+    .kthp-hero__meta-val {
+        font-size: 12px;
+        font-weight: 400;
+        color: rgba(255,255,255,0.58);
+        letter-spacing: 0.04em;
+    }
+    .kthp-hero__meta-sep {
+        width: 1px;
+        height: 28px;
+        background: rgba(255,255,255,0.07);
+        margin-right: 2.5rem;
+        flex-shrink: 0;
+    }
+
+    /* artists */
+    .kthp-hero__artists {
+        font-family: var(--ff-body);
+        font-size: 9.5px;
+        font-weight: 300;
+        letter-spacing: 0.38em;
+        text-transform: uppercase;
+        color: rgba(255,255,255,0.18);
+    }
+    .kthp-hero__artists span {
+        color: rgba(255,255,255,0.36);
+        font-weight: 500;
+    }
+
+    /* scroll nudge */
+    .kthp-hero__scroll {
+        position: absolute;
+        bottom: 36px;
+        right: 48px;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 8px;
+        font-weight: 600;
+        letter-spacing: 0.34em;
+        text-transform: uppercase;
+        color: rgba(255,255,255,0.16);
+        animation: scrollNudge 2.4s ease-in-out infinite;
+    }
+    .kthp-hero__scroll-line {
+        width: 28px;
+        height: 1px;
+        background: rgba(0,201,177,0.40);
+    }
+    @keyframes scrollNudge {
+        0%,100% { opacity: 0.5; transform: translateY(0); }
+        50%      { opacity: 1;   transform: translateY(4px); }
+    }
+
+    /* ══════════════════════════════════════════════════
+       2. PRODUCT REVEAL — FULL-VIEWPORT SPLIT
+    ══════════════════════════════════════════════════ */
+    .kthp-product {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        height: 100dvh;
+        max-height: 100dvh;
+        overflow: hidden;
+    }
+
+    /* left: carousel panel */
+    .kthp-product__img-panel {
+        position: relative;
+        overflow: hidden;
+        background: #050505;
+        height: 100%;
+    }
+    /* teal right-edge line */
+    .kthp-product__img-panel::before {
+        content: '';
+        position: absolute;
+        right: 0; top: 0; bottom: 0;
+        width: 1px;
+        background: linear-gradient(180deg, transparent, rgba(0,201,177,0.35), transparent);
+        z-index: 10;
+    }
+
+    /* product carousel — fills the full left panel */
+    .kthp-prod-carousel {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        overflow: hidden;
+    }
+    .kthp-prod-carousel__track {
+        display: flex;
+        height: 100%;
+        transition: transform 0.55s cubic-bezier(0.16,1,0.3,1);
+    }
+    .kthp-prod-carousel__slide {
+        flex: 0 0 100%;
+        height: 100%;
+        position: relative;
+        overflow: hidden;
+    }
+    .kthp-prod-carousel__slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        display: block;
+        transition: transform 0.8s var(--ease-expo);
+    }
+    .kthp-prod-carousel__slide:hover img {
+        transform: scale(1.03);
+    }
+    /* slide overlay: bottom gradient + caption */
+    .kthp-prod-carousel__overlay {
+        position: absolute;
+        bottom: 0; left: 0; right: 0;
+        padding: 48px 36px 32px;
+        background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 100%);
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 1rem;
+        z-index: 2;
+    }
+    .kthp-prod-carousel__cap-title {
+        font-family: var(--ff-display);
+        font-size: 20px;
+        font-weight: 900;
+        letter-spacing: -0.01em;
+        text-transform: uppercase;
+        color: rgba(255,255,255,0.88);
+        line-height: 1;
+    }
+    .kthp-prod-carousel__cap-sub {
+        font-size: 9px;
+        font-weight: 300;
+        color: rgba(255,255,255,0.38);
+        letter-spacing: 0.10em;
+        text-align: right;
+        flex-shrink: 0;
+    }
+    /* dots on top-right of image panel */
+    .kthp-prod-carousel__dots {
+        position: absolute;
+        top: 28px;
+        right: 28px;
+        display: flex;
+        gap: 6px;
+        z-index: 5;
+    }
+    .kthp-prod-carousel__dot {
+        width: 5px; height: 5px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.22);
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        transition: background 0.2s ease, transform 0.2s ease;
+    }
+    .kthp-prod-carousel__dot.active {
+        background: var(--c-teal);
+        transform: scale(1.3);
+        box-shadow: 0 0 6px rgba(0,201,177,0.55);
+    }
+    /* slide counter bottom-left */
+    .kthp-prod-carousel__counter {
+        position: absolute;
+        bottom: 32px;
+        left: 36px;
+        font-family: var(--ff-display);
+        font-size: 11px;
+        font-weight: 900;
+        color: rgba(255,255,255,0.14);
+        letter-spacing: 0.06em;
+        z-index: 3;
+    }
+
+    /* text panel */
+    .kthp-product__text {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 80px 64px;
+        border-left: 1px solid rgba(255,255,255,0.05);
+        position: relative;
+    }
+
+    .kthp-product__eyebrow {
+        font-size: 9px;
+        font-weight: 600;
+        letter-spacing: 0.38em;
+        text-transform: uppercase;
+        color: var(--c-teal-dim);
+        margin-bottom: 1.5rem;
+    }
+
+    .kthp-product__name {
+        font-family: var(--ff-display);
+        font-size: clamp(52px, 6vw, 80px);
+        font-weight: 900;
+        letter-spacing: -0.025em;
+        line-height: 0.86;
+        text-transform: uppercase;
+        color: var(--c-text);
+        margin-bottom: 2.5rem;
+    }
+
+    .kthp-product__desc {
+        font-size: 13.5px;
+        font-weight: 300;
+        color: rgba(255,255,255,0.44);
+        line-height: 1.88;
+        max-width: 400px;
+        margin-bottom: 1.25rem;
+    }
+
+    /* #1 badge — prominent */
+    .kthp-badge {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        margin-top: 2.5rem;
+        padding: 18px 22px;
+        border: 1px solid rgba(0,201,177,0.22);
+        border-left: 3px solid rgba(0,201,177,0.6);
+        border-radius: 4px;
+        background: rgba(0,201,177,0.04);
+        max-width: 400px;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .kthp-badge:hover {
+        border-color: rgba(0,201,177,0.40);
+        box-shadow: var(--glow-teal-sm);
+    }
+    .kthp-badge__num {
+        font-family: var(--ff-display);
+        font-size: 40px;
+        font-weight: 900;
+        color: var(--c-teal);
+        text-shadow: 0 0 24px rgba(0,201,177,0.50);
+        line-height: 1;
+        flex-shrink: 0;
+    }
+    .kthp-badge__title {
+        display: block;
+        font-size: 12px;
+        font-weight: 600;
+        color: rgba(255,255,255,0.80);
+        letter-spacing: 0.04em;
+        margin-bottom: 4px;
+    }
+    .kthp-badge__sub {
+        display: block;
+        font-size: 10px;
+        font-weight: 300;
+        color: rgba(255,255,255,0.36);
+        letter-spacing: 0.04em;
+    }
+
+    /* ══════════════════════════════════════════════════
+       3. SPECS — NUMBERED LIST
+    ══════════════════════════════════════════════════ */
+    .kthp-specs-section {
+        padding: var(--section-pad) 48px;
+        max-width: calc(var(--max-w) + 96px);
+        margin: 0 auto;
+    }
+
+    .kthp-specs-header {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        margin-bottom: 3rem;
+        padding-bottom: 1.25rem;
+        border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .kthp-specs-title {
+        font-family: var(--ff-display);
+        font-size: clamp(28px, 4vw, 44px);
+        font-weight: 900;
+        letter-spacing: -0.02em;
+        text-transform: uppercase;
+        color: var(--c-text);
+    }
+    .kthp-specs-count {
+        font-size: 10px;
+        font-weight: 300;
+        letter-spacing: 0.24em;
+        text-transform: uppercase;
+        color: rgba(255,255,255,0.20);
+    }
+
+    .kthp-specs-list {
+        list-style: none;
+    }
+    .kthp-spec-row {
+        display: grid;
+        grid-template-columns: 36px 160px 1fr auto;
+        align-items: baseline;
+        gap: 0 2rem;
+        padding: 1.1rem 0;
+        border-bottom: 1px solid rgba(255,255,255,0.04);
+        transition: background 0.2s ease;
+        cursor: default;
+    }
+    .kthp-spec-row:hover { background: rgba(255,255,255,0.012); }
+    .kthp-spec-row:hover .kthp-spec-key { color: rgba(0,201,177,0.55); }
+    .kthp-spec-row:hover .kthp-spec-val { color: rgba(255,255,255,0.88); }
+
+    .kthp-spec-num {
+        font-family: var(--ff-display);
+        font-size: 11px;
+        font-weight: 900;
+        color: rgba(255,255,255,0.10);
+        letter-spacing: 0.04em;
+    }
+    .kthp-spec-key {
+        font-size: 9px;
+        font-weight: 600;
+        letter-spacing: 0.26em;
+        text-transform: uppercase;
+        color: rgba(255,255,255,0.24);
+        transition: color 0.2s ease;
+    }
+    .kthp-spec-dash {
+        height: 1px;
+        background: rgba(255,255,255,0.05);
+        align-self: center;
+    }
+    .kthp-spec-val {
+        font-size: 13px;
+        font-weight: 400;
+        color: rgba(255,255,255,0.56);
+        text-align: right;
+        transition: color 0.2s ease;
+    }
+
+    /* ══════════════════════════════════════════════════
+       4. DIMENSIONS — TWO-COLUMN
+    ══════════════════════════════════════════════════ */
+    .kthp-dims-section {
+        border-top: 1px solid rgba(255,255,255,0.05);
+        padding: 72px 48px;
+    }
+    .kthp-dims-inner {
+        max-width: calc(var(--max-w) + 96px);
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 260px 1fr;
+        gap: 4rem;
+        align-items: start;
+    }
+
+    /* left: size chart */
+    .kthp-size {
+        padding: 56px 48px;
+        border-right: 1px solid rgba(255,255,255,0.05);
+        display: flex;
+        flex-direction: column;
+    }
+    .kthp-size__eyebrow {
+        font-size: 8.5px;
+        font-weight: 600;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: rgba(255,255,255,0.20);
+        margin-bottom: 0.6rem;
+    }
+    .kthp-size__title {
+        font-family: var(--ff-display);
+        font-size: 34px;
+        font-weight: 900;
+        letter-spacing: -0.015em;
+        text-transform: uppercase;
+        color: var(--c-text);
+        line-height: 0.9;
+        margin-bottom: 2.5rem;
+    }
+
+    /* reuse existing size-chart styles */
+
+    .kthp-size__note {
+        margin-top: auto;
+        padding-top: 1.5rem;
+        font-size: 10.5px;
+        font-weight: 300;
+        font-style: italic;
+        color: rgba(255,255,255,0.22);
+        border-top: 1px solid rgba(255,255,255,0.04);
+        line-height: 1.65;
+    }
+
+    /* right: gallery carousel */
+    .kthp-gallery {
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+    .kthp-gallery__header {
+        padding: 24px 40px;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-shrink: 0;
+    }
+    .kthp-gallery__label {
+        font-size: 8.5px;
+        font-weight: 600;
+        letter-spacing: 0.30em;
+        text-transform: uppercase;
+        color: rgba(255,255,255,0.20);
+    }
+    .kthp-gallery__counter {
+        font-family: var(--ff-display);
+        font-size: 11px;
+        font-weight: 900;
+        color: rgba(255,255,255,0.14);
+        letter-spacing: 0.05em;
+    }
+
+    .kthp-carousel {
+        flex: 1;
+        position: relative;
+        overflow: hidden;
+    }
+    .kthp-carousel__track {
+        display: flex;
+        height: 100%;
+        transition: transform 0.5s cubic-bezier(0.16,1,0.3,1);
+    }
+    .kthp-carousel__slide {
+        flex: 0 0 100%;
+        height: 100%;
+        position: relative;
+        overflow: hidden;
+    }
+    .kthp-carousel__slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+    .kthp-carousel__cap {
+        position: absolute;
+        bottom: 0; left: 0; right: 0;
+        padding: 40px 40px 28px;
+        background: linear-gradient(to top, rgba(0,0,0,0.72) 0%, transparent 100%);
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 1rem;
+    }
+    .kthp-carousel__cap-title {
+        font-family: var(--ff-display);
+        font-size: 22px;
+        font-weight: 900;
+        letter-spacing: -0.01em;
+        text-transform: uppercase;
+        color: rgba(255,255,255,0.90);
+        line-height: 1;
+    }
+    .kthp-carousel__cap-sub {
+        font-size: 9.5px;
+        font-weight: 300;
+        color: rgba(255,255,255,0.38);
+        letter-spacing: 0.08em;
+        text-align: right;
+        flex-shrink: 0;
+    }
+
+    .kthp-carousel__nav {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        display: flex;
+        gap: 8px;
+        right: 24px;
+        flex-direction: column;
+    }
+    .kthp-carousel__btn {
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        border: 1px solid rgba(255,255,255,0.12);
+        background: rgba(0,0,0,0.55);
+        color: rgba(255,255,255,0.65);
+        font-size: 14px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    }
+    .kthp-carousel__btn:hover {
+        background: rgba(0,201,177,0.15);
+        border-color: rgba(0,201,177,0.35);
+        color: var(--c-teal);
+    }
+
+    .kthp-carousel__dots {
+        position: absolute;
+        bottom: 20px;
+        right: 24px;
+        display: flex;
+        gap: 5px;
+    }
+    .kthp-carousel__dot {
+        width: 5px; height: 5px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.22);
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        transition: background 0.2s ease, transform 0.2s ease;
+    }
+    .kthp-carousel__dot.active {
+        background: var(--c-teal);
+        transform: scale(1.3);
+        box-shadow: 0 0 6px rgba(0,201,177,0.55);
+    }
+
+    /* ══════════════════════════════════════════════════
+       5. CTA
+    ══════════════════════════════════════════════════ */
+    .kthp-cta {
+        padding: var(--section-pad) 48px;
+        max-width: calc(var(--max-w) + 96px);
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: center;
+        gap: 3rem;
+    }
+    .kthp-cta__text {}
+    .kthp-cta__eyebrow {
+        font-size: 9px;
+        font-weight: 600;
+        letter-spacing: 0.36em;
+        text-transform: uppercase;
+        color: rgba(255,255,255,0.22);
+        margin-bottom: 0.75rem;
+    }
+    .kthp-cta__title {
+        font-family: var(--ff-display);
+        font-size: clamp(36px, 5vw, 60px);
+        font-weight: 900;
+        letter-spacing: -0.025em;
+        text-transform: uppercase;
+        line-height: 0.88;
+        color: var(--c-text);
+    }
+    .kthp-cta__title span {
+        -webkit-text-stroke: 1px rgba(255,255,255,0.28);
+        color: transparent;
+    }
+
+    /* ══════════════════════════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════════════════════════ */
+    @media (max-width: 860px) {
+        .kthp-hero { padding: 0 24px 56px; }
+        .kthp-back { left: 24px; top: 24px; position: absolute; }
+        .kthp-hero__line2 { font-size: clamp(72px, 14vw, 140px); }
+        .kthp-product { grid-template-columns: 1fr; height: auto; max-height: none; }
+        .kthp-product__img-panel { height: 60vw; min-height: 320px; }
+        .kthp-product__img-panel::before { display: none; }
+        .kthp-product__text { border-left: none; border-top: 1px solid rgba(255,255,255,0.05); padding: 48px 24px; }
+        .kthp-specs-section { padding: var(--section-pad) 24px; }
+        .kthp-spec-row { grid-template-columns: 28px 120px 1fr auto; gap: 0 1rem; }
+        .kthp-dims-section { padding: 56px 24px; }
+        .kthp-dims-inner { grid-template-columns: 1fr; gap: 2rem; }
+        .kthp-cta { grid-template-columns: 1fr; gap: 2rem; padding: var(--section-pad) 24px; }
+    }
+
+    @media (max-width: 600px) {
+        .kthp-hero__line2 { font-size: clamp(58px, 13vw, 100px); }
+        .kthp-hero__meta { gap: 0; flex-direction: column; align-items: flex-start; }
+        .kthp-hero__meta-sep { display: none; }
+        .kthp-hero__meta-item { padding-right: 0; margin-bottom: 0.6rem; }
+        .kthp-spec-row { grid-template-columns: 1fr 1fr; }
+        .kthp-spec-num,.kthp-spec-dash { display: none; }
+    }
+
+    /* ── LIGHT MODE ── */
+    body[data-theme="light"] .kthp-back { background: rgba(255,255,255,0.85); color: rgba(0,0,0,0.38); border-color: rgba(0,0,0,0.10); }
+    body[data-theme="light"] .kthp-back:hover { color: rgba(0,0,0,0.75); }
+    body[data-theme="light"] .kthp-htag { color: rgba(0,0,0,0.30); border-color: rgba(0,0,0,0.10); }
+    body[data-theme="light"] .kthp-htag--teal { color: rgba(0,150,134,0.80); border-color: rgba(0,180,160,0.28); }
+    body[data-theme="light"] .kthp-hero__line1 { color: rgba(0,0,0,0.28); }
+    body[data-theme="light"] .kthp-hero__meta-label { color: rgba(0,0,0,0.22); }
+    body[data-theme="light"] .kthp-hero__meta-val { color: rgba(0,0,0,0.60); }
+    body[data-theme="light"] .kthp-hero__artists { color: rgba(0,0,0,0.20); }
+    body[data-theme="light"] .kthp-hero__artists span { color: rgba(0,0,0,0.40); }
+    body[data-theme="light"] .kthp-product__eyebrow { color: rgba(0,150,134,0.80); }
+    body[data-theme="light"] .kthp-product__desc { color: rgba(0,0,0,0.48); }
+    body[data-theme="light"] .kthp-product__text { border-left-color: rgba(0,0,0,0.06); background: rgba(0,0,0,0.01); }
+    body[data-theme="light"] .kthp-badge { border-color: rgba(0,180,160,0.20); border-left-color: rgba(0,180,160,0.55); background: rgba(0,180,160,0.04); }
+    body[data-theme="light"] .kthp-badge__title { color: rgba(0,0,0,0.75); }
+    body[data-theme="light"] .kthp-badge__sub { color: rgba(0,0,0,0.38); }
+    body[data-theme="light"] .kthp-spec-key { color: rgba(0,0,0,0.28); }
+    body[data-theme="light"] .kthp-spec-val { color: rgba(0,0,0,0.55); }
+    body[data-theme="light"] .kthp-spec-row:hover .kthp-spec-val { color: rgba(0,0,0,0.80); }
+    body[data-theme="light"] .kthp-size__note { color: rgba(0,0,0,0.28); border-top-color: rgba(0,0,0,0.06); }
+    body[data-theme="light"] .kthp-gallery__label { color: rgba(0,0,0,0.28); }
+    body[data-theme="light"] .kthp-carousel__btn { background: rgba(255,255,255,0.80); border-color: rgba(0,0,0,0.12); color: rgba(0,0,0,0.55); }
+    body[data-theme="light"] .kthp-cta__eyebrow { color: rgba(0,0,0,0.26); }
+    </style>
+</head>
+<body>
+
+<div id="cursorDot"  class="cursor-dot"  aria-hidden="true"></div>
+<div id="cursorRing" class="cursor-ring" aria-hidden="true"></div>
+
+<!-- ── SIDEBAR ── -->
+<aside id="sidebar" class="sidebar" aria-label="Site navigation">
+    <a href="index.html" class="sidebar__logo-wrap" id="sidebarLogoWrap" aria-label="IONIK home">
+        <img id="sidebarLogo" class="sidebar__logo-img" src="ionik-logo.svg" alt="IONIK" draggable="false">
+    </a>
+    <div class="sidebar__track" aria-hidden="true">
+        <div id="scrollFill" class="sidebar__fill"></div>
+    </div>
+    <nav class="sidebar__nav" aria-label="Primary">
+        <ul role="list">
+            <li><a href="index.html#home" class="sidebar__link"><span class="sidebar__link-bar"></span><span class="sidebar__link-text">Home</span></a></li>
+            <li class="sidebar__group" aria-hidden="true"><span class="sidebar__group-label">Subsidiaries</span></li>
+            <li class="sidebar__item--has-sub open" id="navGearItem">
+                <button class="sidebar__link sidebar__link--parent" id="navGearToggle" aria-expanded="true" aria-controls="navGearSub">
+                    <span class="sidebar__link-bar"></span>
+                    <span class="sidebar__link-text">IONIK Gear</span>
+                    <span class="sidebar__chevron" aria-hidden="true">›</span>
+                </button>
+                <ul class="sidebar__sub" id="navGearSub" role="list">
+                    <li>
+                        <a href="kth.html" class="sidebar__sublink active">
+                            <span class="sidebar__sublink-dot" aria-hidden="true"></span>
+                            <span>Key to Happiness</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li><a href="index.html#events"    class="sidebar__link sidebar__link--sub"><span class="sidebar__link-bar"></span><span class="sidebar__link-text">IONIK Events</span></a></li>
+            <li><a href="index.html#creatives" class="sidebar__link sidebar__link--sub"><span class="sidebar__link-bar"></span><span class="sidebar__link-text">IONIK Creatives</span></a></li>
+            <li><a href="index.html#web"        class="sidebar__link sidebar__link--sub"><span class="sidebar__link-bar"></span><span class="sidebar__link-text">IONIK Web</span></a></li>
+            <li class="sidebar__sep" aria-hidden="true"></li>
+            <li><a href="index.html#about"   class="sidebar__link"><span class="sidebar__link-bar"></span><span class="sidebar__link-text">About</span></a></li>
+            <li><a href="index.html#contact" class="sidebar__link"><span class="sidebar__link-bar"></span><span class="sidebar__link-text">Contact</span></a></li>
+        </ul>
+    </nav>
+    <div class="sidebar__bottom">
+        <button id="themeToggle" class="sidebar__theme-btn" aria-label="Switch to light mode">
+            <svg class="theme-icon theme-icon--sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+            <svg class="theme-icon theme-icon--moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <a href="index.html#contact" class="sidebar__cta">Start a Project</a>
+        <a href="mailto:info.ionikcollectives@gmail.com" class="sidebar__email">info.ionikcollectives@gmail.com</a>
+    </div>
+</aside>
+
+<button id="sidebarToggle" class="s-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="sidebar"><span></span><span></span><span></span></button>
+<div id="sidebarOverlay" class="s-overlay" aria-hidden="true"></div>
+
+<!-- ── BACK LINK (fixed) ── -->
+<a href="index.html#gear" class="kthp-back" id="kthBack">IONIK Gear</a>
+
+<!-- ══════════════════════════════════
+     MAIN
+══════════════════════════════════ -->
+<div class="main-wrap">
+<main id="main">
+
+    <!-- ── 1. HERO ── -->
+    <section class="kthp-hero kthp-section" aria-label="Key to Happiness">
+
+        <!-- background videos — alternating playlist -->
+        <video class="kthp-hero__video" id="heroVideoA"
+               src="Assets/Tactical_Bottle_Carrier_Video.mp4"
+               muted playsinline preload="auto"
+               aria-hidden="true"></video>
+        <video class="kthp-hero__video" id="heroVideoB"
+               src="Assets/kling_20260531_VIDEO_Take_Image_4830_0.mp4"
+               muted playsinline preload="auto"
+               aria-hidden="true"></video>
+        <div class="kthp-hero__video-overlay" aria-hidden="true"></div>
+
+        <div class="kthp-hero__inner">
+
+            <div class="kthp-hero__tags">
+                <span class="kthp-htag kthp-htag--teal">IONIK Gear</span>
+                <span class="kthp-htag">SKG Events</span>
+                <span class="kthp-htag">Tokyo Entertainment</span>
+                <span class="kthp-htag">#1 First in Sri Lanka</span>
+            </div>
+
+            <div class="kthp-hero__title" aria-label="Key to Happiness">
+                <span class="kthp-hero__line1">Key to</span>
+                <span class="kthp-hero__line2">Happiness</span>
+            </div>
+
+            <div class="kthp-hero__rule" aria-hidden="true"></div>
+
+            <div class="kthp-hero__meta">
+                <div class="kthp-hero__meta-item">
+                    <span class="kthp-hero__meta-label">Date</span>
+                    <span class="kthp-hero__meta-val">06 June 2026</span>
+                </div>
+                <div class="kthp-hero__meta-sep" aria-hidden="true"></div>
+                <div class="kthp-hero__meta-item">
+                    <span class="kthp-hero__meta-label">Venue</span>
+                    <span class="kthp-hero__meta-val">Port City Colombo</span>
+                </div>
+                <div class="kthp-hero__meta-sep" aria-hidden="true"></div>
+                <div class="kthp-hero__meta-item">
+                    <span class="kthp-hero__meta-label">Edition</span>
+                    <span class="kthp-hero__meta-val">10th Anniversary</span>
+                </div>
+            </div>
+
+            <p class="kthp-hero__artists">
+                Artists &nbsp;—&nbsp;
+                <span>Alex O'Rion</span>
+                &nbsp; · &nbsp;
+                <span>Quivver</span>
+                &nbsp; · &nbsp;
+                <span>Antrim</span>
+            </p>
+
+        </div>
+
+        <div class="kthp-hero__scroll" aria-hidden="true">
+            <span class="kthp-hero__scroll-line"></span>
+            SCROLL
+        </div>
+    </section>
+
+    <!-- ── 2. PRODUCT REVEAL ── -->
+    <section class="kthp-product kthp-section" aria-label="Product">
+
+        <!-- left: product carousel -->
+        <div class="kthp-product__img-panel">
+            <div class="kthp-prod-carousel" id="prodCarousel" role="region" aria-label="Product images">
+                <div class="kthp-prod-carousel__track" id="prodTrack">
+                    <div class="kthp-prod-carousel__slide">
+                        <img src="Assets/KTH_gear.jpeg" alt="KTH Tactical Bottle Carrier — The Strap" loading="eager">
+                        <div class="kthp-prod-carousel__overlay">
+                            <span class="kthp-prod-carousel__cap-title">The Strap</span>
+                            <span class="kthp-prod-carousel__cap-sub">Premium High-Density Nylon</span>
+                        </div>
+                    </div>
+                    <div class="kthp-prod-carousel__slide">
+                        <img src="Assets/KTH_gear.jpeg" alt="KTH Tactical Bottle Carrier — The Buckle" loading="lazy">
+                        <div class="kthp-prod-carousel__overlay">
+                            <span class="kthp-prod-carousel__cap-title">The Buckle</span>
+                            <span class="kthp-prod-carousel__cap-sub">Quick-Release Impact Plastic</span>
+                        </div>
+                    </div>
+                    <div class="kthp-prod-carousel__slide">
+                        <img src="Assets/KTH_gear.jpeg" alt="KTH Tactical Bottle Carrier — The Grip Ring" loading="lazy">
+                        <div class="kthp-prod-carousel__overlay">
+                            <span class="kthp-prod-carousel__cap-title">The Grip Ring</span>
+                            <span class="kthp-prod-carousel__cap-sub">Anti-Slip Plastic Ring</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="kthp-prod-carousel__dots" role="tablist">
+                    <button class="kthp-prod-carousel__dot active" role="tab" aria-label="Slide 1" aria-selected="true"></button>
+                    <button class="kthp-prod-carousel__dot" role="tab" aria-label="Slide 2" aria-selected="false"></button>
+                    <button class="kthp-prod-carousel__dot" role="tab" aria-label="Slide 3" aria-selected="false"></button>
+                </div>
+                <span class="kthp-prod-carousel__counter" id="prodCounter" aria-hidden="true">01 / 03</span>
+            </div>
+        </div>
+
+        <!-- text -->
+        <div class="kthp-product__text">
+            <p class="kthp-product__eyebrow">— Tactical Utility Gear —</p>
+            <h2 class="kthp-product__name">
+                Tactical<br>Bottle<br>Carrier
+            </h2>
+            <p class="kthp-product__desc">
+                A rugged, premium-grade hands-free hydration accessory — purpose-engineered for festival-goers.
+                Clips to belt loops, waistbands, or backpack straps in seconds.
+            </p>
+            <p class="kthp-product__desc">
+                8+ hours outdoors, standing, dancing — fully hands-free, fully comfortable.
+                Exclusively bundled with Backstage, Gold &amp; Platinum tickets.
+            </p>
+
+            <div class="kthp-badge">
+                <span class="kthp-badge__num">#1</span>
+                <div>
+                    <span class="kthp-badge__title">First Ever in Sri Lanka</span>
+                    <span class="kthp-badge__sub">Festival utility gear bundled with tickets</span>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- ── 3. TECHNICAL SPECIFICATIONS ── -->
+    <section class="kthp-section" aria-label="Specifications">
+        <div class="kthp-specs-section">
+            <div class="kthp-specs-header">
+                <h2 class="kthp-specs-title">Technical<br>Specifications</h2>
+                <span class="kthp-specs-count">08 details</span>
+            </div>
+            <ul class="kthp-specs-list">
+                <li class="kthp-spec-row">
+                    <span class="kthp-spec-num">01</span>
+                    <span class="kthp-spec-key">Strap</span>
+                    <div class="kthp-spec-dash"></div>
+                    <span class="kthp-spec-val">Premium High-Density Nylon</span>
+                </li>
+                <li class="kthp-spec-row">
+                    <span class="kthp-spec-num">02</span>
+                    <span class="kthp-spec-key">Buckle</span>
+                    <div class="kthp-spec-dash"></div>
+                    <span class="kthp-spec-val">Quick-Release Impact Plastic</span>
+                </li>
+                <li class="kthp-spec-row">
+                    <span class="kthp-spec-num">03</span>
+                    <span class="kthp-spec-key">Grip Ring</span>
+                    <div class="kthp-spec-dash"></div>
+                    <span class="kthp-spec-val">Anti-Slip Plastic</span>
+                </li>
+                <li class="kthp-spec-row">
+                    <span class="kthp-spec-num">04</span>
+                    <span class="kthp-spec-key">Total Length</span>
+                    <div class="kthp-spec-dash"></div>
+                    <span class="kthp-spec-val">7.5 Inches</span>
+                </li>
+                <li class="kthp-spec-row">
+                    <span class="kthp-spec-num">05</span>
+                    <span class="kthp-spec-key">Attachment</span>
+                    <div class="kthp-spec-dash"></div>
+                    <span class="kthp-spec-val">Universal Belt Loop</span>
+                </li>
+                <li class="kthp-spec-row">
+                    <span class="kthp-spec-num">06</span>
+                    <span class="kthp-spec-key">Branding</span>
+                    <div class="kthp-spec-dash"></div>
+                    <span class="kthp-spec-val">Full KTH Custom Print</span>
+                </li>
+                <li class="kthp-spec-row">
+                    <span class="kthp-spec-num">07</span>
+                    <span class="kthp-spec-key">Artists</span>
+                    <div class="kthp-spec-dash"></div>
+                    <span class="kthp-spec-val">Alex O'Rion · Quivver · Antrim</span>
+                </li>
+                <li class="kthp-spec-row">
+                    <span class="kthp-spec-num">08</span>
+                    <span class="kthp-spec-key">Eligible Tiers</span>
+                    <div class="kthp-spec-dash"></div>
+                    <span class="kthp-spec-val">Backstage · Gold · Platinum</span>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- ── 4. DIMENSIONS ── -->
+    <section class="kthp-section kthp-dims-section" aria-label="Product dimensions">
+        <div class="kthp-dims-inner">
+            <div class="kthp-dims-left">
+                <p class="kthp-size__eyebrow">Dimensions</p>
+                <h3 class="kthp-size__title">Product<br>Size</h3>
+                <p class="kthp-size__note" style="margin-top:1.5rem">Sits at the hip — no movement restriction, dances with you all night.</p>
+            </div>
+            <div class="kthp-dims-right">
+                <div class="size-chart">
+                    <div class="size-chart__row">
+                        <span class="size-chart__label">Total Length</span>
+                        <div class="size-chart__track"><div class="size-chart__fill" style="--w:100%"></div></div>
+                        <span class="size-chart__val">7.5 in</span>
+                    </div>
+                    <div class="size-chart__row">
+                        <span class="size-chart__label">Strap Width</span>
+                        <div class="size-chart__track"><div class="size-chart__fill" style="--w:20%"></div></div>
+                        <span class="size-chart__val">1.5 in</span>
+                    </div>
+                    <div class="size-chart__row">
+                        <span class="size-chart__label">Ring Diameter</span>
+                        <div class="size-chart__track"><div class="size-chart__fill" style="--w:24%"></div></div>
+                        <span class="size-chart__val">1.8 in</span>
+                    </div>
+                    <div class="size-chart__row">
+                        <span class="size-chart__label">Bottle Capacity</span>
+                        <div class="size-chart__track"><div class="size-chart__fill" style="--w:45%"></div></div>
+                        <span class="size-chart__val">500ml–1L</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── 5. CTA ── -->
+    <section class="kthp-section" aria-label="Get in touch">
+        <div class="kthp-cta">
+            <div class="kthp-cta__text">
+                <p class="kthp-cta__eyebrow">— Commission a Custom Product —</p>
+                <h2 class="kthp-cta__title">
+                    Want gear<br>for your <span>event?</span>
+                </h2>
+            </div>
+            <a href="index.html#contact" class="btn btn-fill">Get in Touch →</a>
+        </div>
+    </section>
+
+</main>
+
+<footer class="footer">
+    <div class="footer__inner">
+        <span class="footer__brand">IONIK Co.</span>
+        <nav class="footer__links" aria-label="Footer">
+            <a href="index.html#gear">Gear</a>
+            <a href="index.html#events">Events</a>
+            <a href="index.html#creatives">Creatives</a>
+            <a href="index.html#web">Web</a>
+            <a href="index.html#about">About</a>
+            <a href="index.html#contact">Contact</a>
+        </nav>
+        <small class="footer__copy">© 2026 IONIK Co. All rights reserved.</small>
+    </div>
+</footer>
+</div><!-- /.main-wrap -->
+
+<script src="ionik-script.js"></script>
+<script>
+    /* content-ready — fires bars animation + sidebar logo */
+    requestAnimationFrame(function() {
+        requestAnimationFrame(function() {
+            document.body.classList.add('content-ready');
+        });
+    });
+
+    /* sidebar dropdown */
+    (function() {
+        var toggle = document.getElementById('navGearToggle');
+        var item   = document.getElementById('navGearItem');
+        if (!toggle || !item) return;
+        toggle.addEventListener('click', function() {
+            var open = item.classList.toggle('open');
+            toggle.setAttribute('aria-expanded', String(open));
+        });
+    }());
+
+    /* flag preloader to skip on return navigation */
+    (function() {
+        var back = document.getElementById('kthBack');
+        if (back) {
+            back.addEventListener('click', function() {
+                sessionStorage.setItem('ionik-skip-preloader', '1');
+            });
+        }
+    }());
+
+    /* hero video playlist — fades between two videos indefinitely */
+    (function() {
+        var videos = [
+            document.getElementById('heroVideoA'),
+            document.getElementById('heroVideoB')
+        ];
+        if (!videos[0] || !videos[1]) return;
+
+        var FADE_BEFORE  = 1.0;  /* seconds before end to begin fade-out */
+        var CROSSFADE_MS = 1000; /* must match CSS transition duration (1s) */
+        var current = 0;
+        var switching = false;
+
+        function active()  { return videos[current]; }
+        function next()    { return videos[1 - current]; }
+
+        function playNext() {
+            if (switching) return;
+            switching = true;
+
+            var outVid = active();
+            var inVid  = next();
+
+            /* fade out current */
+            outVid.classList.remove('active');
+            outVid.classList.add('fading');
+
+            /* prepare next: reset, preload, start playback silently */
+            inVid.currentTime = 0;
+            inVid.play().then(function() {
+                /* fade in next after crossfade window */
+                setTimeout(function() {
+                    inVid.classList.remove('fading');
+                    inVid.classList.add('active');
+
+                    /* clean up outgoing video after it has fully faded */
+                    setTimeout(function() {
+                        outVid.pause();
+                        outVid.currentTime = 0;
+                        outVid.classList.remove('fading');
+                        current = 1 - current;
+                        switching = false;
+                    }, CROSSFADE_MS);
+
+                }, 80);
+            }).catch(function() { switching = false; });
+        }
+
+        /* watch current video — start crossfade when near the end */
+        function watchTime() {
+            var v = active();
+            if (!v.duration || switching) return;
+            if (v.duration - v.currentTime < FADE_BEFORE) {
+                playNext();
+            }
+        }
+
+        /* attach timeupdate to both so the listener stays active after switch */
+        videos.forEach(function(v) {
+            v.addEventListener('timeupdate', watchTime, { passive: true });
+            /* fallback: if ended fires before timeupdate catches it */
+            v.addEventListener('ended', function() {
+                if (!switching) playNext();
+            });
+        });
+
+        /* kick off first video */
+        videos[0].play().then(function() {
+            videos[0].classList.add('active');
+        }).catch(function() {});
+    }());
+
+    /* product carousel (left panel of product section) */
+    (function() {
+        var track   = document.getElementById('prodTrack');
+        var counter = document.getElementById('prodCounter');
+        var dots    = document.querySelectorAll('.kthp-prod-carousel__dot');
+        var wrap    = document.getElementById('prodCarousel');
+        if (!track) return;
+
+        var current = 0, total = 3, timer = null, touchX = 0;
+
+        function pad(n) { return n < 10 ? '0' + n : '' + n; }
+
+        function goTo(idx) {
+            current = (idx + total) % total;
+            track.style.transform = 'translateX(-' + (current * 100) + '%)';
+            if (counter) counter.textContent = pad(current + 1) + ' / ' + pad(total);
+            dots.forEach(function(d, i) {
+                d.classList.toggle('active', i === current);
+                d.setAttribute('aria-selected', String(i === current));
+            });
+        }
+
+        function start() { timer = setInterval(function() { goTo(current + 1); }, 4500); }
+        function stop()  { clearInterval(timer); }
+
+        dots.forEach(function(d, i) {
+            d.addEventListener('click', function() { stop(); goTo(i); start(); });
+        });
+
+        if (wrap) {
+            wrap.addEventListener('touchstart', function(e) { touchX = e.changedTouches[0].clientX; }, { passive: true });
+            wrap.addEventListener('touchend', function(e) {
+                var dx = e.changedTouches[0].clientX - touchX;
+                if (Math.abs(dx) > 40) { stop(); goTo(dx < 0 ? current + 1 : current - 1); start(); }
+            }, { passive: true });
+            wrap.addEventListener('mouseenter', stop);
+            wrap.addEventListener('mouseleave', start);
+        }
+
+        goTo(0);
+        start();
+    }());
+</script>
+</body>
+</html>

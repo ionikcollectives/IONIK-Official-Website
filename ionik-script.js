@@ -28,6 +28,14 @@ window.scrollTo(0, 0);
     var logoImg = document.getElementById('preLogoImg');
     if (!el) return;
 
+    /* Skip preloader when returning from a project page (e.g. kth.html) */
+    if (sessionStorage.getItem('ionik-skip-preloader')) {
+        sessionStorage.removeItem('ionik-skip-preloader');
+        el.style.display = 'none';
+        document.body.classList.add('content-ready');
+        return;
+    }
+
     var MIN_MS = 2900;
     var t0     = performance.now();
     document.body.classList.add('no-scroll');
@@ -346,7 +354,7 @@ window.scrollTo(0, 0);
 
     /* ── Scroll Spy ── */
     var navLinks    = sidebar.querySelectorAll('.sidebar__link[data-section]');
-    var sectionEls  = ['home', 'gear', 'events', 'creatives', 'web', 'about', 'contact']
+    var sectionEls  = ['home', 'gear', 'kth', 'events', 'creatives', 'web', 'about', 'contact']
                         .map(function (id) { return document.getElementById(id); })
                         .filter(Boolean);
 
@@ -631,4 +639,103 @@ window.scrollTo(0, 0);
             setTimeout(function () { failEl.hidden = true; }, 6000);
         }
     });
+}());
+
+
+/* ─────────────────────────────────────────────────────────
+   9. SIDEBAR GEAR DROPDOWN
+   Toggles the IONIK Gear submenu open/closed.
+───────────────────────────────────────────────────────── */
+(function SidebarDropdown() {
+    var toggle = document.getElementById('navGearToggle');
+    var item   = document.getElementById('navGearItem');
+    if (!toggle || !item) return;
+
+    toggle.addEventListener('click', function () {
+        var isOpen = item.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', String(isOpen));
+    });
+
+    /* Auto-open when kth or gear is the active section */
+    var allLinks = document.querySelectorAll('#sidebar .sidebar__link[data-section], #sidebar .sidebar__sublink[data-section]');
+
+    window.addEventListener('scroll', function () {
+        var trigger  = window.scrollY + window.innerHeight * 0.4;
+        var sections = ['home', 'gear', 'kth', 'events', 'creatives', 'web', 'about', 'contact']
+            .map(function (id) { return document.getElementById(id); })
+            .filter(Boolean);
+
+        var current = sections[0];
+        sections.forEach(function (el) {
+            if (el.offsetTop <= trigger) current = el;
+        });
+
+        allLinks.forEach(function (link) {
+            link.classList.toggle('active', link.dataset.section === current.id);
+        });
+
+        if (current.id === 'gear' || current.id === 'kth') {
+            if (!item.classList.contains('open')) {
+                item.classList.add('open');
+                toggle.setAttribute('aria-expanded', 'true');
+            }
+        }
+    }, { passive: true });
+}());
+
+
+/* ─────────────────────────────────────────────────────────
+   10. PRODUCT CAROUSEL
+   Slide navigation with arrows, dots, touch swipe,
+   and 4s auto-advance (paused on hover).
+───────────────────────────────────────────────────────── */
+(function ProductCarousel() {
+    var carousel = document.getElementById('productCarousel');
+    if (!carousel) return;
+
+    var track  = carousel.querySelector('.carousel__track');
+    var slides = carousel.querySelectorAll('.carousel__slide');
+    var dots   = carousel.querySelectorAll('.carousel__dot');
+    var prev   = carousel.querySelector('.carousel__prev');
+    var next   = carousel.querySelector('.carousel__next');
+    if (!track || !slides.length) return;
+
+    var current     = 0;
+    var total       = slides.length;
+    var autoTimer   = null;
+    var touchStartX = 0;
+
+    function goTo(idx) {
+        current = (idx + total) % total;
+        track.style.transform = 'translateX(-' + (current * 100) + '%)';
+        dots.forEach(function (d, i) {
+            d.classList.toggle('active', i === current);
+            d.setAttribute('aria-selected', String(i === current));
+        });
+    }
+
+    function startAuto() { autoTimer = setInterval(function () { goTo(current + 1); }, 4000); }
+    function stopAuto()  { clearInterval(autoTimer); }
+
+    if (prev) prev.addEventListener('click', function () { stopAuto(); goTo(current - 1); startAuto(); });
+    if (next) next.addEventListener('click', function () { stopAuto(); goTo(current + 1); startAuto(); });
+
+    dots.forEach(function (dot, i) {
+        dot.addEventListener('click', function () { stopAuto(); goTo(i); startAuto(); });
+    });
+
+    carousel.addEventListener('touchstart', function (e) {
+        touchStartX = e.changedTouches[0].clientX;
+    }, { passive: true });
+
+    carousel.addEventListener('touchend', function (e) {
+        var dx = e.changedTouches[0].clientX - touchStartX;
+        if (Math.abs(dx) > 40) { stopAuto(); goTo(dx < 0 ? current + 1 : current - 1); startAuto(); }
+    }, { passive: true });
+
+    carousel.addEventListener('mouseenter', stopAuto);
+    carousel.addEventListener('mouseleave', startAuto);
+
+    goTo(0);
+    startAuto();
 }());

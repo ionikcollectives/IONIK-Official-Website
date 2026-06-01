@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="IONIK — Premium Digital Marketing Agency. We build brands that dominate.">
-    <title>IONIK — Digital Agency</title>
+    <title>IONIK Co.</title>
     <link rel="icon" type="image/png" media="(prefers-color-scheme: dark)"  href="Assets/ionik_icon_white-Photoroom.png">
     <link rel="icon" type="image/png" media="(prefers-color-scheme: light)" href="Assets/ionik_icon_black-Photoroom.png">
     <link rel="icon" type="image/png" href="Assets/ionik_icon_white-Photoroom.png">
@@ -32,7 +32,7 @@
             For the sidebar icon, name it  ionik-mark.svg  (the standalone O/eye mark).
         -->
         <img id="preLogoImg" class="pre-logo-img" src="ionik-logo.svg" alt="IONIK" draggable="false">
-        <p class="pre-tagline">DIGITAL AGENCY</p>
+        <p class="pre-tagline">CREATIVE COMPANY</p>
     </div>
     <div class="pre-shockwave" aria-hidden="true"></div>
     <div class="pre-flash"     aria-hidden="true"></div>
@@ -78,11 +78,23 @@
             <li class="sidebar__group" aria-hidden="true">
                 <span class="sidebar__group-label">Subsidiaries</span>
             </li>
-            <li>
-                <a href="#gear" class="sidebar__link sidebar__link--sub" data-section="gear">
+            <li class="sidebar__item--has-sub open" id="navGearItem">
+                <button class="sidebar__link sidebar__link--parent"
+                        id="navGearToggle"
+                        aria-expanded="true"
+                        aria-controls="navGearSub">
                     <span class="sidebar__link-bar"></span>
                     <span class="sidebar__link-text">IONIK Gear</span>
-                </a>
+                    <span class="sidebar__chevron" aria-hidden="true">›</span>
+                </button>
+                <ul class="sidebar__sub" id="navGearSub" role="list" aria-label="IONIK Gear projects">
+                    <li>
+                        <a href="#gear" class="sidebar__sublink">
+                            <span class="sidebar__sublink-dot" aria-hidden="true"></span>
+                            <span>Key to Happiness</span>
+                        </a>
+                    </li>
+                </ul>
             </li>
             <li>
                 <a href="#events" class="sidebar__link sidebar__link--sub" data-section="events">
@@ -167,20 +179,20 @@
         <div class="hero__dots" aria-hidden="true"></div>
 
         <div class="hero__content">
-            <p class="hero__eyebrow">— LET'S WORK TOGETHER —</p>
+            <p class="hero__eyebrow">— IONIK CO. —</p>
             <h1 class="hero__title">
                 <span>LET'S BUILD</span>
                 <span>SOMETHING</span>
                 <span>POWERFUL</span>
             </h1>
             <p class="hero__sub">
-                Ready to dominate your market? Tell us about your brand,
-                and we'll show you exactly how to get there.
+                A creative company built for brands that refuse to be ordinary.
+                Gear. Events. Creatives. Web.
             </p>
             <div class="hero__actions">
-                <a href="#contact"  class="btn btn-fill">START A PROJECT</a>
-                <a href="#services" class="btn btn-ghost">
-                    <span class="btn-arrow">→</span> OUR SERVICES
+                <a href="#contact" class="btn btn-fill">START A PROJECT</a>
+                <a href="#gear" class="btn btn-ghost">
+                    <span class="btn-arrow">→</span> OUR SUBSIDIARIES
                 </a>
             </div>
             <p class="hero__foot">
@@ -191,113 +203,59 @@
     </section>
 
     <!-- ────────── IONIK GEAR ────────── -->
-    <section id="gear" class="subsidiary gear-section" aria-label="IONIK Gear">
+    <section id="gear" class="subsidiary" aria-label="IONIK Gear">
         <div class="section-wrap">
-
             <header class="section-header">
-                <p class="eyebrow">— IONIK GEAR —</p>
+                <p class="eyebrow">— SUBSIDIARY —</p>
                 <h2 class="section-title">
-                    Utility Built<br>to <span class="stroke-text">Last</span>
+                    IONIK<br><span class="stroke-text">Gear</span>
                 </h2>
                 <p class="section-lead">
-                    Customised utility products and event accessories. Engineered for performance, designed for legacy.
+                    Customised utility products and event accessories. Premium by design, built for real-world use.
                 </p>
             </header>
+            <div class="gear-projects">
+                <div class="gp-card">
 
-            <div class="gear-drop">
+                    <!-- Interactive 3D model viewer -->
+                    <div class="gp-card__model" aria-label="Interactive 3D model — drag to rotate">
+                        <canvas id="strapCanvas" class="strap-canvas" aria-hidden="true"></canvas>
+                        <div class="gp-card__model-hint" aria-hidden="true">↺ &nbsp;Drag to rotate</div>
+                    </div>
 
-                <div class="gear-drop__header">
-                    <span class="gear-tag gear-tag--live">Current Drop</span>
-                    <span class="gear-tag gear-tag--event">Key To Happiness · 10th Anniversary</span>
-                    <span class="gear-tag gear-tag--first">#1 First in Sri Lanka</span>
-                </div>
+                    <!-- Project info -->
+                    <div class="gp-card__info">
+                        <div class="gp-card__tags">
 
-                <div class="gear-drop__body">
+                            <span class="kth-tag kth-tag--first">#1 Sri Lanka</span>
+                        </div>
 
-                    <div class="gear-drop__info">
-                        <h3 class="gear-drop__title">TACTICAL<br>BOTTLE<br>CARRIER</h3>
-                        <p class="gear-drop__desc">
-                            A rugged, premium-grade hands-free hydration accessory — purpose-engineered for festival-goers.
-                            Exclusively bundled with Backstage, Gold &amp; Platinum tickets for the Key To Happiness
-                            10th Anniversary at Port City Colombo, 06 June 2026.
-                        </p>
+                        <h3 class="gp-card__title">Tactical<br>Bottle<br>Carrier</h3>
 
-                        <dl class="gear-specs">
-                            <div class="gear-spec">
-                                <dt class="gear-spec__key">Strap</dt>
-                                <dd class="gear-spec__val">Premium High-Density Nylon</dd>
+                        <dl class="gp-card__meta">
+                            <div class="gp-card__meta-row">
+                                <dt class="gp-card__meta-label">Event</dt>
+                                <dd class="gp-card__meta-val">Key To Happiness — 10th Anniversary</dd>
                             </div>
-                            <div class="gear-spec">
-                                <dt class="gear-spec__key">Buckle</dt>
-                                <dd class="gear-spec__val">Quick-Release Impact Plastic</dd>
+                            <div class="gp-card__meta-row">
+                                <dt class="gp-card__meta-label">Date</dt>
+                                <dd class="gp-card__meta-val">06 June 2026</dd>
                             </div>
-                            <div class="gear-spec">
-                                <dt class="gear-spec__key">Grip</dt>
-                                <dd class="gear-spec__val">Anti-Slip Plastic Ring</dd>
+                            <div class="gp-card__meta-row">
+                                <dt class="gp-card__meta-label">Venue</dt>
+                                <dd class="gp-card__meta-val">Port City Colombo</dd>
                             </div>
-                            <div class="gear-spec">
-                                <dt class="gear-spec__key">Length</dt>
-                                <dd class="gear-spec__val">7.5 Inches</dd>
-                            </div>
-                            <div class="gear-spec">
-                                <dt class="gear-spec__key">Attach</dt>
-                                <dd class="gear-spec__val">Universal Belt Loop</dd>
-                            </div>
-                            <div class="gear-spec">
-                                <dt class="gear-spec__key">Print</dt>
-                                <dd class="gear-spec__val">Full KTH Custom Branding</dd>
+                            <div class="gp-card__meta-row">
+                                <dt class="gp-card__meta-label">Product</dt>
+                                <dd class="gp-card__meta-val">Premium HD Nylon · Quick-Release Buckle · Grip Ring</dd>
                             </div>
                         </dl>
 
-                        <a href="#contact" class="btn btn-fill gear-drop__cta">Enquire Now →</a>
+                        <a href="kth.html" class="btn btn-ghost gp-card__cta">Go to pre-order →</a>
                     </div>
 
-                    <div class="gear-drop__visual" aria-hidden="true">
-                        <div class="gear-visual">
-                            <div class="gear-visual__top">
-                                <span class="gear-visual__year">2026</span>
-                                <span class="gear-visual__event">KEY TO HAPPINESS</span>
-                            </div>
-                            <div class="gear-visual__name">TACTICAL<br>BOTTLE<br>CARRIER</div>
-                            <div class="gear-visual__bottom">
-                                <span class="gear-visual__sub">10TH ANNIVERSARY</span>
-                                <span class="gear-visual__dot"></span>
-                                <span class="gear-visual__sub">PORT CITY COLOMBO</span>
-                            </div>
-                            <div class="gear-visual__ghost" aria-hidden="true">7.5</div>
-                            <div class="gear-visual__glow" aria-hidden="true"></div>
-                        </div>
-                    </div>
-
+                    <div class="gp-card__glow" aria-hidden="true"></div>
                 </div>
-
-                <div class="gear-tiers">
-                    <p class="gear-tiers__label">— Exclusive Edition Packages —</p>
-                    <div class="gear-tiers__grid">
-                        <div class="gear-tier">
-                            <span class="gear-tier__num">01</span>
-                            <span class="gear-tier__name">Bronze</span>
-                            <span class="gear-tier__edition">Core Edition</span>
-                            <span class="gear-tier__price">LKR 549</span>
-                            <span class="gear-tier__moq">per unit · MOQ 700</span>
-                        </div>
-                        <div class="gear-tier gear-tier--hero">
-                            <span class="gear-tier__num">02</span>
-                            <span class="gear-tier__name">Gold</span>
-                            <span class="gear-tier__edition">Anniversary Edition</span>
-                            <span class="gear-tier__price">LKR 699</span>
-                            <span class="gear-tier__moq">per unit · MOQ 700</span>
-                        </div>
-                        <div class="gear-tier">
-                            <span class="gear-tier__num">03</span>
-                            <span class="gear-tier__name">Platinum</span>
-                            <span class="gear-tier__edition">Port City Edition</span>
-                            <span class="gear-tier__price">LKR 799</span>
-                            <span class="gear-tier__moq">per unit · MOQ 700</span>
-                        </div>
-                    </div>
-                </div>
-
             </div>
         </div>
     </section>
@@ -307,20 +265,19 @@
         <div class="section-wrap">
             <div class="events-wrap">
                 <div class="events-content">
-                    <p class="eyebrow">— IONIK EVENTS —</p>
+                    <p class="eyebrow">— SUBSIDIARY —</p>
                     <h2 class="section-title">
-                        Something's<br><span class="stroke-text">Coming</span>
+                        IONIK<br><span class="stroke-text">Events</span>
                     </h2>
                     <p class="section-lead">
                         Premium event experiences, creative productions, and cultural moments engineered to leave a mark.
-                        IONIK Events is in development — watch this space.
                     </p>
                     <div class="events-coming">
-                        <span class="events-coming__text">Coming Soon</span>
+                        <span class="events-coming__text">COMING SOON</span>
                     </div>
                 </div>
-                <div class="events-bg" aria-hidden="true">
-                    <span class="events-bg__word">EVENTS</span>
+                <div class="events-deco" aria-hidden="true">
+                    <span class="events-deco__word">EVENTS</span>
                 </div>
             </div>
         </div>
@@ -331,9 +288,9 @@
         <div class="section-wrap">
 
             <header class="section-header">
-                <p class="eyebrow">— IONIK CREATIVES —</p>
+                <p class="eyebrow">— SUBSIDIARY —</p>
                 <h2 class="section-title">
-                    Digital Marketing<br>&amp; <span class="stroke-text">Brand Growth</span>
+                    IONIK<br><span class="stroke-text">Creatives</span>
                 </h2>
                 <p class="section-lead">
                     Social media strategy, content creation, and digital campaigns engineered to dominate your market.
@@ -411,9 +368,9 @@
         <div class="section-wrap">
 
             <header class="section-header">
-                <p class="eyebrow">— IONIK WEB —</p>
+                <p class="eyebrow">— SUBSIDIARY —</p>
                 <h2 class="section-title">
-                    IT Solutions &<br><span class="stroke-text">Web Dev</span>
+                    IONIK<br><span class="stroke-text">Web</span>
                 </h2>
                 <p class="section-lead">
                     From concept to deployment — full-stack development and digital infrastructure built for scale and performance.
@@ -497,32 +454,33 @@
                         Obsessed<br>With <span class="stroke-text">Results</span>
                     </h2>
                     <p class="about__body">
-                        IONIK is a full-spectrum digital marketing agency built for brands that refuse to be ordinary.
-                        We combine data intelligence with creative precision to engineer marketing systems that don't
-                        just perform — they dominate.
+                        IONIK Co. is a full-spectrum creative company built for brands that refuse to be ordinary.
+                        Through four subsidiaries — Gear, Events, Creatives, and Web — we engineer products,
+                        experiences, and marketing systems that don't just perform — they dominate.
                     </p>
                     <p class="about__body">
-                        From scaling startups to enterprise transformations, our work is defined by one metric: your growth.
+                        From Sri Lanka's first festival utility gear to full-stack digital transformations,
+                        our work is defined by one metric: your growth.
                     </p>
                     <a href="#contact" class="btn btn-fill about__cta">Work With Us →</a>
                 </div>
 
                 <div class="about__stats">
                     <div class="stat">
-                        <span class="stat__num">300<span class="stat__sup">+</span></span>
-                        <span class="stat__label">Brands Scaled</span>
+                        <span class="stat__num">4<span class="stat__sup">×</span></span>
+                        <span class="stat__label">Subsidiaries</span>
                     </div>
                     <div class="stat">
-                        <span class="stat__num">12<span class="stat__sup">×</span></span>
-                        <span class="stat__label">Average ROI</span>
+                        <span class="stat__num">#<span class="stat__sup">1</span></span>
+                        <span class="stat__label">Sri Lanka First</span>
                     </div>
                     <div class="stat">
                         <span class="stat__num">98<span class="stat__sup">%</span></span>
                         <span class="stat__label">Client Retention</span>
                     </div>
                     <div class="stat">
-                        <span class="stat__num">5<span class="stat__sup">+</span></span>
-                        <span class="stat__label">Years Dominating</span>
+                        <span class="stat__num">∞<span class="stat__sup"> </span></span>
+                        <span class="stat__label">Brand Potential</span>
                     </div>
                 </div>
 
@@ -626,9 +584,10 @@
 <!-- FOOTER -->
 <footer class="footer">
     <div class="footer__inner">
-        <span class="footer__brand">IONIK</span>
+        <span class="footer__brand">IONIK Co.</span>
         <nav class="footer__links" aria-label="Footer navigation">
-            <a href="#gear">IONIK Gear</a>
+            <a href="#gear">Gear</a>
+            <a href="#events">Events</a>
             <a href="#creatives">Creatives</a>
             <a href="#web">Web</a>
             <a href="#about">About</a>
@@ -646,5 +605,6 @@
 <script src="https://cdn.jsdelivr.net/npm/three@0.134.0/build/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.134.0/examples/js/loaders/GLTFLoader.js"></script>
 <script src="ionik-3d.js"></script>
+<script src="ionik-gear-viewer.js"></script>
 </body>
 </html>
