@@ -647,8 +647,9 @@ window.scrollTo(0, 0);
    Toggles the IONIK Gear submenu open/closed.
 ───────────────────────────────────────────────────────── */
 (function SidebarDropdown() {
-    var toggle = document.getElementById('navGearToggle');
-    var item   = document.getElementById('navGearItem');
+    /* Supports both navWebItem (new) and navGearItem (legacy fallback) */
+    var toggle = document.getElementById('navWebToggle') || document.getElementById('navGearToggle');
+    var item   = document.getElementById('navWebItem')   || document.getElementById('navGearItem');
     if (!toggle || !item) return;
 
     toggle.addEventListener('click', function () {
@@ -656,12 +657,10 @@ window.scrollTo(0, 0);
         toggle.setAttribute('aria-expanded', String(isOpen));
     });
 
-    /* Auto-open when kth or gear is the active section */
-    var allLinks = document.querySelectorAll('#sidebar .sidebar__link[data-section], #sidebar .sidebar__sublink[data-section]');
-
+    /* Auto-open when the web or kth section is active */
     window.addEventListener('scroll', function () {
         var trigger  = window.scrollY + window.innerHeight * 0.4;
-        var sections = ['home', 'gear', 'kth', 'events', 'creatives', 'web', 'about', 'contact']
+        var sections = ['home', 'gear', 'events', 'creatives', 'web', 'about', 'contact']
             .map(function (id) { return document.getElementById(id); })
             .filter(Boolean);
 
@@ -670,11 +669,7 @@ window.scrollTo(0, 0);
             if (el.offsetTop <= trigger) current = el;
         });
 
-        allLinks.forEach(function (link) {
-            link.classList.toggle('active', link.dataset.section === current.id);
-        });
-
-        if (current.id === 'gear' || current.id === 'kth') {
+        if (current.id === 'web') {
             if (!item.classList.contains('open')) {
                 item.classList.add('open');
                 toggle.setAttribute('aria-expanded', 'true');
@@ -738,4 +733,178 @@ window.scrollTo(0, 0);
 
     goTo(0);
     startAuto();
+}());
+
+
+/* ─────────────────────────────────────────────────────────
+   11. PAGE TRANSITION
+   Cinematic dark curtain + teal neon edge sweeps between pages.
+
+   EXIT  → curtain rises from below viewport, covering everything.
+           Teal edge leads at the top.
+   ENTER → curtain continues rising off the top, revealing the
+           new page. Teal edge trails at the bottom.
+
+   Works on both index.html ↔ kth.html without any extra markup.
+───────────────────────────────────────────────────────── */
+(function PageTransition() {
+
+    /* Inject curtain into DOM */
+    var curtain = document.createElement('div');
+    curtain.className = 'pt-curtain';
+    curtain.innerHTML = '<div class="pt-curtain__edge"></div>';
+    document.body.appendChild(curtain);
+
+    /* ── ENTER: arriving from another page ── */
+    if (sessionStorage.getItem('ionik-pt')) {
+        sessionStorage.removeItem('ionik-pt');
+
+        /* 1. Snap curtain to fully-covering position (no animation) */
+        curtain.style.transition = 'none';
+        curtain.style.transform  = 'translateY(0%)';
+        curtain.style.pointerEvents = 'all';
+        curtain.classList.add('pt-entering');
+
+        /* 2. Two rAFs guarantee the snap paints before the slide begins */
+        requestAnimationFrame(function () {
+            requestAnimationFrame(function () {
+                curtain.style.transition    = 'transform 0.70s cubic-bezier(0.76,0,0.24,1) 0.08s';
+                curtain.style.transform     = 'translateY(-100%)';
+                curtain.style.pointerEvents = '';
+                curtain.addEventListener('transitionend', function () {
+                    curtain.classList.remove('pt-entering');
+                    curtain.style.cssText = '';        /* full reset */
+                }, { once: true });
+            });
+        });
+    }
+
+    /* ── EXIT: intercept same-origin cross-page link clicks ── */
+    document.addEventListener('click', function (e) {
+        var link = e.target.closest('a[href]');
+        if (!link) return;
+
+        var href = link.getAttribute('href');
+        if (!href) return;
+
+        /* Let through: new-tab, external, mailto/tel/js, hash-only */
+        if (link.target === '_blank') return;
+        if (/^(mailto:|tel:|javascript:|https?:|\/\/)/.test(href)) return;
+        if (href.charAt(0) === '#') return;
+
+        /* Determine if the destination is a different HTML file */
+        var filePart    = href.split('#')[0];
+        var currentFile = window.location.pathname.split('/').pop() || 'index.html';
+        if (filePart === '' || filePart === currentFile) return;
+
+        /* Cross-page navigation confirmed — play exit */
+        e.preventDefault();
+        sessionStorage.setItem('ionik-pt',              '1');
+        sessionStorage.setItem('ionik-skip-preloader',  '1');
+
+        curtain.style.transition    = 'transform 0.52s cubic-bezier(0.76,0,0.24,1)';
+        curtain.style.transform     = 'translateY(0%)';
+        curtain.style.pointerEvents = 'all';
+
+        setTimeout(function () { window.location.href = href; }, 560);
+    });
+
+}());
+
+
+/* ─────────────────────────────────────────────────────────
+   12. SCROLL REVEAL
+   Elements emerge as the user scrolls. Each element gets a
+   direction class (sr-up / sr-left / sr-right / sr-scale)
+   and a stagger delay. IntersectionObserver fires the .in
+   class once the element crosses the threshold.
+
+   Groups:
+     • Section headers, gear card   — fade up
+     • About text / cinfo           — slide from sides
+     • Stats                        — scale + rise, stagger 90ms
+     • Events deco                  — slide right
+     • KTH product text children    — fade up, stagger 85ms
+     • Spec rows                    — slide left, stagger 42ms
+     • Size-chart rows              — slide right, stagger 55ms
+     • Dims columns                 — slide in from sides
+     • CTA text                     — slide left
+     • Footer                       — fade up
+───────────────────────────────────────────────────────── */
+(function ScrollReveal() {
+
+    if (typeof IntersectionObserver === 'undefined') return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    /* ── Element groups: [selector, direction, stagger-ms] ── */
+    var GROUPS = [
+        /* ── index.html ── */
+        ['.section-header',               'up',    0  ],
+        ['.gp-card',                      'up',    0  ],
+        ['.about__text',                  'left',  0  ],
+        ['.about__stats .stat',           'scale', 90 ],
+        ['.cform',                        'up',    0  ],
+        ['.cinfo',                        'right', 0  ],
+        ['.events-content',               'left',  0  ],
+        ['.events-deco',                  'right', 0  ],
+        ['.web-featured',                 'up',    0  ],
+        ['.footer__inner',                'up',    0  ],
+        /* ── kth.html showcase ── */
+        ['.kth-overview__eyebrow',        'left',  0  ],
+        ['.kth-overview__desc',           'up',    0  ],
+        ['.kth-meta-block',               'up',    75 ],
+        ['.kth-deliverables__header',     'up',    0  ],
+        ['.kth-deliv-item',               'up',    65 ],
+        ['.kth-3d__eyebrow',              'up',    0  ],
+        ['.kth-3d__caption',              'up',    0  ],
+        ['.kth-gallery__item',            'up',    50 ],
+        ['.kth-specs__header',            'up',    0  ],
+        ['.kth-spec-row',                 'left',  38 ],
+        ['.kth-impact__eyebrow',          'up',    0  ],
+        ['.kth-impact__stat',             'scale', 90 ],
+        ['.kth-cta__eyebrow',             'up',    0  ],
+        ['.kth-cta__title',               'up',    0  ],
+        ['.kth-cta__sub',                 'up',    0  ],
+        ['.kth-cta__actions',             'up',    0  ],
+    ];
+
+    var DIR = { up:'sr-up', left:'sr-left', right:'sr-right', scale:'sr-scale' };
+
+    /* Never touch elements inside the hero or the existing scard animation */
+    var SKIP = '.hero, .kth-hero, .kthp-hero, #preloader, .scard';
+
+    /* Tag every matched element */
+    GROUPS.forEach(function (g) {
+        var sel = g[0], dir = g[1], stagger = g[2];
+        document.querySelectorAll(sel).forEach(function (el, i) {
+            if (el.closest(SKIP))          return;   /* inside excluded zone */
+            if (el.classList.contains('sr')) return;  /* already tagged */
+            el.classList.add('sr', DIR[dir] || 'sr-up');
+            if (stagger && i > 0) el.style.transitionDelay = (i * stagger) + 'ms';
+        });
+    });
+
+    /* Observe every tagged element */
+    var obs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+            if (!entry.isIntersecting) return;
+            var el    = entry.target;
+            var delay = parseInt(el.style.transitionDelay) || 0;
+
+            el.classList.add('in');
+            obs.unobserve(el);
+
+            /* Clear the stagger delay once revealed so hover/other transitions
+               on the same element are not inadvertently delayed. */
+            if (delay) {
+                setTimeout(function () { el.style.transitionDelay = ''; }, 850 + delay);
+            }
+        });
+    }, {
+        threshold:  0.10,
+        rootMargin: '0px 0px -55px 0px',
+    });
+
+    document.querySelectorAll('.sr').forEach(function (el) { obs.observe(el); });
+
 }());

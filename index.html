@@ -78,23 +78,11 @@
             <li class="sidebar__group" aria-hidden="true">
                 <span class="sidebar__group-label">Subsidiaries</span>
             </li>
-            <li class="sidebar__item--has-sub open" id="navGearItem">
-                <button class="sidebar__link sidebar__link--parent"
-                        id="navGearToggle"
-                        aria-expanded="true"
-                        aria-controls="navGearSub">
+            <li>
+                <a href="#gear" class="sidebar__link sidebar__link--sub" data-section="gear">
                     <span class="sidebar__link-bar"></span>
                     <span class="sidebar__link-text">IONIK Gear</span>
-                    <span class="sidebar__chevron" aria-hidden="true">›</span>
-                </button>
-                <ul class="sidebar__sub" id="navGearSub" role="list" aria-label="IONIK Gear projects">
-                    <li>
-                        <a href="#gear" class="sidebar__sublink">
-                            <span class="sidebar__sublink-dot" aria-hidden="true"></span>
-                            <span>Key to Happiness</span>
-                        </a>
-                    </li>
-                </ul>
+                </a>
             </li>
             <li>
                 <a href="#events" class="sidebar__link sidebar__link--sub" data-section="events">
@@ -108,11 +96,23 @@
                     <span class="sidebar__link-text">IONIK Creatives</span>
                 </a>
             </li>
-            <li>
-                <a href="#web" class="sidebar__link sidebar__link--sub" data-section="web">
+            <li class="sidebar__item--has-sub open" id="navWebItem">
+                <button class="sidebar__link sidebar__link--parent"
+                        id="navWebToggle"
+                        aria-expanded="true"
+                        aria-controls="navWebSub">
                     <span class="sidebar__link-bar"></span>
                     <span class="sidebar__link-text">IONIK Web</span>
-                </a>
+                    <span class="sidebar__chevron" aria-hidden="true">›</span>
+                </button>
+                <ul class="sidebar__sub" id="navWebSub" role="list" aria-label="IONIK Web projects">
+                    <li>
+                        <a href="#web" class="sidebar__sublink">
+                            <span class="sidebar__sublink-dot" aria-hidden="true"></span>
+                            <span>Key to Happiness</span>
+                        </a>
+                    </li>
+                </ul>
             </li>
             <li class="sidebar__sep" aria-hidden="true"></li>
             <li>
@@ -251,7 +251,6 @@
                             </div>
                         </dl>
 
-                        <a href="kth.html" class="btn btn-ghost gp-card__cta">Go to pre-order →</a>
                     </div>
 
                     <div class="gp-card__glow" aria-hidden="true"></div>
@@ -376,6 +375,25 @@
                     From concept to deployment — full-stack development and digital infrastructure built for scale and performance.
                 </p>
             </header>
+
+            <!-- Featured Project -->
+            <div class="web-featured">
+                <a href="kth.html" class="web-project-card" aria-label="Key to Happiness case study">
+                    <div class="web-project-card__media">
+                        <img src="Assets/KTH_gear3.jpeg" alt="Key to Happiness Digital Experience" loading="lazy">
+                    </div>
+                    <div class="web-project-card__info">
+                        <div class="web-project-card__tags">
+                            <span class="web-project-card__tag">Web Design</span>
+                            <span class="web-project-card__tag">3D Interactive</span>
+                            <span class="web-project-card__tag">Event Tech</span>
+                        </div>
+                        <h3 class="web-project-card__title">Key to<br>Happiness</h3>
+                        <p class="web-project-card__sub">Digital experience design for SKG Events &times; KTH 10th Anniversary — Sri Lanka's first festival utility gear showcase.</p>
+                        <span class="btn btn-ghost gp-card__cta">View Case Study →</span>
+                    </div>
+                </a>
+            </div>
 
             <div class="services__grid">
 
