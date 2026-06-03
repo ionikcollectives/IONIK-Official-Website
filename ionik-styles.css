@@ -3514,6 +3514,11 @@ body[data-theme="light"] .sidebar__sublink.active .sidebar__sublink-dot {
     }
 }
 
+/* ── Web project card button — teal text at rest ── */
+.web-project-card .gp-card__cta {
+    color: var(--c-teal) !important;
+}
+
 /* ── Same trigger for the Web featured project card ── */
 .web-project-card:hover .gp-card__cta {
     border-color: rgba(0, 201, 177, 0.18) !important;
