@@ -737,7 +737,43 @@ window.scrollTo(0, 0);
 
 
 /* ─────────────────────────────────────────────────────────
-   11. PAGE TRANSITION
+   11. FAQ ACCORDION
+   Click to expand/collapse. Only one item open at a time.
+───────────────────────────────────────────────────────── */
+(function FaqAccordion() {
+    var items = document.querySelectorAll('.faq-item');
+    if (!items.length) return;
+
+    items.forEach(function (item) {
+        var trigger = item.querySelector('.faq-trigger');
+        var body    = item.querySelector('.faq-body');
+        if (!trigger || !body) return;
+
+        trigger.addEventListener('click', function () {
+            var isOpen = item.classList.contains('open');
+
+            /* Close all */
+            items.forEach(function (i) {
+                i.classList.remove('open');
+                var b = i.querySelector('.faq-body');
+                var t = i.querySelector('.faq-trigger');
+                if (b) b.style.maxHeight = '0';
+                if (t) t.setAttribute('aria-expanded', 'false');
+            });
+
+            /* Open clicked if it was closed */
+            if (!isOpen) {
+                item.classList.add('open');
+                body.style.maxHeight = body.scrollHeight + 'px';
+                trigger.setAttribute('aria-expanded', 'true');
+            }
+        });
+    });
+}());
+
+
+/* ─────────────────────────────────────────────────────────
+   12. PAGE TRANSITION (formerly 11)
    Cinematic dark curtain + teal neon edge sweeps between pages.
 
    EXIT  → curtain rises from below viewport, covering everything.
@@ -848,6 +884,8 @@ window.scrollTo(0, 0);
         ['.events-content',               'left',  0  ],
         ['.events-deco',                  'right', 0  ],
         ['.web-featured',                 'up',    0  ],
+        ['.how-step',                     'up',    70 ],
+        ['.faq-item',                     'up',    40 ],
         ['.footer__inner',                'up',    0  ],
         /* ── kth.html showcase ── */
         ['.kth-overview__eyebrow',        'left',  0  ],
