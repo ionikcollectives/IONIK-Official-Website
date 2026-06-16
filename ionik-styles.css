@@ -545,12 +545,17 @@ body.content-ready .mobile-logo {
     transition: height 0.15s linear;
 }
 
-/* Nav */
+/* Nav — scrolls internally so the bottom CTA/email stay pinned
+   and reachable even when the "IONIK Web" sub-menu is expanded
+   and the list grows taller than the sidebar's fixed height
+   (this was previously pushing the CTA off-screen on mobile). */
 .sidebar__nav {
     flex: 1;
+    min-height: 0;
+    overflow-y: auto;
     padding: 20px 0;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
 }
 .sidebar__nav ul {
     width: 100%;
