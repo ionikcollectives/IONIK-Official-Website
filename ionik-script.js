@@ -207,13 +207,18 @@ window.scrollTo(0, 0);
 
             /* 2. After mega-glitch (220ms) — shatter + Phase 1 explode */
             setTimeout(function () {
-                var shardData    = buildShards(logoImg);
-                var sidebarLogoEl = document.getElementById('sidebarLogo');
+                var shardData = buildShards(logoImg);
                 el.classList.add('is-leaving');
 
-                /* Phase 2: shards have been flying ~620ms, now pull them to sidebar */
+                /* Below 860px the sidebar (and its logo) sits off-canvas
+                   and isn't visible until the drawer is opened, so fly
+                   the shards to the mobile top logo instead. */
+                var isMobile  = window.innerWidth <= 860;
+                var reassembleTarget = document.getElementById(isMobile ? 'mobileLogo' : 'sidebarLogo');
+
+                /* Phase 2: shards have been flying ~620ms, now pull them to the logo */
                 setTimeout(function () {
-                    reassembleShards(shardData, sidebarLogoEl);
+                    reassembleShards(shardData, reassembleTarget);
                 }, 620);
 
                 /* Page ready — timed so reassembly finishes before hero enters */
