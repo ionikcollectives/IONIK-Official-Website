@@ -17,6 +17,12 @@
     var W = window.innerWidth;
     var H = window.innerHeight;
 
+    /* Render only while the hero (the only section this shows
+       through) is still on screen. Recomputed on resize since
+       hero height is responsive. */
+    var heroEl    = document.getElementById('home');
+    var visibleTo = heroEl ? heroEl.offsetHeight : H;
+
     /* ── Scene & Camera ── */
     var scene  = new THREE.Scene();
     var camera = new THREE.PerspectiveCamera(38, W / H, 0.01, 2000);
@@ -24,11 +30,11 @@
     /* ── Renderer — transparent background ── */
     var renderer;
     try {
-        renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+        renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: false });
     } catch (e) {
         return; /* WebGL not supported — degrade silently */
     }
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
     renderer.setSize(W, H);
     renderer.outputEncoding    = THREE.sRGBEncoding;
     renderer.toneMapping       = THREE.ACESFilmicToneMapping;
@@ -135,11 +141,22 @@
         camera.aspect = W / H;
         camera.updateProjectionMatrix();
         renderer.setSize(W, H);
+        visibleTo = heroEl ? heroEl.offsetHeight : H;
     });
 
-    /* ── Render loop ── */
+    /* ── Render loop ──
+       This canvas sits behind every section (z-index:-1) and is
+       only ever visible through the hero, since every section
+       below has an opaque background. Rendering it at full cost
+       on every frame for the whole page competes with the main
+       thread for scroll input handling and is a real source of
+       scroll jank (most noticeable right as the page scrolls past
+       the hero). Skip the actual render call once scrolled past
+       it — visually identical, far cheaper. */
     function tick() {
         requestAnimationFrame(tick);
+
+        if (window.scrollY > visibleTo) return;
 
         var t = (Date.now() - startTime) * 0.001; /* seconds */
 

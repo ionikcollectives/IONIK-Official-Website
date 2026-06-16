@@ -48,7 +48,7 @@
     --section-pad: 120px;
 }
 
-html { scroll-behavior: smooth; font-size: 16px; overflow-x: hidden; }
+html { font-size: 16px; overflow-x: hidden; overflow-anchor: none; }
 
 body {
     background: var(--c-bg);
@@ -62,7 +62,7 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
-body.no-scroll { overflow: hidden; }
+html.no-scroll, body.no-scroll { overflow: hidden; height: 100%; }
 
 a       { color: inherit; text-decoration: none; }
 ul      { list-style: none; }
@@ -297,6 +297,7 @@ body::after {
 /* Full preloader fades out after shards have flown */
 .preloader.is-leaving {
     animation: preloaderFadeOut 0.45s ease-out 0.68s forwards;
+    pointer-events: none;
 }
 @keyframes preloaderFadeOut {
     from { opacity: 1; }
@@ -766,7 +767,7 @@ body.content-ready .sidebar__logo-img {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 80px 48px 80px;
+    padding: clamp(32px, 6vmin, 80px) 48px;
     text-align: center;
     overflow: hidden;
 }
@@ -782,11 +783,31 @@ body.content-ready .sidebar__logo-img {
     pointer-events: none;
 }
 
+/* Icon watermark background */
+.hero__icon-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+}
+.hero__icon-bg-img {
+    max-width: 85%;
+    max-height: 85%;
+    object-fit: contain;
+    opacity: 0.14;
+}
+.hero__icon-bg-img--light { display: none; }
+body[data-theme="light"] .hero__icon-bg-img--dark  { display: none; }
+body[data-theme="light"] .hero__icon-bg-img--light { display: block; }
+
 /* Hero content */
 .hero__content {
     position: relative;
     z-index: 2;
-    max-width: 900px;
+    max-width: 1100px;
 }
 
 .hero__eyebrow {
@@ -795,26 +816,27 @@ body.content-ready .sidebar__logo-img {
     font-weight: 300;
     letter-spacing: 0.42em;
     color: var(--c-muted);
-    margin-bottom: 2rem;
+    margin-bottom: clamp(12px, 3vmin, 32px);
 }
 
 .hero__title {
     font-family: var(--ff-display);
-    font-size: clamp(60px, 13vw, 148px);
+    font-size: clamp(36px, 9vmin, 92px);
     font-weight: 900;
     letter-spacing: -0.025em;
-    line-height: 0.88;
+    line-height: 0.96;
     text-transform: uppercase;
-    margin-bottom: 2.5rem;
+    margin-bottom: clamp(12px, 3vmin, 40px);
+    white-space: nowrap;
 }
 .hero__title span { display: block; }
 
 .hero__sub {
-    font-size: clamp(14px, 1.5vw, 16.5px);
+    font-size: clamp(13px, 1.6vmin, 16.5px);
     font-weight: 300;
     color: var(--c-muted);
     max-width: 500px;
-    margin: 0 auto 3rem;
+    margin: 0 auto clamp(16px, 3.5vmin, 48px);
     line-height: 1.75;
 }
 
@@ -824,7 +846,7 @@ body.content-ready .sidebar__logo-img {
     justify-content: center;
     gap: 2rem;
     flex-wrap: wrap;
-    margin-bottom: 2.5rem;
+    margin-bottom: clamp(16px, 3vmin, 40px);
 }
 
 .hero__foot {
@@ -854,7 +876,6 @@ body.content-ready .sidebar__logo-img {
 body.content-ready .hero__eyebrow              { opacity: 1; transform: none; transition-delay: 0.06s; }
 body.content-ready .hero__title span:nth-child(1) { opacity: 1; transform: none; transition-delay: 0.14s; }
 body.content-ready .hero__title span:nth-child(2) { opacity: 1; transform: none; transition-delay: 0.22s; }
-body.content-ready .hero__title span:nth-child(3) { opacity: 1; transform: none; transition-delay: 0.30s; }
 body.content-ready .hero__sub                  { opacity: 1; transform: none; transition-delay: 0.38s; }
 body.content-ready .hero__actions              { opacity: 1; transform: none; transition-delay: 0.46s; }
 body.content-ready .hero__foot                 { opacity: 1; transform: none; transition-delay: 0.54s; }
@@ -887,6 +908,7 @@ body.content-ready .hero__foot                 { opacity: 1; transform: none; tr
     content: '';
     position: absolute;
     inset: 0;
+    z-index: -1;
     background: var(--c-bg);
     transform: scaleX(0);
     transform-origin: left;
@@ -3665,7 +3687,7 @@ body[data-theme="light"] .gp-card__cta::before {
 @media (max-width: 480px) {
 
     /* Hero title floor too high on 320px */
-    .hero__title span { font-size: clamp(44px, 13vw, 80px); }
+    .hero__title span { font-size: clamp(34px, 11vw, 64px); white-space: normal; }
 
     /* Hero buttons stack full-width */
     .hero__actions {

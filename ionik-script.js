@@ -38,6 +38,7 @@ window.scrollTo(0, 0);
 
     var MIN_MS = 2900;
     var t0     = performance.now();
+    document.documentElement.classList.add('no-scroll');
     document.body.classList.add('no-scroll');
 
     /* ── Image glitch burst (15 rapid transform jitter frames) ── */
@@ -218,6 +219,7 @@ window.scrollTo(0, 0);
                 /* Page ready — timed so reassembly finishes before hero enters */
                 setTimeout(function () {
                     el.classList.add('is-gone');
+                    document.documentElement.classList.remove('no-scroll');
                     document.body.classList.remove('no-scroll');
                     document.body.classList.add('content-ready');
                 }, 1450);
@@ -322,6 +324,7 @@ window.scrollTo(0, 0);
         toggle.setAttribute('aria-expanded', 'true');
         toggle.setAttribute('aria-label', 'Close menu');
         if (overlay) { overlay.classList.add('open'); overlay.removeAttribute('aria-hidden'); }
+        document.documentElement.classList.add('no-scroll');
         document.body.classList.add('no-scroll');
     }
 
@@ -332,6 +335,7 @@ window.scrollTo(0, 0);
         toggle.setAttribute('aria-expanded', 'false');
         toggle.setAttribute('aria-label', 'Open menu');
         if (overlay) { overlay.classList.remove('open'); overlay.setAttribute('aria-hidden', 'true'); }
+        document.documentElement.classList.remove('no-scroll');
         document.body.classList.remove('no-scroll');
     }
 
@@ -374,8 +378,44 @@ window.scrollTo(0, 0);
         setActive(current.id);
     }
 
-    window.addEventListener('scroll', updateSpy, { passive: true });
+    /* rAF-throttled — trackpads fire far more 'scroll' events per
+       second than the display can paint. Running offsetTop reads
+       and classList writes on every single event forces repeated
+       synchronous layout flushes mid-gesture, which reads as the
+       scroll stuttering/catching, especially on trackpads. */
+    var spyTicking = false;
+    window.addEventListener('scroll', function () {
+        if (!spyTicking) {
+            requestAnimationFrame(function () {
+                updateSpy();
+                spyTicking = false;
+            });
+            spyTicking = true;
+        }
+    }, { passive: true });
     updateSpy();
+}());
+
+
+/* ─────────────────────────────────────────────────────────
+   3b. ANCHOR SMOOTH SCROLL
+   CSS `scroll-behavior: smooth` was removed because it also
+   smooths native wheel/trackpad scrolling, causing each wheel
+   tick to trigger its own scroll animation (a stutter-step
+   feel). Smooth scrolling is now applied only to in-page
+   anchor link clicks, leaving wheel/trackpad scroll native.
+───────────────────────────────────────────────────────── */
+(function AnchorSmoothScroll() {
+    document.addEventListener('click', function (e) {
+        var link = e.target.closest('a[href^="#"]');
+        if (!link) return;
+        var id = link.getAttribute('href').slice(1);
+        if (!id) return;
+        var target = document.getElementById(id);
+        if (!target) return;
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
 }());
 
 
