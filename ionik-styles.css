@@ -908,7 +908,7 @@ body.content-ready .hero__foot                 { opacity: 1; transform: none; tr
     content: '';
     position: absolute;
     inset: 0;
-    z-index: -1;
+    z-index: 0;
     background: var(--c-bg);
     transform: scaleX(0);
     transform-origin: left;
@@ -916,6 +916,7 @@ body.content-ready .hero__foot                 { opacity: 1; transform: none; tr
 }
 .btn-fill:hover::before { transform: scaleX(1); }
 .btn-fill:hover         { color: #ffffff; }
+.btn-fill .btn-label    { position: relative; z-index: 1; }
 
 .btn-ghost {
     color: var(--c-muted);
