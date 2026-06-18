@@ -425,6 +425,31 @@ window.scrollTo(0, 0);
 
 
 /* ─────────────────────────────────────────────────────────
+   3c. SCROLL-EXIT VEIL
+   Fixed overlay at top of viewport. Fades in as soon as the
+   user scrolls, so content exiting the top blurs + dissolves.
+   Opacity 0 at rest → 1 within the first 140 px of scroll.
+───────────────────────────────────────────────────────── */
+(function ScrollExitVeil() {
+    var veil = document.querySelector('.scroll-exit-veil');
+    if (!veil) return;
+
+    function update() {
+        var opacity = Math.min(window.scrollY / 140, 1);
+        veil.style.opacity = opacity;
+    }
+
+    var ticking = false;
+    window.addEventListener('scroll', function () {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(function () { update(); ticking = false; });
+    }, { passive: true });
+
+    update();
+}());
+
+/* ─────────────────────────────────────────────────────────
    4. SCROLL PROGRESS
    Updates the thin fill bar on the right edge of the sidebar.
 ───────────────────────────────────────────────────────── */
@@ -601,14 +626,17 @@ window.scrollTo(0, 0);
     function validateAll() {
         var nameEl    = document.getElementById('f-name');
         var emailEl   = document.getElementById('f-email');
+        var serviceEl = document.getElementById('f-service');
         var messageEl = document.getElementById('f-message');
 
         var okName    = validate(nameEl,    function (v) { return v.trim().length > 0; });
         var okEmail   = validate(emailEl,   function (v) { return isEmail(v); });
+        var okService = validate(serviceEl, function (v) { return v !== ''; });
         var okMessage = validate(messageEl, function (v) { return v.trim().length > 0; });
 
         if (!okName)    { if (nameEl)    nameEl.focus();    return false; }
         if (!okEmail)   { if (emailEl)   emailEl.focus();   return false; }
+        if (!okService) { if (serviceEl) serviceEl.focus(); return false; }
         if (!okMessage) { if (messageEl) messageEl.focus(); return false; }
         return true;
     }
@@ -622,6 +650,13 @@ window.scrollTo(0, 0);
             if (ok) clearInvalid(this);
         });
     });
+
+    var serviceEl = document.getElementById('f-service');
+    if (serviceEl) {
+        serviceEl.addEventListener('change', function () {
+            if (this.value !== '') clearInvalid(this);
+        });
+    }
 
     function setLoading(on) {
         submitBtn.disabled = on;
@@ -640,6 +675,7 @@ window.scrollTo(0, 0);
                 subject:    'New Project Inquiry — IONIK',
                 name:       document.getElementById('f-name').value.trim(),
                 email:      document.getElementById('f-email').value.trim(),
+                service:    document.getElementById('f-service').value,
                 message:    document.getElementById('f-message').value.trim()
             };
 

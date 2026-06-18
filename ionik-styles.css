@@ -83,6 +83,32 @@ textarea { font: inherit; }
     display: block;
 }
 
+/* ── Scroll-exit veil ──
+   Fixed overlay at viewport top. Opacity driven by JS (0 at rest,
+   1 once scrolled). Blurs + fades content as it exits the top. */
+.scroll-exit-veil {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 220px;
+    z-index: 900;
+    pointer-events: none;
+    opacity: 0;
+    background: linear-gradient(to bottom,
+        rgba(2,2,2,1)   0%,
+        rgba(2,2,2,0.55) 45%,
+        rgba(2,2,2,0)   100%);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    -webkit-mask-image: linear-gradient(to bottom, black 0%, black 30%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 0%, black 30%, transparent 100%);
+}
+body[data-theme="light"] .scroll-exit-veil {
+    background: linear-gradient(to bottom,
+        rgba(245,245,242,1)   0%,
+        rgba(245,245,242,0.55) 45%,
+        rgba(245,245,242,0)   100%);
+}
+
 /* Subtle film-grain overlay via SVG filter */
 body::after {
     content: '';
@@ -819,19 +845,25 @@ body.content-ready .mobile-logo {
 
 /* Icon watermark background */
 .hero__icon-bg {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
+    position: fixed;
+    top: 0;
+    left: var(--sidebar-w);
+    right: 0;
+    bottom: 0;
+    z-index: 0;
     display: flex;
     align-items: center;
     justify-content: center;
     pointer-events: none;
 }
+@media (max-width: 860px) {
+    .hero__icon-bg { left: 0; }
+}
 .hero__icon-bg-img {
     max-width: 85%;
     max-height: 85%;
     object-fit: contain;
-    opacity: 0.14;
+    opacity: 0.22;
 }
 .hero__icon-bg-img--light { display: none; }
 body[data-theme="light"] .hero__icon-bg-img--dark  { display: none; }
@@ -1299,6 +1331,40 @@ body.content-ready .hero__foot                 { opacity: 1; transform: none; tr
 }
 .field__textarea { min-height: 96px; line-height: 1.6; overflow: hidden; }
 
+/* Select variant */
+.field--select { padding-bottom: 2px; }
+.field--select select.field__input {
+    cursor: pointer;
+    padding-right: 22px;
+    background-color: transparent;
+    color: var(--c-text);
+    outline: none;
+    box-shadow: none;
+    -webkit-appearance: none;
+}
+select.field__input option {
+    background: #0d0d0d;
+    color: #ffffff;
+}
+.field--select::after {
+    content: '▾';
+    position: absolute;
+    right: 0; bottom: 12px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.32);
+    pointer-events: none;
+    transition: color 0.26s ease;
+}
+.field--select:focus-within::after { color: rgba(255,255,255,0.72); }
+select.field__input:not(:invalid) ~ .field__label,
+select.field__input:focus ~ .field__label {
+    top: -6px;
+    font-size: 9.5px;
+    letter-spacing: 0.18em;
+    color: rgba(255,255,255,0.52);
+    text-transform: uppercase;
+}
+
 .field__label {
     position: absolute;
     top: 14px; left: 0;
@@ -1735,6 +1801,11 @@ body[data-theme="light"] .field__input:-webkit-autofill:focus {
 body[data-theme="light"] .field__label { color: rgba(0,0,0,0.36); }
 body[data-theme="light"] .field__input:focus ~ .field__label,
 body[data-theme="light"] .field__input:not(:placeholder-shown) ~ .field__label { color: rgba(0,0,0,0.54); }
+body[data-theme="light"] select.field__input:not(:invalid) ~ .field__label,
+body[data-theme="light"] select.field__input:focus ~ .field__label { color: rgba(0,0,0,0.54); }
+body[data-theme="light"] .field--select::after { color: rgba(0,0,0,0.30); }
+body[data-theme="light"] .field--select:focus-within::after { color: rgba(0,0,0,0.60); }
+body[data-theme="light"] select.field__input option { background: #f5f5f2; color: #0d0d0d; }
 body[data-theme="light"] .field__bar                   { background: #0d0d0d; }
 body[data-theme="light"] .field.invalid .field__input  { border-bottom-color: rgba(185,28,28,0.40); }
 body[data-theme="light"] .field.invalid .field__bar    { background: rgba(185,28,28,0.65); }
@@ -2540,6 +2611,24 @@ body[data-theme="light"] .gp-card__model-hint { color: rgba(0,0,0,0.22); }
     align-self: flex-start;
     margin-top: auto;
 }
+
+.gp-card__desc {
+    font-size: 13px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.54);
+    line-height: 1.65;
+    margin-bottom: 1.5rem;
+}
+
+.gp-card__cta-btn {
+    align-self: flex-start;
+    font-size: 12px;
+    padding: 10px 20px;
+    white-space: normal;
+    text-align: center;
+}
+
+body[data-theme="light"] .gp-card__desc { color: rgba(0,0,0,0.50); }
 
 /* Ambient glow */
 .gp-card__glow {
