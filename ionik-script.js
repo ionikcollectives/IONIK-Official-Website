@@ -544,6 +544,18 @@ window.scrollTo(0, 0);
     cards.forEach(function (card) { observer.observe(card); });
 }());
 
+/* How-steps: add .in-view when scrolled into view (used by touch hover styles) */
+(function HowStepEntrance() {
+    var steps = document.querySelectorAll('.how-step');
+    if (!steps.length || typeof IntersectionObserver === 'undefined') return;
+    var obs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+            entry.target.classList.toggle('in-view', entry.isIntersecting);
+        });
+    }, { threshold: 0.35 });
+    steps.forEach(function (step) { obs.observe(step); });
+}());
+
 
 /* ─────────────────────────────────────────────────────────
    7. THEME TOGGLE

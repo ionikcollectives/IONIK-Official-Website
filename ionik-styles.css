@@ -27,11 +27,11 @@
     --glow-sm: 0 0 10px rgba(255,255,255,0.40), 0 0 36px rgba(255,255,255,0.12);
     --glow-md: 0 0 18px rgba(255,255,255,0.55), 0 0 60px rgba(255,255,255,0.18), 0 0 110px rgba(255,255,255,0.06);
 
-    /* KTH Teal */
-    --c-teal:         #00c9b1;
-    --c-teal-dim:     rgba(0, 201, 177, 0.55);
-    --glow-teal-sm:   0 0 12px rgba(0, 201, 177, 0.22);
-    --glow-teal-md:   0 0 28px rgba(0, 201, 177, 0.28), 0 0 60px rgba(0, 201, 177, 0.10);
+    /* Accent — white in dark mode, black in light mode */
+    --c-teal:         rgba(255,255,255,0.88);
+    --c-teal-dim:     rgba(255,255,255,0.40);
+    --glow-teal-sm:   0 0 12px rgba(255,255,255,0.14);
+    --glow-teal-md:   0 0 28px rgba(255,255,255,0.18), 0 0 60px rgba(255,255,255,0.06);
 
     /* Typography */
     --ff-display: 'Barlow Condensed', sans-serif;
@@ -466,6 +466,56 @@ body::after {
 
 @media (hover: none) {
     .cursor-dot, .cursor-ring { display: none; }
+}
+
+/* ── Touch scroll-driven "hover" effects ──────────────────
+   On touch devices there is no cursor hover. Instead, the
+   same visual effects fire when elements scroll into view
+   (.in-view class added by IntersectionObserver). */
+@media (hover: none) {
+
+    /* Service cards */
+    .scard.in-view {
+        background: rgba(255,255,255,0.032);
+        border-color: rgba(255,255,255,0.13);
+    }
+    .scard.in-view .scard__num {
+        color: var(--c-teal);
+        text-shadow: 0 0 32px rgba(255,255,255,0.12);
+    }
+    .scard.in-view .scard__title   { color: var(--c-text); }
+    .scard.in-view .scard__desc    { color: rgba(255,255,255,0.58); }
+    .scard.in-view .scard__arrow   { color: rgba(255,255,255,0.7); transform: translate(3px,-3px); }
+    .scard.in-view .scard__glow-line { transform: scaleX(1); }
+
+    /* How-step cards */
+    .how-step.in-view {
+        border-color: rgba(255,255,255,0.18);
+        background: rgba(255,255,255,0.03);
+    }
+    .how-step.in-view .how-step__num  {
+        color: var(--c-teal);
+        text-shadow: 0 0 40px rgba(255,255,255,0.12);
+    }
+    .how-step.in-view .how-step__line { transform: scaleX(1); }
+
+    /* Light mode overrides */
+    body[data-theme="light"] .scard.in-view {
+        background: rgba(0,0,0,0.034);
+        border-color: rgba(0,0,0,0.14);
+    }
+    body[data-theme="light"] .scard.in-view .scard__num  { color: rgba(0,0,0,0.70); text-shadow: none; }
+    body[data-theme="light"] .scard.in-view .scard__title { color: #0d0d0d; }
+    body[data-theme="light"] .scard.in-view .scard__desc  { color: rgba(0,0,0,0.76); }
+    body[data-theme="light"] .scard.in-view .scard__arrow { color: rgba(0,0,0,0.70); }
+    body[data-theme="light"] .scard.in-view .scard__glow-line {
+        background: linear-gradient(90deg, transparent, rgba(0,0,0,0.18), transparent);
+    }
+    body[data-theme="light"] .how-step.in-view {
+        border-color: rgba(0,0,0,0.18);
+        background: rgba(0,0,0,0.03);
+    }
+    body[data-theme="light"] .how-step.in-view .how-step__num { color: rgba(0,0,0,0.70); text-shadow: none; }
 }
 
 
@@ -1108,7 +1158,7 @@ body.content-ready .hero__foot                 { opacity: 1; transform: none; tr
 }
 .scard.in-view:hover .scard__num {
     color: var(--c-teal);
-    text-shadow: 0 0 32px rgba(0,201,177,0.35);
+    text-shadow: 0 0 32px rgba(255,255,255,0.12);
 }
 
 /* Card content */
@@ -1715,6 +1765,10 @@ body.is-switching .s-toggle span {
 body[data-theme="light"] {
     background: #f5f5f2;
     color:      #0d0d0d;
+    --c-teal:         rgba(0,0,0,0.82);
+    --c-teal-dim:     rgba(0,0,0,0.40);
+    --glow-teal-sm:   0 0 12px rgba(0,0,0,0.10);
+    --glow-teal-md:   0 0 28px rgba(0,0,0,0.12), 0 0 60px rgba(0,0,0,0.05);
 }
 
 /* Scrollbar */
@@ -1767,7 +1821,7 @@ body[data-theme="light"] .services__grid                     { border-color: rgb
 body[data-theme="light"] .scard                              { background: rgba(0,0,0,0.018); border-color: rgba(0,0,0,0.08); }
 body[data-theme="light"] .scard.in-view:hover                { background: rgba(0,0,0,0.034); border-color: rgba(0,0,0,0.14); }
 body[data-theme="light"] .scard__num                         { color: rgba(0,0,0,0.08); }
-body[data-theme="light"] .scard.in-view:hover .scard__num   { color: rgba(0,160,143,0.70); text-shadow: 0 0 24px rgba(0,180,160,0.20); }
+body[data-theme="light"] .scard.in-view:hover .scard__num   { color: rgba(0,0,0,0.70); text-shadow: none; }
 body[data-theme="light"] .scard__title                       { color: rgba(0,0,0,0.82); }
 body[data-theme="light"] .scard.in-view:hover .scard__title  { color: #0d0d0d; }
 body[data-theme="light"] .scard__desc                        { color: rgba(0,0,0,0.60); }
@@ -1854,7 +1908,7 @@ body[data-theme="light"] .footer__copy        { color: rgba(0,0,0,0.38); }
     font-weight: 600;
     letter-spacing: 0.38em;
     text-transform: uppercase;
-    color: rgba(255,255,255,0.14);
+    color: rgba(255,255,255,0.45);
 }
 
 .sidebar__sep {
@@ -1870,7 +1924,7 @@ body[data-theme="light"] .footer__copy        { color: rgba(0,0,0,0.38); }
     font-size: 10.5px;
 }
 
-body[data-theme="light"] .sidebar__group-label { color: rgba(0,0,0,0.18); }
+body[data-theme="light"] .sidebar__group-label { color: rgba(255,255,255,0.45); }
 body[data-theme="light"] .sidebar__sep         { background: rgba(0,0,0,0.06); }
 
 
@@ -3990,7 +4044,7 @@ body[data-theme="light"] .web-project-card__sub { color: rgba(0,0,0,0.45); }
     background: var(--c-teal);
     margin: 0 2.5rem;
     flex-shrink: 0;
-    box-shadow: 0 0 6px rgba(0,201,177,0.6);
+    box-shadow: 0 0 6px rgba(255,255,255,0.25);
 }
 @keyframes marqueeRun {
     from { transform: translateX(0); }
@@ -4026,8 +4080,8 @@ body[data-theme="light"] .marquee__item { color: rgba(0,0,0,0.58); }
     cursor: default;
 }
 .how-step:hover {
-    border-color: rgba(0,201,177,0.22);
-    background: rgba(0,201,177,0.025);
+    border-color: rgba(255,255,255,0.18);
+    background: rgba(255,255,255,0.03);
 }
 .how-step__num {
     font-family: var(--ff-display);
@@ -4042,7 +4096,7 @@ body[data-theme="light"] .marquee__item { color: rgba(0,0,0,0.58); }
 }
 .how-step:hover .how-step__num {
     color: var(--c-teal);
-    text-shadow: 0 0 40px rgba(0,201,177,0.30);
+    text-shadow: 0 0 40px rgba(255,255,255,0.12);
 }
 .how-step__title {
     font-family: var(--ff-display);
@@ -4078,7 +4132,7 @@ body[data-theme="light"] .marquee__item { color: rgba(0,0,0,0.58); }
     top: 2.5rem;
     right: -14px;
     font-size: 16px;
-    color: rgba(0,201,177,0.25);
+    color: rgba(255,255,255,0.20);
     z-index: 2;
     pointer-events: none;
 }
@@ -4092,7 +4146,7 @@ body[data-theme="light"] .marquee__item { color: rgba(0,0,0,0.58); }
     .how-steps { grid-template-columns: 1fr; }
 }
 body[data-theme="light"] .how-step { background: rgba(0,0,0,0.018); border-color: rgba(0,0,0,0.07); }
-body[data-theme="light"] .how-step:hover { border-color: rgba(0,180,160,0.22); background: rgba(0,180,160,0.025); }
+body[data-theme="light"] .how-step:hover { border-color: rgba(0,0,0,0.18); background: rgba(0,0,0,0.03); }
 body[data-theme="light"] .how-step__num   { color: rgba(0,0,0,0.08); }
 body[data-theme="light"] .how-step__title { color: rgba(0,0,0,0.88); }
 body[data-theme="light"] .how-step__desc  { color: rgba(0,0,0,0.62); }
@@ -4155,7 +4209,7 @@ body[data-theme="light"] .how-step__desc  { color: rgba(0,0,0,0.62); }
 }
 .faq-item.open .faq-trigger__icon {
     transform: rotate(45deg);
-    border-color: rgba(0,201,177,0.40);
+    border-color: rgba(255,255,255,0.30);
     color: var(--c-teal);
 }
 
@@ -4180,5 +4234,7 @@ body[data-theme="light"] .how-step__desc  { color: rgba(0,0,0,0.62); }
 body[data-theme="light"] .faq-trigger__q { color: rgba(0,0,0,0.60); }
 body[data-theme="light"] .faq-item.open .faq-trigger__q { color: rgba(0,0,0,0.90); }
 body[data-theme="light"] .faq-trigger__icon { border-color: rgba(0,0,0,0.12); color: rgba(0,0,0,0.35); }
+body[data-theme="light"] .faq-item.open .faq-trigger__icon { border-color: rgba(0,0,0,0.30); }
 body[data-theme="light"] .faq-body__inner { color: rgba(0,0,0,0.50); }
 body[data-theme="light"] .faq-item { border-color: rgba(0,0,0,0.08); }
+body[data-theme="light"] .how-step:not(:last-child)::after { color: rgba(0,0,0,0.20); }
