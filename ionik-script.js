@@ -13,9 +13,18 @@
 
 'use strict';
 
-/* Always start at the top on load/refresh */
+/* Always start at the top on load/refresh — unless the URL points at an
+   anchor (e.g. arriving from another page via index.html#ceylon-motion),
+   in which case that section wins instead. */
+var initialHash = window.location.hash;
 if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
-window.scrollTo(0, 0);
+if (!initialHash) window.scrollTo(0, 0);
+
+function scrollToInitialHash() {
+    if (!initialHash) return;
+    var target = document.querySelector(initialHash);
+    if (target) target.scrollIntoView({ block: 'start' });
+}
 
 
 /* ─────────────────────────────────────────────────────────
@@ -28,11 +37,12 @@ window.scrollTo(0, 0);
     var logoImg = document.getElementById('preLogoImg');
     if (!el) return;
 
-    /* Skip preloader when returning from a project page (e.g. kth.html) */
+    /* Skip preloader when returning to this page via history navigation */
     if (sessionStorage.getItem('ionik-skip-preloader')) {
         sessionStorage.removeItem('ionik-skip-preloader');
         el.style.display = 'none';
         document.body.classList.add('content-ready');
+        scrollToInitialHash();
         return;
     }
 
@@ -227,6 +237,7 @@ window.scrollTo(0, 0);
                     document.documentElement.classList.remove('no-scroll');
                     document.body.classList.remove('no-scroll');
                     document.body.classList.add('content-ready');
+                    scrollToInitialHash();
                 }, 1450);
             }, 220);
         }, wait);
@@ -363,7 +374,7 @@ window.scrollTo(0, 0);
 
     /* ── Scroll Spy ── */
     var navLinks    = sidebar.querySelectorAll('.sidebar__link[data-section]');
-    var sectionEls  = ['home', 'gear', 'kth', 'events', 'creatives', 'web', 'about', 'contact']
+    var sectionEls  = ['home', 'gear', 'events', 'creatives', 'web', 'about', 'contact']
                         .map(function (id) { return document.getElementById(id); })
                         .filter(Boolean);
 
@@ -374,6 +385,7 @@ window.scrollTo(0, 0);
     }
 
     function updateSpy() {
+        if (!sectionEls.length) return;
         /* Trigger point: 40% down from the top of the viewport */
         var trigger = window.scrollY + window.innerHeight * 0.4;
         var current = sectionEls[0];
@@ -750,12 +762,14 @@ window.scrollTo(0, 0);
         toggle.setAttribute('aria-expanded', String(isOpen));
     });
 
-    /* Auto-open when the web or kth section is active */
+    /* Auto-open when the web section is active */
     window.addEventListener('scroll', function () {
         var trigger  = window.scrollY + window.innerHeight * 0.4;
         var sections = ['home', 'gear', 'events', 'creatives', 'web', 'about', 'contact']
             .map(function (id) { return document.getElementById(id); })
             .filter(Boolean);
+
+        if (!sections.length) return;
 
         var current = sections[0];
         sections.forEach(function (el) {
@@ -866,44 +880,53 @@ window.scrollTo(0, 0);
 
 
 /* ─────────────────────────────────────────────────────────
-   12. PAGE TRANSITION (formerly 11)
-   Cinematic dark curtain + teal neon edge sweeps between pages.
+   12. PAGE TRANSITION
+   A quiet crossfade to black and back between pages — just
+   enough to soften the cut, nothing showy.
 
-   EXIT  → curtain rises from below viewport, covering everything.
-           Teal edge leads at the top.
-   ENTER → curtain continues rising off the top, revealing the
-           new page. Teal edge trails at the bottom.
+   EXIT  → curtain fades in over the page, then navigates.
+   ENTER → curtain starts opaque, fades out to reveal the
+           new page.
 
-   Works on both index.html ↔ kth.html without any extra markup.
+   Works between index.html and project pages without any extra markup.
 ───────────────────────────────────────────────────────── */
 (function PageTransition() {
 
     /* Inject curtain into DOM */
     var curtain = document.createElement('div');
     curtain.className = 'pt-curtain';
-    curtain.innerHTML = '<div class="pt-curtain__edge"></div>';
     document.body.appendChild(curtain);
 
     /* ── ENTER: arriving from another page ── */
     if (sessionStorage.getItem('ionik-pt')) {
         sessionStorage.removeItem('ionik-pt');
 
-        /* 1. Snap curtain to fully-covering position (no animation) */
+        /* 1. Snap curtain to fully-opaque (no animation) */
         curtain.style.transition = 'none';
-        curtain.style.transform  = 'translateY(0%)';
+        curtain.style.opacity    = '1';
         curtain.style.pointerEvents = 'all';
-        curtain.classList.add('pt-entering');
 
-        /* 2. Two rAFs guarantee the snap paints before the slide begins */
+        /* Safety net: whatever happens with the transition, the page must
+           never be left stuck behind the curtain. Runs once, from either
+           the transitionend or the fallback timer, whichever fires first. */
+        var revealed = false;
+        function reveal() {
+            if (revealed) return;
+            revealed = true;
+            curtain.style.cssText = '';        /* full reset */
+        }
+
+        /* 2. Two rAFs guarantee the snap paints before the fade begins */
         requestAnimationFrame(function () {
             requestAnimationFrame(function () {
-                curtain.style.transition    = 'transform 0.70s cubic-bezier(0.76,0,0.24,1) 0.08s';
-                curtain.style.transform     = 'translateY(-100%)';
+                curtain.style.transition    = 'opacity 0.45s ease';
+                curtain.style.opacity       = '0';
                 curtain.style.pointerEvents = '';
-                curtain.addEventListener('transitionend', function () {
-                    curtain.classList.remove('pt-entering');
-                    curtain.style.cssText = '';        /* full reset */
-                }, { once: true });
+                curtain.addEventListener('transitionend', reveal, { once: true });
+                /* Fallback in case transitionend never fires (blocked tab,
+                   stale cache, reduced-motion, etc.) — never leave the
+                   curtain stuck covering the page. */
+                setTimeout(reveal, 900);
             });
         });
     }
@@ -931,11 +954,11 @@ window.scrollTo(0, 0);
         sessionStorage.setItem('ionik-pt',              '1');
         sessionStorage.setItem('ionik-skip-preloader',  '1');
 
-        curtain.style.transition    = 'transform 0.52s cubic-bezier(0.76,0,0.24,1)';
-        curtain.style.transform     = 'translateY(0%)';
+        curtain.style.transition    = 'opacity 0.32s ease';
+        curtain.style.opacity       = '1';
         curtain.style.pointerEvents = 'all';
 
-        setTimeout(function () { window.location.href = href; }, 560);
+        setTimeout(function () { window.location.href = href; }, 340);
     });
 
 }());
@@ -949,14 +972,11 @@ window.scrollTo(0, 0);
    class once the element crosses the threshold.
 
    Groups:
-     • Section headers, gear card   — fade up
+     • Section headers              — fade up
      • About text / cinfo           — slide from sides
      • Stats                        — scale + rise, stagger 90ms
      • Events deco                  — slide right
-     • KTH product text children    — fade up, stagger 85ms
-     • Spec rows                    — slide left, stagger 42ms
-     • Size-chart rows              — slide right, stagger 55ms
-     • Dims columns                 — slide in from sides
+     • ceylon-motion.html showcase  — fade up / slide, staggered
      • CTA text                     — slide left
      • Footer                       — fade up
 ───────────────────────────────────────────────────────── */
@@ -969,7 +989,6 @@ window.scrollTo(0, 0);
     var GROUPS = [
         /* ── index.html ── */
         ['.section-header',               'up',    0  ],
-        ['.gp-card',                      'up',    0  ],
         ['.about__text',                  'left',  0  ],
         ['.about__stats .stat',           'scale', 90 ],
         ['.cform',                        'up',    0  ],
@@ -980,29 +999,27 @@ window.scrollTo(0, 0);
         ['.how-step',                     'up',    70 ],
         ['.faq-item',                     'up',    40 ],
         ['.footer__inner',                'up',    0  ],
-        /* ── kth.html showcase ── */
-        ['.kth-overview__eyebrow',        'left',  0  ],
-        ['.kth-overview__desc',           'up',    0  ],
-        ['.kth-meta-block',               'up',    75 ],
-        ['.kth-deliverables__header',     'up',    0  ],
-        ['.kth-deliv-item',               'up',    65 ],
-        ['.kth-3d__eyebrow',              'up',    0  ],
-        ['.kth-3d__caption',              'up',    0  ],
-        ['.kth-gallery__item',            'up',    50 ],
-        ['.kth-specs__header',            'up',    0  ],
-        ['.kth-spec-row',                 'left',  38 ],
-        ['.kth-impact__eyebrow',          'up',    0  ],
-        ['.kth-impact__stat',             'scale', 90 ],
-        ['.kth-cta__eyebrow',             'up',    0  ],
-        ['.kth-cta__title',               'up',    0  ],
-        ['.kth-cta__sub',                 'up',    0  ],
-        ['.kth-cta__actions',             'up',    0  ],
+        /* ── ceylon-motion.html showcase ── */
+        ['.cmp-overview__eyebrow',        'left',  0  ],
+        ['.cmp-overview__desc',           'up',    0  ],
+        ['.cmp-meta-block',               'up',    75 ],
+        ['.cmp-deliverables__header',     'up',    0  ],
+        ['.cmp-deliv-item',               'up',    65 ],
+        ['.cmp-gallery-wrap__header',     'up',    0  ],
+        ['.cmp-specs__header',            'up',    0  ],
+        ['.cmp-spec-row',                 'left',  38 ],
+        ['.cmp-impact__eyebrow',          'up',    0  ],
+        ['.cmp-impact__stat',             'scale', 90 ],
+        ['.cmp-cta__eyebrow',             'up',    0  ],
+        ['.cmp-cta__title',               'up',    0  ],
+        ['.cmp-cta__sub',                 'up',    0  ],
+        ['.cmp-cta__actions',             'up',    0  ],
     ];
 
     var DIR = { up:'sr-up', left:'sr-left', right:'sr-right', scale:'sr-scale' };
 
     /* Never touch elements inside the hero or the existing scard animation */
-    var SKIP = '.hero, .kth-hero, .kthp-hero, #preloader, .scard';
+    var SKIP = '.hero, .cmp-hero, #preloader, .scard';
 
     /* Tag every matched element */
     GROUPS.forEach(function (g) {
@@ -1037,5 +1054,40 @@ window.scrollTo(0, 0);
     });
 
     document.querySelectorAll('.sr').forEach(function (el) { obs.observe(el); });
+
+}());
+
+
+/* ─────────────────────────────────────────────────────────
+   13. CEYLON MOTION PICTURES — MARQUEE GALLERY
+   Two rows of stills scroll in opposite directions, looping
+   seamlessly (each track's content is tripled, animated by
+   exactly one copy-width). Mirrors the ticker on the film's
+   own site — same photo set, same grayscale-until-hover
+   treatment.
+───────────────────────────────────────────────────────── */
+(function CmpMarquee() {
+
+    var trackA = document.getElementById('cmpwTrackA');
+    var trackB = document.getElementById('cmpwTrackB');
+    if (!trackA || !trackB) return;
+
+    var ROW_A = ['SDP08475', 'SDP08480', 'SDP08512', 'SDP08576', 'SDP08624',
+                 'SDP08628', 'SDP08637', 'SDP08689', 'SDP09002', 'SDP09018', 'SDP09058'];
+    var ROW_B = ['SDP08479', 'SDP08492', 'SDP08563', 'SDP08605', 'SDP08625',
+                 'SDP08634', 'SDP08688', 'SDP08998', 'SDP09012', 'SDP09022', 'SDP09079'];
+
+    function fill(track, files) {
+        var html = '';
+        for (var copy = 0; copy < 3; copy++) {
+            files.forEach(function (f) {
+                html += '<div class="cmpw__item"><img src="Assets/CeylonMotion/marquee/' + f + '.jpg" loading="lazy" alt=""></div>';
+            });
+        }
+        track.innerHTML = html;
+    }
+
+    fill(trackA, ROW_A);
+    fill(trackB, ROW_B);
 
 }());

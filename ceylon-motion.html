@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Ceylon Motion Pictures — IONIK Web case study. The official production website for &quot;හන්තානට ඇහෙනවද&quot;, a Sri Lankan social-awareness feature film.">
+    <title>Ceylon Motion Pictures — IONIK Web Case Study</title>
+    <link rel="icon" type="image/png" media="(prefers-color-scheme: dark)"  href="Assets/IONIK/ionik_icon_white-Photoroom.png">
+    <link rel="icon" type="image/png" media="(prefers-color-scheme: light)" href="Assets/IONIK/ionik_icon_black-Photoroom.png">
+    <link rel="icon" type="image/png" href="Assets/IONIK/ionik_icon_white-Photoroom.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;900&family=Space+Grotesk:wght@300;400;500;600&family=Abhaya+Libre:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="ionik-styles.css">
+
+    <style>
+    /* ═══════════════════════════════════════════════════════
+       CEYLON MOTION PICTURES — IONIK WEB CASE STUDY
+       Palette lifted from the live film site itself: near-black,
+       deep crimson, bone white, muted mauve, gold accent.
+    ═══════════════════════════════════════════════════════ */
+
+    :root {
+        --cmp-pad:     clamp(24px, 5vw, 72px);
+        --cmp-bg:      #0A0509;
+        --cmp-crimson: #A32439;
+        --cmp-crimson-dim: rgba(163,36,57,0.55);
+        --cmp-gold:    #C9A227;
+        --cmp-bone:    #EDE8E3;
+    }
+
+    /* ── BACK LINK ── */
+    .cmp-back {
+        position: fixed;
+        top: 32px;
+        left: calc(var(--sidebar-w) + 32px);
+        z-index: 200;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-family: var(--ff-body);
+        font-size: 9px;
+        font-weight: 600;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        color: rgba(237,232,227,0.55);
+        text-decoration: none;
+        padding: 7px 16px 7px 12px;
+        border: 1px solid rgba(237,232,227,0.10);
+        border-radius: 100px;
+        background: rgba(10,5,9,0.55);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        transition: color 0.2s, border-color 0.2s;
+    }
+    .cmp-back::before { content: '←'; font-size: 12px; }
+    .cmp-back:hover   { color: var(--cmp-bone); border-color: rgba(237,232,227,0.22); }
+
+    /* ══════════════════════════════════════════════
+       1. HERO
+    ══════════════════════════════════════════════ */
+    .cmp-hero {
+        min-height: 100dvh;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        padding: 0 var(--cmp-pad) clamp(48px, 7vh, 80px);
+        overflow: hidden;
+        background: var(--cmp-bg);
+    }
+    .cmp-hero__img {
+        position: absolute;
+        inset: 0;
+        width: 100%; height: 100%;
+        object-fit: cover;
+        object-position: center 25%;
+        opacity: 0.30;
+        z-index: 0;
+        pointer-events: none;
+    }
+    .cmp-hero__overlay {
+        position: absolute;
+        inset: 0;
+        background:
+            radial-gradient(ellipse 80% 60% at 60% 20%, rgba(163,36,57,0.16) 0%, transparent 60%),
+            linear-gradient(to top, var(--cmp-bg) 0%, rgba(10,5,9,0.25) 45%, rgba(10,5,9,0.65) 100%);
+        z-index: 1;
+        pointer-events: none;
+    }
+    .cmp-hero__tag {
+        position: absolute;
+        top: clamp(80px, 12vh, 110px);
+        left: var(--cmp-pad);
+        z-index: 3;
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        font-family: var(--ff-body);
+        font-size: 8.5px;
+        font-weight: 600;
+        letter-spacing: 0.34em;
+        text-transform: uppercase;
+        color: var(--cmp-gold);
+    }
+    .cmp-hero__tag::before {
+        content: '';
+        width: 32px;
+        height: 1px;
+        background: var(--cmp-gold);
+        flex-shrink: 0;
+    }
+    .cmp-hero__status {
+        position: absolute;
+        top: clamp(80px, 12vh, 110px);
+        right: var(--cmp-pad);
+        z-index: 3;
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        font-family: var(--ff-body);
+        font-size: 9px;
+        font-weight: 600;
+        letter-spacing: 0.24em;
+        text-transform: uppercase;
+        color: rgba(237,232,227,0.55);
+    }
+    .cmp-hero__status-dot {
+        width: 6px; height: 6px;
+        border-radius: 50%;
+        background: #4caf6a;
+        box-shadow: 0 0 8px rgba(76,175,106,0.7);
+        flex-shrink: 0;
+        animation: cmpPulseDot 2.2s ease-in-out infinite;
+    }
+    @keyframes cmpPulseDot { 0%,100% { opacity: 1; } 50% { opacity: 0.35; } }
+
+    .cmp-hero__inner { position: relative; z-index: 3; }
+
+    /* Title art image replaces a typed headline */
+    .cmp-hero__logo {
+        width: min(560px, 78vw);
+        height: auto;
+        display: block;
+        margin-bottom: clamp(1.25rem, 3vh, 1.75rem);
+        filter: drop-shadow(0 0 40px rgba(163,36,57,0.35));
+    }
+    .cmp-hero__quote {
+        font-size: clamp(14px, 1.7vw, 17px);
+        font-weight: 400;
+        color: rgba(237,232,227,0.55);
+        letter-spacing: 0.01em;
+        margin-bottom: clamp(2rem, 4vh, 2.75rem);
+    }
+
+    /* Highlighted "visit the live site" callout — the focal CTA of the hero */
+    .cmp-hero__visit {
+        display: inline-flex;
+        align-items: center;
+        gap: 14px;
+        padding: 14px 26px;
+        margin-bottom: clamp(2rem, 4vh, 2.75rem);
+        border-radius: 100px;
+        border: 1px solid rgba(201,162,39,0.45);
+        background: rgba(163,36,57,0.10);
+        text-decoration: none;
+        width: fit-content;
+        position: relative;
+        overflow: visible;
+        animation: cmpVisitGlow 2.6s ease-in-out infinite;
+        transition: border-color 0.25s ease, background 0.25s ease, transform 0.25s ease;
+    }
+    .cmp-hero__visit:hover {
+        transform: translateY(-2px);
+        border-color: var(--cmp-gold);
+        background: rgba(163,36,57,0.18);
+    }
+    .cmp-hero__visit-label {
+        font-size: 8px;
+        font-weight: 600;
+        letter-spacing: 0.24em;
+        text-transform: uppercase;
+        color: rgba(237,232,227,0.45);
+        display: block;
+        margin-bottom: 2px;
+    }
+    .cmp-hero__visit-url {
+        font-family: var(--ff-display);
+        font-size: clamp(16px, 2vw, 20px);
+        font-weight: 900;
+        letter-spacing: -0.01em;
+        color: var(--cmp-bone);
+    }
+    .cmp-hero__visit-arrow {
+        font-size: 20px;
+        color: var(--cmp-gold);
+        transition: transform 0.25s var(--ease-expo);
+    }
+    .cmp-hero__visit:hover .cmp-hero__visit-arrow { transform: translate(4px, -4px); }
+    @keyframes cmpVisitGlow {
+        0%, 100% { box-shadow: 0 0 0px rgba(201,162,39,0.0); }
+        50%      { box-shadow: 0 0 26px rgba(201,162,39,0.22); }
+    }
+
+    .cmp-hero__rule {
+        height: 1px;
+        background: linear-gradient(90deg, var(--cmp-crimson) 0%, rgba(237,232,227,0.08) 50%, transparent 100%);
+        margin-bottom: clamp(1.5rem, 3vh, 2rem);
+    }
+    .cmp-hero__meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.25rem 0;
+    }
+    .cmp-hero__meta-item {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+        padding-right: clamp(1.5rem, 3vw, 3rem);
+    }
+    .cmp-hero__meta-sep {
+        width: 1px; height: 28px;
+        background: rgba(237,232,227,0.10);
+        margin-right: clamp(1.5rem, 3vw, 3rem);
+        flex-shrink: 0;
+        align-self: center;
+    }
+    .cmp-hero__meta-label {
+        font-size: 7.5px;
+        font-weight: 600;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: rgba(237,232,227,0.32);
+    }
+    .cmp-hero__meta-val {
+        font-size: 12.5px;
+        font-weight: 400;
+        color: rgba(237,232,227,0.85);
+        letter-spacing: 0.03em;
+    }
+    .cmp-hero__scroll {
+        position: absolute;
+        bottom: clamp(24px, 4vh, 36px);
+        right: var(--cmp-pad);
+        z-index: 3;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 7.5px;
+        font-weight: 600;
+        letter-spacing: 0.34em;
+        text-transform: uppercase;
+        color: rgba(237,232,227,0.22);
+        animation: cmpScrollBob 2.6s ease-in-out infinite;
+    }
+    .cmp-hero__scroll-line { width: 26px; height: 1px; background: var(--cmp-crimson-dim); }
+    @keyframes cmpScrollBob {
+        0%,100% { opacity: 0.4; transform: translateY(0); }
+        50%      { opacity: 0.9; transform: translateY(5px); }
+    }
+
+    /* ══════════════════════════════════════════════
+       2. OVERVIEW
+    ══════════════════════════════════════════════ */
+    .cmp-overview {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        border-top: 1px solid rgba(237,232,227,0.06);
+        background: var(--cmp-bg);
+    }
+    .cmp-overview__left {
+        padding: clamp(48px, 8vw, 96px) var(--cmp-pad);
+        border-right: 1px solid rgba(237,232,227,0.06);
+    }
+    .cmp-overview__eyebrow {
+        font-size: 8px;
+        font-weight: 600;
+        letter-spacing: 0.34em;
+        text-transform: uppercase;
+        color: var(--cmp-gold);
+        margin-bottom: 1.5rem;
+    }
+    .cmp-overview__desc {
+        font-size: clamp(15px, 1.8vw, 18px);
+        font-weight: 300;
+        color: rgba(237,232,227,0.72);
+        line-height: 1.85;
+        max-width: 520px;
+    }
+    .cmp-overview__desc strong { color: var(--cmp-bone); font-weight: 500; }
+    .cmp-overview__right {
+        padding: clamp(48px, 8vw, 96px) var(--cmp-pad);
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: clamp(1.5rem, 3vw, 2.5rem);
+        align-content: start;
+    }
+    .cmp-meta-block__label {
+        font-size: 7.5px;
+        font-weight: 600;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        color: rgba(237,232,227,0.28);
+        margin-bottom: 7px;
+    }
+    .cmp-meta-block__val {
+        font-size: 14px;
+        font-weight: 500;
+        color: rgba(237,232,227,0.85);
+        letter-spacing: 0.01em;
+        line-height: 1.5;
+    }
+
+    /* ══════════════════════════════════════════════
+       3. DELIVERABLES
+    ══════════════════════════════════════════════ */
+    .cmp-deliverables {
+        border-top: 1px solid rgba(237,232,227,0.05);
+        padding: clamp(56px, 8vw, 96px) var(--cmp-pad);
+        background: var(--cmp-bg);
+    }
+    .cmp-deliverables__header {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        margin-bottom: clamp(2rem, 4vw, 3.5rem);
+    }
+    .cmp-deliverables__title {
+        font-family: var(--ff-display);
+        font-size: clamp(26px, 3.5vw, 42px);
+        font-weight: 900;
+        letter-spacing: -0.02em;
+        text-transform: uppercase;
+        color: var(--cmp-bone);
+    }
+    .cmp-deliverables__count {
+        font-size: 9.5px;
+        font-weight: 300;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: rgba(237,232,227,0.22);
+    }
+    .cmp-deliv-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 2px;
+    }
+    .cmp-deliv-item {
+        padding: clamp(1.5rem, 3vw, 2.5rem) clamp(1.25rem, 2.5vw, 2rem);
+        border: 1px solid rgba(237,232,227,0.05);
+        background: rgba(237,232,227,0.014);
+        position: relative;
+        overflow: hidden;
+        transition: border-color 0.35s ease, background 0.35s ease;
+        cursor: default;
+    }
+    .cmp-deliv-item:hover {
+        border-color: var(--cmp-crimson-dim);
+        background: rgba(163,36,57,0.05);
+    }
+    .cmp-deliv-item__num {
+        font-family: var(--ff-display);
+        font-size: clamp(36px, 5vw, 56px);
+        font-weight: 900;
+        color: rgba(237,232,227,0.05);
+        line-height: 1;
+        margin-bottom: 1.25rem;
+        transition: color 0.35s ease;
+    }
+    .cmp-deliv-item:hover .cmp-deliv-item__num {
+        color: var(--cmp-crimson);
+        filter: brightness(1.5);
+        text-shadow: 0 0 32px rgba(163,36,57,0.45);
+    }
+    .cmp-deliv-item__title {
+        font-family: var(--ff-display);
+        font-size: clamp(16px, 2vw, 22px);
+        font-weight: 900;
+        letter-spacing: -0.01em;
+        text-transform: uppercase;
+        color: rgba(237,232,227,0.90);
+        margin-bottom: 0.6rem;
+        line-height: 1.1;
+    }
+    .cmp-deliv-item__desc {
+        font-size: 12px;
+        font-weight: 300;
+        color: rgba(237,232,227,0.42);
+        line-height: 1.65;
+    }
+    .cmp-deliv-item__line {
+        position: absolute;
+        bottom: 0; left: 0; right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, var(--cmp-crimson), transparent);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.4s var(--ease-expo);
+    }
+    .cmp-deliv-item:hover .cmp-deliv-item__line { transform: scaleX(1); }
+
+    /* ══════════════════════════════════════════════
+       4. GALLERY (marquee)
+    ══════════════════════════════════════════════ */
+    .cmp-gallery-wrap {
+        border-top: 1px solid rgba(237,232,227,0.05);
+        padding: clamp(56px, 8vw, 96px) var(--cmp-pad);
+        background: var(--cmp-bg);
+    }
+    .cmp-gallery-wrap__header {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        margin-bottom: clamp(2rem, 4vw, 3rem);
+    }
+    .cmp-gallery-wrap__title {
+        font-family: var(--ff-display);
+        font-size: clamp(26px, 3.5vw, 42px);
+        font-weight: 900;
+        letter-spacing: -0.02em;
+        text-transform: uppercase;
+        color: var(--cmp-bone);
+    }
+    .cmp-gallery-wrap__count {
+        font-size: 9.5px;
+        font-weight: 300;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: rgba(237,232,227,0.22);
+    }
+    .cmp-gallery-wrap .cmpw__marquee { height: clamp(220px, 30vw, 340px); }
+    .cmp-gallery-wrap .cmpw__row {
+        -webkit-mask-image: linear-gradient(to right, transparent, #000 4%, #000 96%, transparent);
+        mask-image: linear-gradient(to right, transparent, #000 4%, #000 96%, transparent);
+    }
+
+    /* ══════════════════════════════════════════════
+       5. SPECS
+    ══════════════════════════════════════════════ */
+    .cmp-specs {
+        border-top: 1px solid rgba(237,232,227,0.05);
+        padding: clamp(56px, 8vw, 96px) var(--cmp-pad);
+        background: var(--cmp-bg);
+    }
+    .cmp-specs__header {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        margin-bottom: clamp(2rem, 4vw, 3rem);
+        padding-bottom: 1.25rem;
+        border-bottom: 1px solid rgba(237,232,227,0.06);
+    }
+    .cmp-specs__title {
+        font-family: var(--ff-display);
+        font-size: clamp(28px, 4vw, 48px);
+        font-weight: 900;
+        letter-spacing: -0.02em;
+        text-transform: uppercase;
+        color: var(--cmp-bone);
+    }
+    .cmp-specs__count {
+        font-size: 9.5px;
+        font-weight: 300;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: rgba(237,232,227,0.22);
+    }
+    .cmp-specs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+    .cmp-spec-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        padding: 1rem 0;
+        border-bottom: 1px solid rgba(237,232,227,0.05);
+        gap: 1rem;
+    }
+    .cmp-specs-grid > .cmp-spec-row:nth-child(odd)  { padding-right: 3rem; border-right: 1px solid rgba(237,232,227,0.05); }
+    .cmp-specs-grid > .cmp-spec-row:nth-child(even) { padding-left: 3rem; }
+    .cmp-spec-key {
+        font-size: 9px;
+        font-weight: 600;
+        letter-spacing: 0.24em;
+        text-transform: uppercase;
+        color: rgba(237,232,227,0.36);
+        flex-shrink: 0;
+    }
+    .cmp-spec-val {
+        font-size: 13.5px;
+        font-weight: 400;
+        color: rgba(237,232,227,0.88);
+        text-align: right;
+    }
+
+    /* ══════════════════════════════════════════════
+       6. IMPACT
+    ══════════════════════════════════════════════ */
+    .cmp-impact {
+        border-top: 1px solid rgba(237,232,227,0.05);
+        background: #060305;
+        padding: clamp(72px, 12vw, 128px) var(--cmp-pad);
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+    .cmp-impact::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(ellipse 70% 50% at 50% 50%, rgba(163,36,57,0.10) 0%, transparent 70%);
+        pointer-events: none;
+    }
+    .cmp-impact__eyebrow {
+        font-size: 8.5px;
+        font-weight: 600;
+        letter-spacing: 0.34em;
+        text-transform: uppercase;
+        color: rgba(237,232,227,0.28);
+        margin-bottom: clamp(3rem, 6vw, 5rem);
+        position: relative;
+    }
+    .cmp-impact__grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: clamp(2rem, 5vw, 4rem);
+        max-width: 900px;
+        margin: 0 auto;
+        position: relative;
+    }
+    .cmp-impact__stat-num {
+        font-family: var(--ff-display);
+        font-size: clamp(52px, 8vw, 100px);
+        font-weight: 900;
+        letter-spacing: -0.04em;
+        line-height: 1;
+        color: var(--cmp-crimson);
+        filter: brightness(1.35);
+        text-shadow: 0 0 50px rgba(163,36,57,0.45), 0 0 100px rgba(163,36,57,0.18);
+        margin-bottom: 0.6rem;
+    }
+    .cmp-impact__stat-label {
+        font-size: 11px;
+        font-weight: 400;
+        letter-spacing: 0.10em;
+        color: rgba(237,232,227,0.46);
+        line-height: 1.5;
+    }
+
+    /* ══════════════════════════════════════════════
+       7. CTA
+    ══════════════════════════════════════════════ */
+    .cmp-cta {
+        border-top: 1px solid rgba(237,232,227,0.06);
+        padding: clamp(80px, 14vw, 160px) var(--cmp-pad);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: clamp(1.5rem, 3vw, 2.5rem);
+        position: relative;
+        overflow: hidden;
+        background: var(--cmp-bg);
+    }
+    .cmp-cta::before {
+        content: 'IONIK';
+        position: absolute;
+        font-family: var(--ff-display);
+        font-size: clamp(100px, 22vw, 280px);
+        font-weight: 900;
+        letter-spacing: -0.06em;
+        color: rgba(237,232,227,0.022);
+        pointer-events: none;
+        user-select: none;
+        white-space: nowrap;
+        top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    .cmp-cta__eyebrow {
+        font-size: 8.5px;
+        font-weight: 600;
+        letter-spacing: 0.32em;
+        text-transform: uppercase;
+        color: var(--cmp-gold);
+        position: relative;
+    }
+    .cmp-cta__title {
+        font-family: var(--ff-display);
+        font-size: clamp(44px, 7vw, 96px);
+        font-weight: 900;
+        letter-spacing: -0.035em;
+        text-transform: uppercase;
+        line-height: 0.86;
+        color: #fff;
+        position: relative;
+    }
+    .cmp-cta__title em {
+        font-style: normal;
+        -webkit-text-stroke: 1px rgba(163,36,57,0.75);
+        color: transparent;
+    }
+    .cmp-cta__sub {
+        font-size: clamp(13px, 1.5vw, 15px);
+        font-weight: 300;
+        color: rgba(237,232,227,0.46);
+        max-width: 420px;
+        line-height: 1.75;
+        position: relative;
+    }
+    .cmp-cta__actions {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
+        position: relative;
+    }
+    /* Visit Live Site is the highlighted/primary action here */
+    .cmp-cta .btn-fill {
+        background: var(--cmp-crimson);
+        border-color: var(--cmp-crimson);
+        color: #fff;
+        animation: cmpVisitGlow 2.6s ease-in-out infinite;
+    }
+    .cmp-cta .btn-fill:hover { filter: brightness(1.15); }
+    .cmp-cta .btn-ghost { border-color: rgba(237,232,227,0.18); color: rgba(237,232,227,0.85); }
+    .cmp-cta .btn-ghost:hover { border-color: var(--cmp-gold); color: var(--cmp-gold); }
+
+    /* ══════════════════════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════════════════════ */
+    @media (max-width: 860px) {
+        .cmp-back { left: 24px; top: 22px; position: absolute; }
+        .cmp-overview { grid-template-columns: 1fr; }
+        .cmp-overview__left  { border-right: none; border-bottom: 1px solid rgba(237,232,227,0.06); }
+        .cmp-deliv-grid { grid-template-columns: 1fr 1fr; }
+        .cmp-specs-grid { grid-template-columns: 1fr; }
+        .cmp-specs-grid > .cmp-spec-row:nth-child(odd)  { padding-right: 0; border-right: none; }
+        .cmp-specs-grid > .cmp-spec-row:nth-child(even) { padding-left: 0; }
+    }
+    @media (max-width: 600px) {
+        .cmp-hero__meta { flex-direction: column; gap: 0.75rem; }
+        .cmp-hero__meta-sep { display: none; }
+        .cmp-impact__grid { gap: 1.5rem; }
+        .cmp-hero__status { display: none; }
+    }
+    @media (max-width: 480px) {
+        .cmp-deliv-grid  { grid-template-columns: 1fr; }
+        .cmp-impact__grid { grid-template-columns: 1fr; gap: 2.5rem; }
+        .cmp-cta__actions { flex-direction: column; align-items: stretch; }
+        .cmp-cta__actions .btn { text-align: center; justify-content: center; }
+        .cmp-overview__right { grid-template-columns: 1fr 1fr; }
+        .cmp-hero__visit { padding: 11px 18px; gap: 10px; }
+    }
+
+    /* Light mode — dial back but keep the crimson identity */
+    body[data-theme="light"] .cmp-back { background: rgba(255,255,255,0.88); color: rgba(0,0,0,0.45); border-color: rgba(0,0,0,0.10); }
+    body[data-theme="light"] .cmp-back:hover { color: rgba(0,0,0,0.80); }
+    body[data-theme="light"] .cmp-hero,
+    body[data-theme="light"] .cmp-overview,
+    body[data-theme="light"] .cmp-deliverables,
+    body[data-theme="light"] .cmp-gallery-wrap,
+    body[data-theme="light"] .cmp-specs,
+    body[data-theme="light"] .cmp-cta { background: #14100f; }
+    body[data-theme="light"] .cmp-impact { background: #0e0a09; }
+    </style>
+</head>
+<body>
+
+<div id="cursorDot"  class="cursor-dot"  aria-hidden="true"></div>
+<div id="cursorRing" class="cursor-ring" aria-hidden="true"></div>
+
+<!-- ── SIDEBAR ── -->
+<aside id="sidebar" class="sidebar" aria-label="Site navigation">
+    <a href="index.html" class="sidebar__logo-wrap" id="sidebarLogoWrap" aria-label="IONIK home">
+        <img id="sidebarLogo" class="sidebar__logo-img" src="ionik-logo.svg" alt="IONIK" draggable="false">
+    </a>
+    <div class="sidebar__track" aria-hidden="true">
+        <div id="scrollFill" class="sidebar__fill"></div>
+    </div>
+    <nav class="sidebar__nav" aria-label="Primary">
+        <ul role="list">
+            <li><a href="index.html#home"      class="sidebar__link"><span class="sidebar__link-bar"></span><span class="sidebar__link-text">Home</span></a></li>
+            <li class="sidebar__group" aria-hidden="true"><span class="sidebar__group-label">Subsidiaries</span></li>
+            <li><a href="index.html#gear"      class="sidebar__link sidebar__link--sub"><span class="sidebar__link-bar"></span><span class="sidebar__link-text">IONIK Merch</span></a></li>
+            <li><a href="index.html#events"    class="sidebar__link sidebar__link--sub"><span class="sidebar__link-bar"></span><span class="sidebar__link-text">IONIK Events</span></a></li>
+            <li><a href="index.html#creatives" class="sidebar__link sidebar__link--sub"><span class="sidebar__link-bar"></span><span class="sidebar__link-text">IONIK Creatives</span></a></li>
+            <li class="sidebar__item--has-sub open" id="navWebItem">
+                <button class="sidebar__link sidebar__link--parent" id="navWebToggle" aria-expanded="true" aria-controls="navWebSub">
+                    <span class="sidebar__link-bar"></span>
+                    <span class="sidebar__link-text">IONIK Web</span>
+                    <span class="sidebar__chevron" aria-hidden="true">›</span>
+                </button>
+                <ul class="sidebar__sub" id="navWebSub" role="list" aria-label="IONIK Web projects">
+                    <li>
+                        <a href="index.html#ceylon-motion" class="sidebar__sublink active">
+                            <span class="sidebar__sublink-dot" aria-hidden="true"></span>
+                            <span>Ceylon Motion Pictures</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="sidebar__sep" aria-hidden="true"></li>
+            <li><a href="index.html#about"   class="sidebar__link"><span class="sidebar__link-bar"></span><span class="sidebar__link-text">About</span></a></li>
+            <li><a href="index.html#contact" class="sidebar__link"><span class="sidebar__link-bar"></span><span class="sidebar__link-text">Contact</span></a></li>
+        </ul>
+    </nav>
+    <div class="sidebar__bottom">
+        <button id="themeToggle" class="sidebar__theme-btn" aria-label="Switch to light mode">
+            <svg class="theme-icon theme-icon--sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+            <svg class="theme-icon theme-icon--moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <a href="index.html#contact" class="sidebar__cta">Start a Project</a>
+        <a href="mailto:info.ionikcollectives@gmail.com" class="sidebar__email">info.ionikcollectives@gmail.com</a>
+    </div>
+</aside>
+
+<button id="sidebarToggle" class="s-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="sidebar"><span></span><span></span><span></span></button>
+<div id="sidebarOverlay" class="s-overlay" aria-hidden="true"></div>
+
+<!-- Back link -->
+<a href="index.html#web" class="cmp-back" id="cmpBack">IONIK Web</a>
+
+<!-- ══════════════════════════════════
+     MAIN
+══════════════════════════════════ -->
+<div class="main-wrap">
+<main id="main">
+
+    <!-- ── 1. HERO ── -->
+    <section class="cmp-hero" aria-label="Ceylon Motion Pictures case study">
+
+        <img class="cmp-hero__img" src="Assets/CeylonMotion/hero-poster.jpg" alt="Official poster reveal for හන්තානට ඇහෙනවද — Ceylon Motion Pictures presents, directed by Shirly P. Delankawala">
+        <div class="cmp-hero__overlay" aria-hidden="true"></div>
+
+        <span class="cmp-hero__tag" aria-hidden="true">IONIK Web · Live Project</span>
+        <span class="cmp-hero__status" aria-hidden="true"><span class="cmp-hero__status-dot"></span>Live</span>
+
+        <div class="cmp-hero__inner">
+            <img class="cmp-hero__logo" src="Assets/CeylonMotion/movie-title-logo.png" alt="හන්තානට ඇහෙනවද...">
+            <p class="cmp-hero__quote">Ceylon Motion Pictures — a social-awareness feature confronting cyberbullying in Sri Lanka.</p>
+
+            <a href="https://ceylonmotion.pictures" target="_blank" rel="noopener" class="cmp-hero__visit">
+                <span>
+                    <span class="cmp-hero__visit-label">See it live</span>
+                    <span class="cmp-hero__visit-url">ceylonmotion.pictures</span>
+                </span>
+                <span class="cmp-hero__visit-arrow" aria-hidden="true">↗</span>
+            </a>
+
+            <div class="cmp-hero__rule" aria-hidden="true"></div>
+            <div class="cmp-hero__meta" role="list">
+                <div class="cmp-hero__meta-item" role="listitem">
+                    <span class="cmp-hero__meta-label">Client</span>
+                    <span class="cmp-hero__meta-val">Ceylon Motion Pictures</span>
+                </div>
+                <div class="cmp-hero__meta-sep" aria-hidden="true"></div>
+                <div class="cmp-hero__meta-item" role="listitem">
+                    <span class="cmp-hero__meta-label">Genre</span>
+                    <span class="cmp-hero__meta-val">Social-Awareness Drama</span>
+                </div>
+                <div class="cmp-hero__meta-sep" aria-hidden="true"></div>
+                <div class="cmp-hero__meta-item" role="listitem">
+                    <span class="cmp-hero__meta-label">Scope</span>
+                    <span class="cmp-hero__meta-val">Web Design &amp; Development</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="cmp-hero__scroll" aria-hidden="true">
+            <span class="cmp-hero__scroll-line"></span>
+            Scroll
+        </div>
+    </section>
+
+    <!-- ── 2. OVERVIEW ── -->
+    <section class="cmp-overview" aria-label="Project overview">
+        <div class="cmp-overview__left">
+            <p class="cmp-overview__eyebrow">— The Brief —</p>
+            <p class="cmp-overview__desc">
+                Ceylon Motion Pictures came to <strong>IONIK Web</strong> to launch the official site for their
+                feature film — a story confronting cyberbullying and mental health in Sri Lanka. We built a
+                bilingual, cinematic production website: synopsis, full cast and crew directory, a curated
+                production gallery, and a dedicated awareness section linking directly to Sri Lanka's national
+                suicide prevention hotline.
+            </p>
+        </div>
+        <div class="cmp-overview__right">
+            <div class="cmp-meta-block">
+                <p class="cmp-meta-block__label">Director</p>
+                <p class="cmp-meta-block__val">Shirly P.<br>Delankawala</p>
+            </div>
+            <div class="cmp-meta-block">
+                <p class="cmp-meta-block__label">Producer</p>
+                <p class="cmp-meta-block__val">Rimzan<br>Shaheed</p>
+            </div>
+            <div class="cmp-meta-block">
+                <p class="cmp-meta-block__label">Our Role</p>
+                <p class="cmp-meta-block__val">Web Design<br>&amp; Development</p>
+            </div>
+            <div class="cmp-meta-block">
+                <p class="cmp-meta-block__label">Languages</p>
+                <p class="cmp-meta-block__val">Sinhala<br>&amp; English</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── 3. DELIVERABLES ── -->
+    <section class="cmp-deliverables" aria-label="What we built">
+        <div class="cmp-deliverables__header">
+            <h2 class="cmp-deliverables__title">What We Built</h2>
+            <span class="cmp-deliverables__count">04 deliverables</span>
+        </div>
+        <div class="cmp-deliv-grid">
+            <div class="cmp-deliv-item">
+                <p class="cmp-deliv-item__num">01</p>
+                <h3 class="cmp-deliv-item__title">Cinematic<br>Landing</h3>
+                <p class="cmp-deliv-item__desc">A full-viewport hero and scroll-driven storytelling that matches the film's somber, contemplative tone.</p>
+                <span class="cmp-deliv-item__line" aria-hidden="true"></span>
+            </div>
+            <div class="cmp-deliv-item">
+                <p class="cmp-deliv-item__num">02</p>
+                <h3 class="cmp-deliv-item__title">Cast &amp; Crew<br>Directory</h3>
+                <p class="cmp-deliv-item__desc">A bilingual profile grid covering every principal character and all 14 crew roles behind the production.</p>
+                <span class="cmp-deliv-item__line" aria-hidden="true"></span>
+            </div>
+            <div class="cmp-deliv-item">
+                <p class="cmp-deliv-item__num">03</p>
+                <h3 class="cmp-deliv-item__title">Production<br>Gallery</h3>
+                <p class="cmp-deliv-item__desc">Over 100 curated stills from the muhurat ceremony and shoot, organized into a scrolling marquee gallery.</p>
+                <span class="cmp-deliv-item__line" aria-hidden="true"></span>
+            </div>
+            <div class="cmp-deliv-item">
+                <p class="cmp-deliv-item__num">04</p>
+                <h3 class="cmp-deliv-item__title">Awareness<br>Integration</h3>
+                <p class="cmp-deliv-item__desc">A dedicated section presenting Sri Lankan cyberbullying statistics with a direct link to the national suicide prevention hotline.</p>
+                <span class="cmp-deliv-item__line" aria-hidden="true"></span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── 4. GALLERY (marquee — same mechanism as the film's own site) ── -->
+    <section class="cmp-gallery-wrap" aria-label="Production gallery">
+        <div class="cmp-gallery-wrap__header">
+            <h2 class="cmp-gallery-wrap__title">Production<br>Gallery</h2>
+            <span class="cmp-gallery-wrap__count">22 stills</span>
+        </div>
+        <div class="cmpw__marquee" aria-hidden="true">
+            <div class="cmpw__row"><div class="cmpw__track cmpw__track--a" id="cmpwTrackA"></div></div>
+            <div class="cmpw__row"><div class="cmpw__track cmpw__track--b" id="cmpwTrackB"></div></div>
+        </div>
+    </section>
+
+    <!-- ── 5. SPECS ── -->
+    <section class="cmp-specs" aria-label="Technical specification">
+        <div class="cmp-specs__header">
+            <h2 class="cmp-specs__title">Technical<br>Specs</h2>
+            <span class="cmp-specs__count">08 details</span>
+        </div>
+        <div class="cmp-specs-grid">
+            <div class="cmp-spec-row"><span class="cmp-spec-key">Platform</span><span class="cmp-spec-val">Static HTML / CSS / JS</span></div>
+            <div class="cmp-spec-row"><span class="cmp-spec-key">Languages</span><span class="cmp-spec-val">Sinhala &amp; English</span></div>
+            <div class="cmp-spec-row"><span class="cmp-spec-key">Typography</span><span class="cmp-spec-val">Abhaya Libre · Cormorant Garamond · Inter</span></div>
+            <div class="cmp-spec-row"><span class="cmp-spec-key">Sections</span><span class="cmp-spec-val">Hero · Synopsis · Characters · Crew · Gallery · Awareness</span></div>
+            <div class="cmp-spec-row"><span class="cmp-spec-key">Cast Profiles</span><span class="cmp-spec-val">15 Characters</span></div>
+            <div class="cmp-spec-row"><span class="cmp-spec-key">Crew Roles</span><span class="cmp-spec-val">14 Featured</span></div>
+            <div class="cmp-spec-row"><span class="cmp-spec-key">Domain</span><span class="cmp-spec-val">ceylonmotion.pictures</span></div>
+            <div class="cmp-spec-row"><span class="cmp-spec-key">Status</span><span class="cmp-spec-val">Live</span></div>
+        </div>
+    </section>
+
+    <!-- ── 6. IMPACT ── -->
+    <section class="cmp-impact" aria-label="Project scope at a glance">
+        <p class="cmp-impact__eyebrow">— At A Glance —</p>
+        <div class="cmp-impact__grid">
+            <div class="cmp-impact__stat">
+                <p class="cmp-impact__stat-num">29</p>
+                <p class="cmp-impact__stat-label">Cast &amp; crew profiles built into a bilingual directory</p>
+            </div>
+            <div class="cmp-impact__stat">
+                <p class="cmp-impact__stat-num">100+</p>
+                <p class="cmp-impact__stat-label">Production stills organized into the marquee gallery</p>
+            </div>
+            <div class="cmp-impact__stat">
+                <p class="cmp-impact__stat-num">2</p>
+                <p class="cmp-impact__stat-label">Languages supported — Sinhala &amp; English throughout</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── 7. CTA ── -->
+    <section class="cmp-cta" aria-label="Start a project">
+        <p class="cmp-cta__eyebrow">— See It For Yourself —</p>
+        <h2 class="cmp-cta__title">
+            Want this<br>for your <em>brand?</em>
+        </h2>
+        <p class="cmp-cta__sub">
+            This is a real, live client project. Visit the site, then let's talk about building yours.
+        </p>
+        <div class="cmp-cta__actions">
+            <a href="https://ceylonmotion.pictures" target="_blank" rel="noopener" class="btn btn-fill"><span class="btn-label">Visit Live Site ↗</span></a>
+            <a href="index.html#contact" class="btn btn-ghost">Start a Project →</a>
+        </div>
+    </section>
+
+</main>
+
+<footer class="footer">
+    <div class="footer__inner">
+        <span class="footer__brand">IONIK Co.</span>
+        <nav class="footer__links" aria-label="Footer navigation">
+            <a href="index.html#gear">Gear</a>
+            <a href="index.html#events">Events</a>
+            <a href="index.html#creatives">Creatives</a>
+            <a href="index.html#web">Web</a>
+            <a href="index.html#about">About</a>
+            <a href="index.html#contact">Contact</a>
+        </nav>
+        <small class="footer__copy">© 2026 IONIK Co. All rights reserved.</small>
+    </div>
+</footer>
+</div>
+
+<script src="ionik-script.js"></script>
+<script>
+    /* content-ready */
+    requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+            document.body.classList.add('content-ready');
+        });
+    });
+
+    /* Sidebar dropdown */
+    (function () {
+        var toggle = document.getElementById('navWebToggle');
+        var item   = document.getElementById('navWebItem');
+        if (!toggle || !item) return;
+        toggle.addEventListener('click', function () {
+            var open = item.classList.toggle('open');
+            toggle.setAttribute('aria-expanded', String(open));
+        });
+    }());
+
+    /* Set preloader-skip flag when leaving this page */
+    (function () {
+        var back = document.getElementById('cmpBack');
+        if (back) back.addEventListener('click', function () {
+            sessionStorage.setItem('ionik-skip-preloader', '1');
+        });
+    }());
+</script>
+
+</body>
+</html>

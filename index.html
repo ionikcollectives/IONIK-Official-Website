@@ -10,13 +10,10 @@
     <link rel="icon" type="image/png" href="Assets/IONIK/ionik_icon_white-Photoroom.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;900&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;900&family=Space+Grotesk:wght@300;400;500;600&family=Abhaya+Libre:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="ionik-styles.css">
 </head>
 <body>
-
-<!-- 3D background canvas — sits behind all content (z-index: -1) -->
-<canvas id="gearCanvas" aria-hidden="true"></canvas>
 
 <!-- Scroll-exit veil: blurs + fades content as it exits the top of the viewport -->
 <div class="scroll-exit-veil" aria-hidden="true"></div>
@@ -99,11 +96,21 @@
                     <span class="sidebar__link-text">IONIK Creatives</span>
                 </a>
             </li>
-            <li>
-                <a href="#web" class="sidebar__link sidebar__link--sub" data-section="web">
+            <li class="sidebar__item--has-sub" id="navWebItem">
+                <a href="#web" class="sidebar__link sidebar__link--sub sidebar__link--parent" data-section="web"
+                   id="navWebToggle" aria-expanded="false" aria-controls="navWebSub">
                     <span class="sidebar__link-bar"></span>
                     <span class="sidebar__link-text">IONIK Web</span>
+                    <span class="sidebar__chevron" aria-hidden="true">›</span>
                 </a>
+                <ul class="sidebar__sub" id="navWebSub" role="list" aria-label="IONIK Web projects">
+                    <li>
+                        <a href="#ceylon-motion" class="sidebar__sublink">
+                            <span class="sidebar__sublink-dot" aria-hidden="true"></span>
+                            <span>Ceylon Motion Pictures</span>
+                        </a>
+                    </li>
+                </ul>
             </li>
             <li class="sidebar__sep" aria-hidden="true"></li>
             <li>
@@ -354,6 +361,29 @@
                 </p>
             </header>
 
+            <div class="web-featured" id="ceylon-motion">
+                <p class="eyebrow">— SELECTED WORK —</p>
+
+                <a href="ceylon-motion.html" class="web-project-card web-project-card--poster">
+                    <div class="web-project-card__media web-project-card__media--poster">
+                        <img src="Assets/CeylonMotion/movie-title-logo.png" alt="හන්තානට ඇහෙනවද — Ceylon Motion Pictures">
+                        <div class="web-project-card__media-overlay">
+                            <span class="web-project-card__view">VIEW CASE STUDY ↗</span>
+                        </div>
+                    </div>
+                    <div class="web-project-card__info">
+                        <div class="web-project-card__tags">
+                            <span class="web-project-card__tag">Film Website</span>
+                            <span class="web-project-card__tag">Awareness Campaign</span>
+                        </div>
+                        <h3 class="web-project-card__title">Ceylon Motion<br>Pictures</h3>
+                        <p class="web-project-card__sub">
+                            Official production website for a social-awareness feature giving voice to the silent reality of cyberbullying in Sri Lanka — synopsis, cast &amp; crew, a production gallery, and a dedicated awareness section.
+                        </p>
+                        <span class="web-project-card__cta">View Full Case Study ↗</span>
+                    </div>
+                </a>
+            </div>
 
             <div class="services__grid">
 
@@ -701,11 +731,5 @@
 </div><!-- /.main-wrap -->
 
 <script src="ionik-script.js"></script>
-
-<!-- Three.js + GLTFLoader (UMD globals — works from file://) -->
-<script src="https://cdn.jsdelivr.net/npm/three@0.134.0/build/three.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.134.0/examples/js/loaders/GLTFLoader.js"></script>
-<script src="ionik-3d.js"></script>
-<script src="ionik-gear-viewer.js"></script>
 </body>
 </html>
